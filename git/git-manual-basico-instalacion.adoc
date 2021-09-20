@@ -17,375 +17,113 @@ También está disponible para otros S.O.
 
 Ejecutamos el instalador y vamos pasando por todas las ventanas. Si se indica solo 'Next' quiere decir que no hay que tocar nada.
 
-image::instalacion_01.png[,300,align="center"]
+image::instalacion-01.jpg[,500,align="center"]
+[.text-center]
 'Next'
 
-image::instalacion_02.png[,300,align="center"]
+image::instalacion-02.jpg[,500,align="center"]
+[.text-center]
 'Next', a no ser que queramos instalarlo en otra ruta 
 
-image::instalacion_03.png[,300,align="center"]
+image::instalacion-03.jpg[,500,align="center"]
+[.text-center]
 'Next', los componentes seleccionados son los que vamos a necesitar
 
-image::instalacion_04.png[,300,align="center"]
+image::instalacion-04.jpg[,500,align="center"]
+[.text-center]
 'Next'. Si no queremos una entrada en el menú de inicio marcamos el checkbox
 
-image::instalacion_05.png[,300,align="center"]
+image::instalacion-05.jpg[,500,align="center"]
+[.text-center]
 'Next'. Si no se quiere utilizar Vim como editor puede seleccionarse otro menos lesivo para el cerebro
 
-image::instalacion_06.png[,300,align="center"]
+image::instalacion-06.jpg[,500,align="center"]
+[.text-center]
 'Next'. 
 
-image::instalacion_07.png[,300,align="center"]
+image::instalacion-07.jpg[,500,align="center"]
+[.text-center]
 'Next'. 
 
-image::instalacion_08.png[,300,align="center"]
+image::instalacion-08.jpg[,500,align="center"]
+[.text-center]
 'Next'. 
 
-image::instalacion_09.png[,300,align="center"]
+image::instalacion-09.jpg[,500,align="center"]
+[.text-center]
 'Next'. 
 
-image::instalacion_10.png[,300,align="center"]
+image::instalacion-10.jpg[,500,align="center"]
+[.text-center]
 'Next'. 
 
-image::instalacion_11.png[,300,align="center"]
+image::instalacion-11.jpg[,500,align="center"]
+[.text-center]
 'Next'. 
 
-image::instalacion_12.png[,300,align="center"]
+image::instalacion-12.jpg[,500,align="center"]
+[.text-center]
 'Next'.
 
-image::instalacion_13.png[,300,align="center"]
+image::instalacion-13.jpg[,500,align="center"]
+[.text-center]
 'Next'.
 
-image::instalacion_14.png[,300,align="center"]
+image::instalacion-14.jpg[,500,align="center"]
+[.text-center]
 'Next'.
 
-image::instalacion_15.png[,300,align="center"]
+image::instalacion-15.jpg[,500,align="center"]
+[.text-center]
 Por fin: 'Install'.
 
-image::instalacion_16.png[,300,align="center"]
+image::instalacion-16.jpg[,500,align="center"]
+[.text-center]
 'Finish'.
 
-=== Descargar el workspace
+=== Obtener la url del repositorio
 
+Accedemos al repositorio que queremos clonar para obtener la url (también nos la pueden proporcionar)
 
++ https://github.com/lrag/MEAN_2021_2
 
+image::obtener-repo-01.jpg[,900,align="center"]
+[.text-center]
+Un bonito repositorio
 
+Pulsamos el botón 'Code' y de la ventana flotante que aparece copiamos la url de la sección 'Clone'
 
+image::obtener-repo-02.jpg[,900,align="center"]
 
+=== Clonando el repositorio 
 
+Comenzamos creando una carpeta para alojar el repositorio
 
+* Con el nombre que queramos
+* En la ubicación que nos apetezca
 
+image::clonar-repo-01.jpg[,900,align="center"]
 
+Nos colocamos en la barra de navegación del explorador y sustituimos la ruta por 'cmd'
 
+image::clonar-repo-02.jpg[,900,align="center"]
+image::clonar-repo-03.jpg[,900,align="center"]
 
+Pulsamos intro y se abre un terminal en la ruta indicada
 
+image::clonar-repo-04.jpg[,900,align="center"]
 
+Introducimos el comando 'git clone <url del repositorio>'
 
+* git clone https://github.com/lrag/MEAN_2021_2.git
 
+image::clonar-repo-05.jpg[,900,align="center"]
 
+Y ya tenemos el repositorio clonado en nuestro directorio
 
+image::clonar-repo-06.jpg[,900,align="center"]
 
+Si queremos actualizar nuestra copia local repetimos el comando
 
 
 
-
-
-NOTE: Erlang es un lenguaje de programación concurrente desarrollado por Ericsson. Por sus características es para realizar aplicaciones distribuidas, tolerantes a fallos, soft-real-time y de funcionamiento ininterrumpido. RabbitMQ está programado en Erlang para aprovecharse de estas características. 
-
-En el error disponemos de un botón que nos llevará a la página de descargas. Podemos pulsarlo o visitar
-
-* https://www.erlang.org/downloads
-
-image::spring-cloud-data-flow-instalacion_02.png[,600,align="center"]
-
-Una vez descargado procedemos a su instalación
-
-image::spring-cloud-data-flow-instalacion_03.png[,400,align="center"]
-image::spring-cloud-data-flow-instalacion_04.png[,400,align="center"]
-image::spring-cloud-data-flow-instalacion_05.png[,400,align="center"]
-
-Una vez instalado Erlang podemos hacer lo mismo con RabbitMQ
-
-image::spring-cloud-data-flow-instalacion_06.png[,400,align="center"]
-image::spring-cloud-data-flow-instalacion_07.png[,400,align="center"]
-image::spring-cloud-data-flow-instalacion_08.png[,400,align="center"]
-image::spring-cloud-data-flow-instalacion_09.png[,400,align="center"]
-
-Instalación de RabbitMQ con Docker:
-
-docker run -d --hostname rabbitmq --name rabbitmq -p 15672:15672 -p 5672:5672 rabbitmq:3.7.14-management
-
-Habilitar la consola web
-
-Desde un terminal, en el directorio sbin de la instalación de RabbitMQ:
-
-* rabbitmq-plugins enable rabbitmq_management
-
-Una vez terminado el proceso podemos encontrar la consola web en la siguiente url:
-
-* http://localhost:15672/
-
-image::spring-cloud-data-flow-instalacion_10.png[,400,align="center"]
-
-El usuario por defecto es:
-
-* Login: guest
-* Password : guest
-
-
-==== Arancar las aplicaciones
-
-Desde un terminal procedemos a arrancar las tres aplicaciones, en este orden y esperando a que la anterior haya arrancado completamente:
-
-* java -jar spring-cloud-skipper-server-2.7.1.jar
-* java -jar spring-cloud-dataflow-server-2.8.1.jar
-* java -jar spring-cloud-dataflow-shell-2.8.1.jar
-
-Podemos comprobar que todo es correcto accediendo al Spring Cloud Data Flow Dashboard.
-
-* http://localhost:9393/dashboard
-
-image::spring-cloud-data-flow-instalacion_11.png[,600,align="center"]
-
-=== Parámetros de ejecución
-
-Al ejecutar el servidor de Spring Cloud DataFlow podemos indicar parámetros para modificar el comportamiento por defecto
-
-==== Parámetros para de la base de datos
-
-Spring Cloud Data Flow Server utiliza una base de datos para guardar
-
-* Aplicaciones registradas
-* Trabajos
-* Streams
-
-Si ejecutamos la versión local (solo para desarrollo) utilizará una base de datos H2 que se se elimina al parar el servidor.
-
-Para indicar que utilice otra base de datos debemos añadir parámetros a la hora de ejecutar el servidor. 
-
-*  --spring.datasource.url=jdbc:mysql:<db-info> 
-*  --spring.datasource.username=<user> 
-*  --spring.datasource.password=<password> 
-*  --spring.datasource.driver-class-name=org.mariadb.jdbc.Driver 
-
-Por ejemplo, para mysql:
-
-java -jar spring-cloud-dataflow-server-2.8.1.jar 
---spring.datasource.url=jdbc:mariadb://localhost:3306/bbdd?useMysqlMetadata=true 
---spring.datasource.username=root 
---spring.datasource.password=root 
---spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
-
-Si queremos seguir usando H2, pero que no se borre la base de datos al reiniciar basta con arrancar así el servidor:
-
-java -jar spring-cloud-dataflow-server-2.8.1.jar 
---spring.datasource.url=jdbc:h2:file:c:/h2/bbddDataFlow;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-
-==== Parámetros para Maven
-
-Por defecto Spring Cloud DataFlow Server buscará las aplicaciones en el repositorio local.
-
-Para indicar otros repositorios, usuarios y configuración para, por ejemplo, un proxy debemos utilizar el parámetro --spring.config.additional-location y proporcionar un fichero .yml con la configuración necesaria
-
-java -jar spring-cloud-dataflow-server-2.8.1.jar --spring.config.additional-location=/directorio/maven.yml
-
-[source, yml]
-----
-maven:
-  localRepository: mylocal
-  remote-repositories:
-    repo1:
-      url: https://repo1
-      auth:
-        username: user1
-        password: pass1
-      snapshot-policy:
-        update-policy: daily
-        checksum-policy: warn
-      release-policy:
-        update-policy: never
-        checksum-policy: fail
-    repo2:
-      url: https://repo2
-      policy:
-        update-policy: always
-        checksum-policy: fail
-  proxy:
-    host: proxy1
-    port: "9010"
-    auth:
-      username: proxyuser1
-      password: proxypass1
-----
-
-==== Skipper
-
-El parámetro --spring.cloud.skipper.client.serverUri indica la ubicación del servicio Skipper
-
-java -jar spring-cloud-dataflow-server-2.8.1.jar --spring.cloud.skipper.client.serverUri=https://192.51.100.1:7577/api
-
-
-=== Personalización de la configuración
-
-Para evitar el paso de parámetros durante la ejecución la mejor opción es personalizar la aplicacion Spring Cloud Data Server para que
-se adapte a nuestras necesidades.
-
-Obtención del código:
-
-* https://github.com/spring-cloud/spring-cloud-dataflow/tree/2.8.1
-
-Importamos el código en cualquier editor de Java
-
-image::spring-cloud-data-flow-personalizacion_01.png[,600,align="center"]
-
-Podemos modificar todo lo que necesitemos y volver a generar el jar ejecutable con Maven situandonos en el raiz de los proyectos y ejecutando
-
-* mvn clean install -DskipTests
-
-Una vez terminada la ejecución de Maven encontraremos el jar en la carpeta 'target'
-
-==== Base de datos
-
-Driver:
-
-Por defecto se incluyen los driver JDBC para H2, MySQL, Oracle, PostgreSQL, Db2, y SQL Server. Si quiere utilizarse otro
-gestor de base de datos debemos añadir la dependencia:
-
-En el proyecto 'spring-cloud-dataflow-server' editamos el fichero 'pom.xml' y añadimos el driver necesario:
-
-spring-cloud-dataflow-2.8.1\spring-cloud-dataflow-server\pom.xml
-[source, xml]
-----
-<dependencies>
-...
-  <dependency>
-    <groupId>com.oracle.jdbc</groupId>
-    <artifactId>ojdbc8</artifactId>
-    <version>12.2.0.1</version>
-  </dependency>
-...
-</dependencies>
-----
-
-Si quiere usarse el Driver de Mysql en lugar del de MariaDB debe añadirse expresamente (la versión está indicada en el parent pom)
-
-\spring-cloud-dataflow-2.8.1\spring-cloud-dataflow-2.8.1\spring-cloud-dataflow-server\pom.xml
-[source, xml]
-----
-<dependencies>
-...
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-    </dependency>
-...
-</dependencies>
-----
-
-Para personalizar los parámetros de la conexión modificaremos el fichero 'dataflow-server.yml' del proyecto 'spring-cloud-starter-dataflow-server'
-
-\spring-cloud-dataflow-2.8.1\spring-cloud-starter-dataflow-server\src\main\resources\dataflow-server.yml
-[source, yml]
-----
-server:
-  port: 9393
-info:
-  app:
-    name: "@project.artifactId@"
-    description: "@project.name@"
-    version: "@project.version@"
-
-maven:
-  remoteRepositories:
-    springRepo:
-      url: https://repo.spring.io/libs-snapshot
-
-spring:
-  application:
-    name: spring-cloud-dataflow-server
-  cloud:
-    config:
-      uri: http://localhost:8888
-
-  datasource:
-    #url: jdbc:h2:tcp://localhost:19092/mem:dataflow
-    #username: sa
-    #password:
-    #driverClassName: org.h2.Driver
-    url: jdbc:mysql://localhost:3306/bbdd?useMysqlMetadata=true&serverTimezone=UTC
-    username: root
-    password: root
-    driverClassName: com.mysql.jdbc.Driver
-----
-
-
-==== Seguridad
-
-Por defecto Spring Cloud Data Flow Server tiene desactivada la seguridad. Si queremos configurarla hemos de modificar el fichero 'application.yml' situado en el proyecto 'spring-cloud-dataflow-server'
-
-\spring-cloud-dataflow-2.8.1\spring-cloud-dataflow-2.8.1\spring-cloud-dataflow-server\src\main\resources\application.yml
-
-==== Log
-
-La configuración de log está en el fichero 'logback-spring.xml' situado en el proyecto 'spring-cloud-dataflow-server'
-
-D:\JAVA\workspaces\SPRING\ws_cloud_data_flow\ws_github\spring-cloud-dataflow-2.8.1\spring-cloud-dataflow-server\src\main\resources
-[source, yml]
-----
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
-    <conversionRule conversionWord="wex"
-                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
-    <conversionRule conversionWord="wEx"
-                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
-    <property name="CONSOLE_LOG_PATTERN"
-              value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-    <property name="FILE_LOG_PATTERN"
-              value="${FILE_LOG_PATTERN:-%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-    <property name="LOG_FILE"
-              value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring-cloud-dataflow-server-local.log}"/>
-
-    <logger name="org.springframework.beans" level="WARN"/>
-    <logger name="org.springframework.context" level="WARN"/>
-    <logger name="org.springframework.jmx" level="WARN"/>
-    <logger name="org.springframework.web" level="WARN"/>
-    <logger name="org.springframework.security" level="WARN"/>
-    <logger name="org.springframework.integration" level="WARN"/>
-    <logger name="org.springframework.boot" level="WARN"/>
-    <logger name="org.springframework.boot.autoconfigure.security" level="INFO"/>
-    <logger name="org.springframework.boot.context.embedded.tomcat" level="INFO"/>
-    <logger name="org.springframework.cloud.kubernetes.config" level="ERROR"/>
-    <springProfile name="local">
-        <appender name="FILE"
-                  class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${LOG_FILE}</file>
-            <rollingPolicy
-                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-                <!-- daily rolling -->
-                <fileNamePattern>${LOG_FILE}.${LOG_FILE_ROLLING_FILE_NAME_PATTERN:-%d{yyyy-MM-dd}}.%i.gz
-                </fileNamePattern>
-                <maxFileSize>${LOG_FILE_MAX_SIZE:-100MB}</maxFileSize>
-                <maxHistory>${LOG_FILE_MAX_HISTORY:-30}</maxHistory>
-                <totalSizeCap>${LOG_FILE_TOTAL_SIZE_CAP:-500MB}</totalSizeCap>
-            </rollingPolicy>
-            <encoder>
-                <pattern>${FILE_LOG_PATTERN}</pattern>
-            </encoder>
-        </appender>
-        <root level="INFO">
-            <appender-ref ref="FILE"/>
-        </root>
-    </springProfile>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-        </encoder>
-    </appender>
-    <root level="INFO">
-        <appender-ref ref="STDOUT"/>
-    </root>
-
-</configuration>
-----

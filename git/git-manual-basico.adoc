@@ -1,8 +1,8 @@
-= Spring Data Flow
+= Acceso al repositorio del curso
 ifdef::autor[]
 {autor}
 endif::[]
-v1.1.4 2020-01-09
+v1.3.4 Turbo MkIV 2021-20-09
 :sourcedir: ../workspace
 :imagesdir: ./images
 :title-page-background-image: image:logo.png[]
@@ -21,16 +21,4 @@ v1.1.4 2020-01-09
 :icons: font
 
 include::git-manual-basico-instalacion.adoc[]
-
-<<<
-
-include::spring-cloud-data-flow-instalacion.adoc[]
-
-<<<
-
-include::spring-cloud-stream.adoc[]
-
-<<<
-
-include::spring-cloud-data-flow-streams.adoc[]
 
