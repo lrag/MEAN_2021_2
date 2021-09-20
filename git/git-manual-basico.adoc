@@ -1,0 +1,36 @@
+= Spring Data Flow
+ifdef::autor[]
+{autor}
+endif::[]
+v1.1.4 2020-01-09
+:sourcedir: ../workspace
+:imagesdir: ./images
+:title-page-background-image: image:logo.png[]
+:navigation:
+:split:
+:doctype: book
+:menu:
+:goto:
+:status:
+:source-highlighter: coderay
+:sectnums:
+:toc:
+:toc-title: Contenidos
+:toclevels: 3
+:chapter-label: Capítulo
+:icons: font
+
+include::git-manual-basico-instalacion.adoc[]
+
+<<<
+
+include::spring-cloud-data-flow-instalacion.adoc[]
+
+<<<
+
+include::spring-cloud-stream.adoc[]
+
+<<<
+
+include::spring-cloud-data-flow-streams.adoc[]
+

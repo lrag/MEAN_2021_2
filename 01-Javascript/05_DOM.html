@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+    //DOM
+    //Document Object Model
+    //Igual que en un documento XML
+    //
+    //Estructura de tipo árbol con nodos de tres tipos:
+    //-Elemento/etiqueta
+    //-Atributo
+    //-Nodo de texto
+
+    function pruebas(){
+
+        //document es un objeto implícito que guarda una referencia al raíz del árbol DOM
+        //Tiene una serie de funciones que sirven para:
+        //-localizar nodos en el árbol
+        //-crear nodos!
+        //
+        //Cuidado con usarlo antes de que se termine de crear el árbol DOM
+        //let nodo = document.getElementById("dato")
+        //console.log(nodo) //NULL
+        
+        //
+        //Buscando nodos en el árbol por 'id'
+        //        
+        let nodo = document.getElementById("dato")
+        console.log(nodo)
+        console.log(nodo.value)
+        console.log(nodo["size"]) // ;)
+
+        //Los objetos del tipo nodo tienen un cerro de propiedades
+        for(let propiedad in nodo){
+            //console.log(propiedad+":"+nodo[propiedad])
+        }
+
+        //Por cada etiqueta que tenga id nos crearán una variable implícita que
+        //la referencie
+        let nodo2 = document.getElementById("nombre")
+        console.log(nodo2)
+        //La variable nombre no la hemos declarado nosotros!
+        console.log(nombre)
+
+        //
+        //Buscando nodos por tipo de etiqueta 
+        //
+        //Devuelve un array con los nodos encontrados
+        console.log("=========================================")        
+        let arrayDeNodos = document.getElementsByTagName("input")
+        console.log(arrayDeNodos.length)
+        console.log(arrayDeNodos)        
+        
+        //Recorrer el array para que saque por consola el value los nodos de tipo botón
+        for(let nodo of arrayDeNodos){
+            if(nodo.type == "button"){
+                console.log(nodo.value)
+            }
+        }
+
+        //
+        //Buscando nodos por 'name'
+        //
+        console.log("=========================================")   
+        arrayDeNodos = document.getElementsByName("nombre")
+        for(nodo of arrayDeNodos){
+            console.log(nodo)
+        }    
+
+        //let array = document.getElementsByName("nombre")
+        //nodo = array[0]
+        nodo = document.getElementsByName("nombre")[0]  //Esto da por sentado que solo hay uno con ese name  
+
+        //
+        //Buscando nodos por estilo css
+        //
+        console.log("=========================================")   
+        arrayDeNodos = document.getElementsByClassName("xXx")
+        for(nodo of arrayDeNodos){
+            console.log(nodo)
+        }    
+
+        //
+        //Buscando nodos utilizando selectores css
+        //
+        console.log("=========================================")  
+        let nodoFormulario = document.querySelector("#formulario")
+        console.log(nodoFormulario)
+
+        let arrayNodos = document.querySelectorAll("#formulario input[type=text]")
+        for(let nodo of arrayNodos){
+            console.log(nodo)
+        }
+
+        //document tiene una función específica para buscar nodos en un
+        //XML
+        //document.getElementsByTagNameNS()  
+
+    }
+
+    //Validar:
+    //Se comprobará que las cajas de texto 'nombre', 'direccion' y 'teléfono'
+    //no estén vacías
+    //
+    function validar(){
+
+        let mensaje = ""
+
+        let tfNombre = document.getElementById("nombre")
+        let nombre = tfNombre.value
+        let nombreSinEspaciosAlPrincipioYAlFinal = nombre.trim()
+        if( nombreSinEspaciosAlPrincipioYAlFinal.length == 0 ){
+            //alert("El nombre está vacío")
+            //mensaje = mensaje + "El nombre está vacío"
+            mensaje += "El nombre está vacío. \n"
+        }
+
+        let direccion = document.getElementById("direccion").value.trim()
+        if( direccion.length == 0 ){
+            //alert("La dirección está vacía")
+            mensaje += "La dirección está vacía. \n"
+        }
+
+        if( document.getElementById("telefono").value.trim().length == 0 ){
+            //alert("El teléfono está vacío")
+            mensaje += "El teléfono está vacío. \n"
+        }
+
+        if(mensaje.length > 0){
+            alert(mensaje)
+        }
+
+    }
+
+    function validarBis(){
+
+        let mensaje = ""
+        let arrayNodos = document.querySelectorAll("#formulario input[type=text]")
+        for(let nodo of arrayNodos){
+            
+            if( nodo.value.trim().length == 0 ){
+                mensaje += nodo.name+" no puede estar vacío \n"
+            }
+        }
+
+        if(mensaje.length > 0){
+            alert(mensaje)
+        }
+
+    }
+
+
+
+</script>
+
+<!--
+Cuando el navegador termina de crear el árbol DOM dispara el evento 'load'
+-->
+<body onload="pruebas()">
+
+    <h1 id="h1">05_Árbol DOM</h1>
+
+    Nombre: <input type="text" 
+                   name="dato" 
+                   id="dato" 
+                   size="25" 
+                   value="texto" 
+                   class="xXx"/>    
+    <hr id="hr"/>
+    
+    <form name="formulario" id="formulario" action="http://www.estaseguroquenoexiste.es" method="get"> 
+        
+        <input type="button" name="accion" value="Validar" onclick="validarBis()"/>
+        <input type="button" value="Preparar parametros"/>
+        <input type="button" name="accion" value="Insertar" onclick="insertarPersona()"/>
+        <input type="submit" name="accion" value="Modificar"/>
+        <input type="submit" name="accion" value="Borrar"/>
+
+        <table>
+            <tr>
+                <td id="td1">Nombre</td>
+                <td id="td2">
+                    <input type="text" name="nombre" id="nombre"/>
+                </td>
+            </tr>
+            <tr>
+                <td id="td3">Dirección</td>
+                <td id="td4">
+                    <input type="text" name="direccion" id="direccion"/>
+                </td>
+            </tr>
+            <tr>
+                <td id="td5">Teléfono</td>
+                <td id="td6">
+                    <input type="text" name="telefono" id="telefono"/>
+                </td>
+            </tr>
+            <tr>
+                <td id="td7">Ciudad</td>
+                <td id="td8">
+                    <select name="ciudad" id="ciudad">
+                        <option>Getafe</option>
+                        <option>Madrid</option>
+                        <option>Salamanca</option>
+                        <option>Santa Pola</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td id="td9">Observaciones</td>
+                <td id="td10">
+                    <textarea name="observaciones" id="observaciones"></textarea>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</body>
+</html>
+
+<!--
+    
+Nodo de un árbol binario    
+    
+{
+    valor : Obj
+    izq   : nodo
+    der   : nodo
+}
+    
+Nodo de un árbol
+
+{
+    valor : Obj
+    hijos : [ nodo ]
+}
+    
+-->

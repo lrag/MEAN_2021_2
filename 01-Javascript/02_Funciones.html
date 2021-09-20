@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+    //
+    //En JS las funciones son OBJETOS
+    //asociados siempre a otro objetos
+    //
+
+    //Los nombres de las funciones serán verbos
+    //Utilizaremos camel case
+
+    //Camel case  : holaQueTal
+    //Pascal case : HolaQueTal (también upper camel case)
+    //Snake case  : Hola_que_tal
+    //Kebab case  : Hola-que-tal
+
+    //En javascript las funciones no indican si devuelven algo o no
+    //No existe la palabra reservada 'void'
+    function saludar(){
+        console.log("Buenos días")
+    }
+
+    //Para invocar una función se utiliza su nombre seguido de paréntesis
+    saludar()
+
+    //El nombre de una función es una variable que la referencia    
+    console.log(saludar)   //Aparece la función
+    console.log(saludar()) //Buenos días CR,LF undefined
+
+    //Las funciones pueden recibir parámetros
+    //No se indica el tipo de los parámetros (normal)
+    console.log("================================================")
+    function sumar(s1, s2){
+        //Los parámetros recibidos son idénticos a variables declaradas con VAR dentro de la función
+        console.log("Suma:"+(s1+s2))
+    }
+
+    sumar(10,20)        //30
+    sumar(10,"Boniato") //10Boniato
+    sumar(true,1)       //
+
+    //Podemos invocar cualquier función con el número de parámetros que queramos. No da error
+    //Esto solo tiene sentido si la función se ha programado pensando en esta posibilidad
+    sumar()           //NaN
+    sumar(1)          //NaN
+    sumar(1,2)        //3
+    sumar(1,2,3)      //3
+    sumar(1,2,3,4)    //3
+    sumar(1,2,3,4,5)  //3
+
+    //Dentro de una función JS disponemos de la variable implícita 'arguments' donde
+    //encontraremos los parámetros recibidos
+    function sumarNumeros(){
+
+        console.log(arguments)
+        let total = 0 
+        for(a=0; a<arguments.length;a++){
+            //total = total + arguments[escort]
+            total += arguments[a]
+        }
+
+        console.log(total)
+        return total
+
+    }
+
+    sumarNumeros()           //
+    sumarNumeros(1)          //
+    sumarNumeros(1,2)        //
+    sumarNumeros(1,2,3)      //
+    sumarNumeros(1,2,3,4)    //
+    sumarNumeros(1,2,3,4,5)  //
+
+    //Desde ES6 se puede utilizar tambien la sintaxis de parámetros variables de C
+    //En JS se llama 'spread' 
+    function sumarNumerosBis(...numeros){
+        //console.log(arguments) Saca lo mismo que en el ejemplo anterior
+        let total = 0 
+        for(a=0; a<numeros.length;a++){
+            total += numeros[a]
+        }
+
+        console.log("(bis):"+total)
+        return total
+    }    
+
+    sumarNumerosBis()           //
+    sumarNumerosBis(1)          //
+    sumarNumerosBis(1,2)        //
+    sumarNumerosBis(1,2,3)      //
+    sumarNumerosBis(1,2,3,4)    //
+    sumarNumerosBis(1,2,3,4,5)  //    
+
+    //
+    //Las funciones pueden devolver un valor (y solo uno)
+    // 
+    console.log("====================================")
+    function restar(minuendo, sustraendo){
+        let resta = minuendo-sustraendo
+        
+        return resta
+    }
+
+    let resta = restar(50,20)
+    console.log(resta)
+
+    //Aunque una funcion no devuelva nada nos permiten hacer esta cosa sin sentido:
+    //function saludar(){
+    //    console.log("Buenos días")
+    //}
+    let resultado = saludar()
+    console.log(resultado) //undefined
+
+    //
+    //Desde ECMAScript6 nos permiten asignar valores por defecto a los parámetros
+    //
+    console.log("====================================")    
+    function ejemploAbstracto(dato1=100, dato2=200){
+        console.log(dato1)
+        console.log(dato2)
+    }
+
+    ejemploAbstracto()      //100, 200
+    ejemploAbstracto(1)     //1  , 200
+    ejemploAbstracto(1,2)   //1  , 2
+    ejemploAbstracto(1,2,3) //1  , 2
+
+    //
+    //Funciones anidadas/nested functions
+    //En JS las funciones anidadas son closures
+    //
+    console.log("====================================") 
+    function nido(){
+
+        console.log("Ejecutando la función nido")
+
+        function pajaro(){
+            console.log("El pájaro está en el nido")
+        }
+
+        pajaro()
+    }  
+ 
+    nido()
+    //pajaro() no se puede invocar a una funcion anidada desde fuera del nido
+
+    //
+    //En JS las funciones son objetos y como tales podemos referenciarlas con variables    
+    //
+
+    //function multiplicar(n1, n2){
+    //    console.log(n1*n2)
+    //}
+    
+    //En este caso estamos creando una función ANÓNIMA y la estamos asignando como valor
+    //a la variable 'multiplicar'
+    console.log("====================================") 
+    let multiplicar = function(n1, n2){
+        console.log(n1*n2)
+        return n1*n2
+    }
+
+    multiplicar(5,25)
+    let multiplicacion = multiplicar(25,25)
+
+    //
+    //En JS a cualquier variable le podemos colocar los parentesis
+    //
+
+    let dato = "ARSA"
+
+    console.log( saludar )   //Estamos referenciando la función
+    console.log( saludar() ) //Estamos invocando la función
+    console.log( dato )
+    //console.log( dato() )  //Esto es sintáticamente correcto, pero cuando le ponemos los parentesis
+                             //a una variable mas nos vale que esa variable referencie a una función
+                             //o explotará
+
+
+    //
+    //Creando funciones con el prototipo Function
+    //
+
+    //-Otro día-
+
+</script>
+
+
+<body>
+    
+    <h1>02_Funciones</h1>
+
+</body>
+</html>
+

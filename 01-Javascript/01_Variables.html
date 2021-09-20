@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<!--
+JAVASCRIPT
+----------------------------------------
+-Lenguaje ded programación de alto nivel
+-Lenguaje interpretado
+-Ejecutado por un motor javascript
+-Inicialmente solo en el navegador
+-NO es un lenguaje multipropósito
+    -No permite el acceso al sistema de archivos
+    -No permite ejecutar comandos del sistema operativo
+    -No permite la apretura de sockets
+        -> Por ejemplo: no podemos conectar con una BB.DD
+
+-Sintaxis basada en C
+-Nada que ver con Java
+-Dimámico
+-Secuencial (sin goto)
+-Estructurado
+-Orientado a objetos (por prototipado)
+-Funcional
+-No tipado
+-Case sensitive
+-Tiene null
+-No permite al programador crear hilos
+-Tiene referencias, no punteros
+-Serialización en profundidad
+-Clonado de primer nivel
+-->
+
+<!-- No deben usarse bloques JS en el HTML -->
+
+<!--
+MIME TYPE de JS
+-text/javascript
+-application/javascript <--
+-->
+
+<script type="application/javascript">
+
+    //Se pueden utilizar comillas simples y dobles
+    //Javascript tiene como separador el punto y coma
+    //->ES OPCIONAL
+    
+    //alert('Nunca hay que utilizar alert')
+
+    console.log("Tampoco hay que usar la consola")
+
+    ///////////////
+    // VARIABLES //
+    ///////////////
+
+    //No estan tipadas
+    //Pueden guardar:
+    //-nada en absoluto
+    //-números
+    //-cadenas de texto (arrays de caracteres)
+    //-un caracter
+    //-booleanos
+    //-referencia a un objeto
+    //-null
+    
+    //Podemos utilizar variables sin molestarnos en declararlas
+    //Si lo hacemos así es obligatorio darles un valor
+
+    numero = 5
+    nombre = "Bart"
+    activo = true
+    variable = null
+    
+    //Las variables no declaradas se asignan a -SPOILER-
+
+    //
+    //Declarando las variables con 'var'
+    //
+
+    var altura = 14
+    var apellidos = "Simpson"
+    //Se puede dejar una variable sin valor
+    var movida
+    console.log(movida) //Undefined
+
+    var noSeQue = null
+    console.log(noSeQue) //En JS 'null' es un valor
+
+    //Con 'var' podemos volver a definir variables, pero está muy feo
+    var dato1 = 5
+    var dato1 = "HOLA CARACOLA"
+
+    //
+    //Comparando variables (independientemente de cómo estén declaradas)
+    //
+
+    //'==' compara las cosas 'por encima'
+    if( movida == noSeQue ){
+        console.log("Iguales")
+    } else {
+        console.log("Distintos")
+    }
+
+    //'===' compara valor y TIPO
+    if( movida === noSeQue ){
+        console.log("Iguales")
+    } else {
+        console.log("Distintos")
+    }
+
+
+    //
+    //Declarando las variables con 'let' (a partir de ECMAScript 6)
+    //La diferencia con 'var' está en el ámbito de la variable
+    //
+    let dato2 = 42
+    let dato3 //undefined
+    let dato4 = null
+
+    //Con let no podemos redefinir variables
+    //let dato4 = "TOCOTÓ"
+
+    //Por supuesto podemos cambiar el valor
+    dato4 = "TOCOTÓ"
+
+    //
+    //Definiendo variables con 'const' (ES6)
+    //Define una constante. Solo se le puede dar valor en el momento de la declaración
+    //
+    const PI = 3.1416
+    //PI = 6 Error!
+
+    //No podemos dejar una constante undefined y darle valor aunque solo sea una vez
+    //const x 
+    //x = 5    
+    //console.log(x)
+
+    //
+    //Cuando asignamos a una variable el valor de otra podemos dejar preparado un valor por defecto 
+    //
+    let x1 
+    let y1 = x1 || 22
+    console.log(y1) //22
+
+    let x2 = null
+    let y2 = x2 || 22
+    console.log(y2) //22
+
+    let x3 = "HOLA"
+    let y3 = x3 || 22
+    console.log(y3) //HOLA
+
+
+    //
+    //AVERIGUANDO EL TIPO DE UNA VARIABLE
+    //
+
+    //la función isNaN
+    let numero2 = "cinco"
+    if(isNaN(numero2)){
+        console.log("No es un número")
+    }
+    
+    //Mucho mejor con typeof
+    //Typeof es un OPERADOR
+    //valores devueltos por typeof
+    //-number
+    //-string
+    //-boolean
+    //-object
+    //-function 
+    //-undefined
+    //-null
+    //-...
+
+    console.log(typeof numero5)
+
+    if( typeof numero5 != "number"){
+        console.log("No es un número")
+    }
+
+    ///////////////////////////
+    //ÁMBITO DE LAS VARIABLES//
+    ///////////////////////////
+
+    //VAR    
+
+    console.log("============================================")
+    function pruebaVar(){
+        
+        //El ámbito de una variable declarada con 'var' es la función en la que está declarada
+        
+        console.log("variable1:"+variable1) //Se puede utilizar antes de la declaración, pero es muy feo
+        var variable1 = "HOLA"
+        console.log("variable1:"+variable1)
+
+        //Las variables declaradas con 'var' existen antes de que se ejecute la primera línea de código
+        if(10 > 100){
+            var variable2 = "MOVIDA"
+        }
+        //Aunque no se meta en el if vemos que la variable existe, pero sin valor
+        //Si hubiera entrado en el if si que tendría valor
+        console.log("variable2:"+variable2)
+        
+        console.log("a:"+a) //undefined
+        for(var a=0; a<10; a++){
+            //...
+        }
+        console.log("a:"+a) //10
+        
+        //En JS (y en otros lenguajes) se pueden declarar bloques de código sin que estén asociados a algo (if, for, while, función...)
+        {
+            var variable3 = "ARSA"
+        }
+        console.log("variable3:"+variable3) //ARSA
+
+    }
+    
+    pruebaVar()
+    //No son visibles fuera de la función:
+    //console.log("variable1:"+variable1)
+    //console.log("variable2:"+variable2)
+    //console.log("a:"+a)
+    
+    //
+    //LET   
+    //
+    console.log("============================================")
+    function pruebaLet(){  
+     
+        //El ámbito de las variables declaradas con let es el BLOQUE en el que están declaradas
+        //Como en C, como en Java, como en PHP...
+        //No se pueden utilizar antes de la declaración
+        //console.log("dato1:"+datoLet1) //ZASCA!
+        let datoLet1 = "AAA"
+        console.log("dato1:"+datoLet1) //AAA
+             
+        if(1000 > 100){
+            let datoLet2 = "MOVIDA"
+            console.log("variable2:"+datoLet2) //MOVIDA
+        } //Aqui desaparece la variable 'datoLet2'
+        //console.log("variable2:"+datoLet2) //ZASCA!!!
+
+        for(let a=0; a<10; a++){
+            //...
+        }
+        //console.log("a:"+a) //ZASCA ONE MORE TIME
+
+        {
+            let datoLet3 = "Para qué quieres esto..."
+        }
+        //console.log("datoLet3:"+datoLet3) //ZASCA TARRASCA
+
+    }
+    
+    pruebaLet()
+    
+    //Esta línea está fuera del ámbito de la variable
+    //console.log("dato1:"+datoLet1) //ZASCA!
+
+    //
+    //El ámbito de una cariable declarada con 'const' es el mismo que con 'let':
+    //la variable existe en el bloque en el que está declarada
+    //
+
+
+    //
+    //Variables utilizadas sin declaración previa
+    //
+    console.log("============================================")    
+    function pruebaVarSinDeclarar(){
+
+        //Utilizamos una variable sin haberla declarado
+       
+        //Las variables sin declarar son asignadas al objeto Window
+        //Se convierten en una suerte de variables globales
+        variableSinDeclarar = "Vamos a ver que pasa"
+        console.log("variableSinDeclarar:"+variableSinDeclarar) //correcto
+    }
+    
+    //console.log("variableSinDeclarar:"+variableSinDeclarar) //ZASCA!
+    pruebaVarSinDeclarar()
+    console.log("variableSinDeclarar:"+variableSinDeclarar) //correcto!
+
+    //
+    //Cuando estamos fuera de las funciones no hay diferencia perceptible entre var, let y const
+    //Si fuera de una funcion se utiliza una variable sin declarar se asigna al objeto Window
+    //y ya se podrá utilizar en cualquier parte
+    //
+    var v1 = 10; //No se convierte en global, pero está en un ámbito superior
+    let v2 = 20; //Ídem
+    v3 = 30; //Se asocia a Window y se 'convierte en global'
+
+    function pruebecilla(){
+        console.log("v1:"+v1)
+        console.log("v2:"+v2)
+        console.log("v3:"+v3)
+    }
+
+    pruebecilla()
+
+
+</script>
+
+
+<body>
+    
+    <h1>01_Variables</h1>
+
+</body>
+
+</html>
+
+

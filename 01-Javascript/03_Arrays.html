@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+    ////////////////////////////////////////////
+    //Los arrays en JS no son verdaderos array//
+    //Los arrays en JS son Objetos            //
+    ////////////////////////////////////////////
+
+    //Declarando un array
+    //No se indica el tamaño
+    let array1 = [] //Un array vacío
+    let array2 = [ 1,2,3,4 ] //Un array con cuatro valores
+    //Los arrays no están tipados
+    let array3 = [ false, true, 2, "tres"]
+
+    //Los arrays son la única estructura de datos disponible en el api de JS
+    //Pueden utilizarse de dos maneras distintas
+    //-Indexado. Array de toda la vida, ArrayList de Java 
+    //-Asociativo. Estructura de datos que guarda pares clave-valor. Mapa, Diccionario
+
+    //////////////////////
+    //                  //
+    // Arrays INDEXADOS //
+    //                  //
+    //////////////////////
+
+    //Añadimos los valores asociados a una posición
+    let array4 = []
+    array4[0] = 10
+    array4[1] = 20
+    array4[2] = 30
+    array4[3] = 40
+
+    //Para acceder a un valor necesitamos conocer en cuán posición está
+    let dato1 = array4[1]
+    let dato2 = array4[2]
+    let dato3 = array4[3]
+
+    console.log(`dato1: ${dato1}, dato2: ${dato2}, dato3: ${dato3}`)
+    console.log(dato1, dato2, dato3)
+    //(Inciso) Interpolacion de cadenas
+    console.log(`dato1: ${dato1}, dato2: ${dato2}, dato3: ${dato3}`)
+
+    console.log(array4[1])     //20
+    console.log(array4[20000]) //undefined, aqui no se comprueba nada
+
+    //Podemos imprimir arrays en la consola
+    console.log(array4) 
+    console.table(array4)
+
+    //Programación orientada a objetos
+    //Componentes de un objeto
+    //-Identidad/estado. Valores que guarda el objeto. Es lo que diferencia a una instancia de otra
+    //-Funcionalidad. Que podemos pedirle al objeto que haga
+
+    //Los arrays son objetos y tienen identidad y funcionalidad
+    //Como identidad tienen
+    //-los distintos valores que guardan
+    //-su longitud: length
+
+    //Notación del punto. Podemos acceder a las propiedades de un objeto utilizando la variable que lo referencia
+    //seguida del '.' y el nombre de la propiedad a la que queremos acceder
+    console.log("Longitud del array4:"+array4.length)
+
+    //Funcionalidad:
+    //En el objeto array encontramos un porrón de funciones de utilidad
+    console.log("==================================")
+    let array5 = []
+    array5.push("A")
+    array5.push("B")
+    array5.push("C")
+    array5.push("D")
+    array5.push("E")
+    array5.push("F","G","H","I") //la función push admite parámetros variables
+    console.log(array5)
+    
+    //Con las funciones de array podemos utilizar el array como una cola FIFO o LIFO
+    //FIFO: First in, first out
+    //LIFO: Last in, first out
+
+    let e1 = array5.shift() //Extrae del array el primer elemento
+    let e2 = array5.pop()   //Extrae del array el último elemento
+    console.log(array5)
+
+    /*
+    LIFO:         FIFO:
+
+    push
+    pop
+      |           push    ----------------------  shift
+      V           -->              E  D  C  B  A  -->
+    |   |                 ----------------------
+    |   |
+    | D |
+    | C |
+    | B |
+    | A |
+    -----
+
+    */
+
+    //Con splice eliminamos elementos de un array
+    //array4.splice(posicion inicial, numero de elementos a borrar)
+    //devuelve un array con los elementos eliminados
+    console.log(array5.splice(1,2)) //C, D
+    console.log(array5) //B , E, F, G, H
+
+    console.log("=======================================")
+    console.log("ESPLICE")
+    let arrayBis = [ 1,2,3,4,5,6,7,8,9 ]
+    arrayBis.splice(1,3)
+    console.log(arrayBis) //[ 1,5,6,7,8,9 ]
+    //Si solo se indica el primer parámetro, splice borra desde esa posición hasta el final
+    arrayBis.splice(3)
+    console.log(arrayBis) //[ 1,5,6 ]
+
+    ///////////////////////////////////////////
+    //                                       //
+    // Arrays asociativos: pares clave-valor //
+    //                                       //
+    ///////////////////////////////////////////
+    console.log("=======================================")
+    //Estructura de datos no indexada
+    //Basado el pares clave-valor
+    //La clave y el valor pueden ser de cualquier tipo
+    //No se declaran de una manera concreta. Se usan los corchetes
+    //A parte de los corchetes tienen una sintaxis propia
+
+    let empleados = []
+    empleados[0] = "Jefe, Antibalas"
+    empleados[1] = "Almacen, Smitty"
+    empleados[2] = "Despachar, Harry"
+    empleados[3] = "Finanzas, Groucho"
+    empleados[4] = "Envíos, Sr. Smith"
+
+    console.log(empleados)
+    
+    //Asociativo clave: puesto, valor: empleado
+    let empleadosAsociativo = []
+    empleadosAsociativo["jefe"]      = "Antibalas"
+    empleadosAsociativo["almacen"]   = "Smitty"
+    empleadosAsociativo["despachar"] = "Harry"
+    empleadosAsociativo["finanzas"]  = "Groucho"
+    empleadosAsociativo["envíos"]    = "Sr. Smith"
+    //Si se repite una clave se machaca el valor
+    empleadosAsociativo["almacen"] = "Mr. T"
+    
+    let almacenero = empleadosAsociativo["almacen"]
+    console.log(almacenero)
+    
+    //Añadir pares clave-valor a un array no aumenta su longitud 
+    console.log(empleadosAsociativo.length) //0
+    
+    console.log(empleadosAsociativo)
+
+    //Un array se puede utilizar a la vez como indexado y asociativo (una cosa muy loca)
+    //
+    console.log("=======================================")    
+    let array6 = []
+    array6[0] = "uno"    
+    array6[1] = "dos"    
+    array6[2] = "tres"    
+    array6[3] = "cuatro"    
+    array6[4] = "cinco"    
+    array6["movida"]   = "111"
+    array6["historia"] = "222"
+    array6["asunto"]   = "333"
+    array6["takataka"] = "cobra" //Una cobra asesina, se escapó de una piscina
+
+    console.log(array6.length) //
+    console.log(array6)
+
+    //
+    //
+    //
+
+    //Utilizando un array indexado para guardar los datos de una persona
+    let persona = []
+    persona[0] = "Bender Bending Rodriguez"
+    persona[1] = "NNY"
+    persona[2] = "555123456"
+    persona[3] = "3"
+
+    //Un array asociativo es más adecuado para esta situación
+    let persona1 = []
+    persona1["nombre"]    = "Bart J Simpson"
+    persona1["direccion"] = "C/Evergreen terrace"
+    persona1["telefono"]  = "555123456"
+    persona1["edad"]      = "10"
+    
+    let persona2 = []
+    persona2["nombre"]    = "Bud Spencer"
+    persona2["direccion"] = "C/Su casa"
+    persona2["telefono"]  = "123456789"
+    persona2["edad"]      = "42"
+
+    let persona3 = []
+    persona3["nombre"]    = "Terence Hill"
+    persona3["direccion"] = "C/Tal"
+    persona3["telefono"]  = "987654321"
+    persona3["edad"]      = "45"
+
+    let persona4 = []
+    persona4["nombre"]    = "Peter Sellers"
+    persona4["direccion"] = "C/Falsa, 123"
+    persona4["telefono"]  = "321654987"
+    persona4["edad"]      = "39"
+
+    //Y ahora ya podemos meter a las personas en un array indexado
+    let listaPersonas = []
+    listaPersonas.push(persona1)    
+    listaPersonas.push(persona2)    
+    listaPersonas.push(persona3)    
+    listaPersonas.push(persona4)    
+    console.log(listaPersonas)
+
+    //Accediendo a un valor de la persona2
+    console.log(persona2["nombre"]) //Bud Spencer
+
+    //Utilizando la notación del punto en arrays asociativos
+    //Para acceder al valor de una clave:
+    console.log(persona2.nombre) //  :)
+    //Para añadir claves/modificar valores
+    persona2.edad = 30
+    console.log(persona2.edad)
+
+    //Esto queda mucho más bonito y legible:
+    let coche = []
+    //coche["marca"] = "FIAT"
+    coche.marca  = "FIAT"
+    coche.modelo = "Uno 45s"
+    coche.color  = "Rojo"
+    console.log(coche)
+    console.log(coche.marca+", "+coche.modelo)
+
+    //Disponemos de una sintaxis específica para declarar arrays asociativos de una manera económica
+    //Cuando utilizamos esta sintaxis ya no hablamos de clave-valor sino de propiedades
+    let videoJuego1 = {
+        "nombre"  : "Witcher 3", 
+        "year"    : 2015,
+        "empresa" : "cd projekt"
+    }
+    let videoJuego2 = {
+        nombre  : "Doom", 
+        year    : 1994,
+        empresa : "Id Software"
+    }
+
+    //Diferencia entre un array asociativo con [] y con {}
+    //Con corchetes: 
+    //-es un array normal y corriente
+    //-tiene todas las funciones de array (push, pop, splice...)
+    //-si es asociativo hablamos de CLAVES
+    //
+    //Con llaves:
+    //-Nos referimos a él como objeto
+    //-es un array únicamente asociativo
+    //-NO tiene ninguna de las funciones de array
+    //-En vez de claves hablamos de PROPIEDADES    
+
+    console.log(videoJuego1)
+
+    //
+    //Añadiendo funcionalidad a los objetos declarados como arrays asociativos
+    //
+    console.log("=======================================") 
+    let avion = {
+        fabricante : "McDonnel Douglas",
+        modelo     : "F-15 Eagle",
+        year       : "1976",
+        TOCOTO     : "ARSA",
+        //colocamos como valor de una propiedar una función anónima
+        despegar   : function (){
+            console.log("Despegando!!!!!!!")
+        }
+    }   
+
+    console.log(avion) //El avión 'entero'
+    console.log(avion.fabricante) //McDonnel Douglas
+    console.log(avion.despegar) //la función 
+    avion.despegar() //Despegando!!!!!!!
+
+    ////////////////////////////////////////////
+    //ELIMINANDO CLAVES DE UN ARRAY ASOCIATIVO//
+    ////////////////////////////////////////////
+
+    delete avion.TOCOTO
+
+    console.log(avion)
+
+    //////////////////////
+    //RECORRIENDO ARRAYS//
+    //////////////////////
+
+    //
+    //Con un for normal de toda la vida
+    //Solo para arrays indexados
+    console.log("=======================================") 
+    let array7 = [ 11,22,33,44,55,66,77,88,99 ]
+    for(let a=0; a<array7.length; a++){
+        let elemento = array7[a]
+        console.log(elemento)
+    }
+
+    //
+    //For of
+    //Solo para arrays indexados
+    console.log("=======================================") 
+    for(let elemento of array7){
+        console.log("For..of: "+ elemento)
+    } 
+
+    //
+    //Con la función forEach
+    //Solo para arrays indexados
+    //No tiene break
+    console.log("=======================================") 
+    
+    //La función forEach de array recibe por parámetro UNA FUNCION que albergará
+    //el código que hay que ejecutar con cada uno de los elementos del array
+    
+    //La función que proporcionamos recibirá tres parámetros
+    //-el elemento
+    //-la posicion
+    //-referencia al array
+    let funcioncilla1 = function(elemento){
+        console.log(arguments)
+        console.log("forEach:"+elemento)
+    }
+    
+    let funcioncilla2 = function(elemento, posicion){
+        console.log(`forEach (${posicion}): ${elemento}`)
+    }
+    
+    array7.forEach(funcioncilla1)
+    console.log("---------------------------------------")
+    array7.forEach(funcioncilla2)
+    console.log("---------------------------------------")
+    array7.forEach(function(elem){
+        console.log("forEach 3:"+elem) 
+    })
+
+    //
+    //For in
+    //Para arrays indexados y asociativos (*)
+    console.log("=======================================") 
+    let grupo = []
+    grupo["bateria"]        = "Ringo"    
+    grupo["bajo"]           = "Paul"    
+    grupo["guitarra/sitar"] = "George"    
+    grupo["guitarra"]       = "John" 
+    grupo["clave"] = "HOLA"
+    console.log(grupo.length) //0
+
+    //Si proporcionamos un array asociativo for..in recorre las claves
+    for(let clave in grupo){
+        //cuando tengamos la clave podemos utilizarla para acceder al valor
+        //console.log(clave+":"+grupo[clave])
+
+        //Esto está mal: tratan 'clave' como una propiedad/clave, no como la variable que hemos definido
+        console.log(clave+":"+grupo.clave) //undefined
+    }
+
+
+
+    console.log("=======================================")    
+    let array8 = []
+    array8[0] = "uno"    
+    array8[1] = "dos"    
+    array8[2] = "tres"    
+    array8[3] = "cuatro"    
+    array8[10] = "cinco"  
+    array8[20] = null
+    array8[2000] = "seis"  
+
+    console.log(array8.length) //???
+    console.log(array8)
+
+    //Si recorremos el array con for of vemos los valores de todas las posiciones, incluyendo
+    //las que están vacías
+    for(let elem of array8){
+        console.log(elem)
+    }
+    //si recorremos el array con el for in nos entregan las POSICIONES en las que hay un valor
+    console.log("---------------------------------------")
+    for(let elem in array8){
+        console.log(elem)
+    }
+
+    //El For in nos permite ver las propiedades de un objeto
+    let disco = {
+        titulo : "The wall",
+        grupo  : "Pink Floyd",
+        year   : 1979
+    }
+    for(let propiedad in disco){
+        console.log(propiedad+":"+disco[propiedad])
+    }
+
+    //
+    //Creando arrays usando la función prototipo 'Array'
+    //
+    //Más adelante...
+    let array9 = new Array()    
+
+
+</script>
+
+<body>
+    
+    <h1>03_Arrays</h1>
+
+</body>
+</html>
