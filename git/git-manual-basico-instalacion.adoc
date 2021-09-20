@@ -89,6 +89,7 @@ image::instalacion_16.png[,300,align="center"]
 
 
 
+
 NOTE: Erlang es un lenguaje de programación concurrente desarrollado por Ericsson. Por sus características es para realizar aplicaciones distribuidas, tolerantes a fallos, soft-real-time y de funcionamiento ininterrumpido. RabbitMQ está programado en Erlang para aprovecharse de estas características. 
 
 En el error disponemos de un botón que nos llevará a la página de descargas. Podemos pulsarlo o visitar
