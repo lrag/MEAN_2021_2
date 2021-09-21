@@ -141,10 +141,14 @@
     function validarBis(){
 
         let mensaje = ""
-        let arrayNodos = document.querySelectorAll("#formulario input[type=text]")
+
+        let arrayNodos = document
+            .querySelectorAll("#formulario input[type=text]")
+        
         for(let nodo of arrayNodos){
             
             if( nodo.value.trim().length == 0 ){
+                
                 mensaje += nodo.name+" no puede estar vacío \n"
             }
         }
@@ -152,9 +156,9 @@
         if(mensaje.length > 0){
             alert(mensaje)
         }
-
     }
 
+    //HOLA QUE TAL
 
 
 </script>
