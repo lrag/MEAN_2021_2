@@ -75,7 +75,7 @@ function obtenerListadoPeliculas(){
         { 
           titulo   : 'Marea roja',
           director : 'Tony Scott',
-          genero   : 'Fantasia' 
+          genero   : 'Submarinos' 
         },
         { 
           titulo   : 'Don erre que erre',
@@ -123,28 +123,58 @@ function crearNodos(){
 
     tabla.append(trCabecera)
 
-    /*
-    -invocar a la funcion obtenerListadoPeliculas
-    -recorrer el array y por cada pelicula crear un tr con los datos de la peli
-    -añadir los tr a la tabla
-    */
-   
+    let arrayPeliculas = obtenerListadoPeliculas()
+    for(let pelicula of arrayPeliculas){
+        let tr = document.createElement("tr")
+        let td1 = document.createElement("td")
+        let td2 = document.createElement("td")
+        let td3 = document.createElement("td")
+        let txt1 = document.createTextNode(pelicula.titulo)
+        let txt2 = document.createTextNode(pelicula.director)
+        let txt3 = document.createTextNode(pelicula.genero)
+        //Da igual el orden en el que construyamos el árbol
+        tr.append(td1, td2, td3)
+        td1.append(txt1)
+        td2.append(txt2)
+        td3.append(txt3)
 
-
-
-
+        tabla.append(tr)
+    }
 
     //Añadimos la tabla al div2
     //let div2 = document.getElementById("div2")
     //div2.append(tabla)
     document.getElementById("div2").append(tabla)
-
 }
+
+function crearNodos2(){
+    let html = 
+        `<table align='center' border='1'>
+            <tr>
+                <th>Título</th>
+                <th>Director</th>
+                <th>Género</th>
+            </tr>`
+    let arrayPeliculas = obtenerListadoPeliculas()
+    for(let pelicula of arrayPeliculas){
+        //html = html +
+        html += 
+            `<tr>
+                <td>${pelicula.titulo}</td>
+                <td>${pelicula.director}</td>
+                <td>${pelicula.genero}</td>
+            </tr>`
+    }
+    html += "</table>"
+
+    document.getElementById("div3").innerHTML = html
+}
+
+
 
 //En esta función vamos a asignar manejadores de eventos a los 
 //botones que los necesiten
 function inicializar(){
-    
     //let btnDocumentWrite = document.getElementById("btn_documentWrite")
     //btnDocumentWrite.onclick = document_write //Percatense de que no tiene los paréntesis
 
@@ -153,10 +183,8 @@ function inicializar(){
     document.getElementById("btn_innerHTML").onclick = innerHTML
     document.getElementById("btn_vaciarInnerHTML").onclick = vaciarInnerHTML
     document.getElementById("btn_crearNodos").onclick = crearNodos
-
+    document.getElementById("btn_crearNodos2").onclick = crearNodos2
 }
-
-
 
 ///////////////////
 // Objeto WINDOW //
@@ -210,7 +238,6 @@ window.onload = inicializar
         <input type="button" id="btn_crearNodos"      value="Crear nodos"/>      
         <input type="button" id="btn_crearNodos2"     value="Crear nodos 2"/>
         <input type="button" id="btn_vaciarSelect"    value="Vaciar select"/>
-        <input type="button" id="btn_movida"          value="Movida"/>
     </div>
 
     <hr/>
