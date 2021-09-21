@@ -3,10 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>06_DHTML</title>
 </head>
 
 <script type="application/javascript">
+
+function document_write(){
+    console.log("==============================")
+
+    console.log(document.write)
+
+    //document.write es una herramienta 'de trazo grueso' para alterar lo que se ve en el navegador...
+
+    //La primera llamada a document.write sustituye todo el árbol por el html que pasamos por parámetro
+    document.write("<h1>Nuevo contenido generado con document.write()</h1>")
+    //Las llamadas posteriores se limitan a añadir contenido
+    document.write("<button onclick='alert(\"HOLA\")'>DALE</button>")
+}
+
+function innerHTML(){
+
+    console.log("==============================")
+
+    //InnerHTML es una propiedad de los nodos
+    //Esta propiedad solo tiene uso en aquellos nodos que correspondan a etiquetas que
+    //pueden tener descendencia: <p>, <div>, <span>, <table>, <h1>, <tr>, <td>...
+    //Etiquetas que aun teniendo la propiedad innerHTML no tiene sentido el usarla:
+    //<br>, <hr>, ...
+
+    //En innerHTML encontramos un texto con el html contenido en la etiqueta
+    let div = document.getElementById("botones")
+    console.log(div.innerHTML)
+
+    //En cualquier momento podemos cambiar el valor de innerHTML
+    let div1 = document.getElementById("div1")
+    div1.innerHTML = "HOLA QUE TAL"
+
+    //Esto machaca el valor anterior
+    div1.innerHTML = "<h2>Contenido generado dinámicamente con innerHTML</h2>"
+
+    //Si queremos ir añadiendo cosas debemos concatenar
+    div1.innerHTML = div1.innerHTML+"<h2>Esto es como todo. Si lo usas bien es seguro. Si lo usas mal...</h2>"
+
+}
+
+
+//En esta función vamos a asignar manejadores de eventos a los 
+//botones que los necesiten
+function inicializar(){
+    
+    //let btnDocumentWrite = document.getElementById("btn_documentWrite")
+    //btnDocumentWrite.onclick = document_write //Percatense de que no tiene los paréntesis
+
+    //Lo mismo en una única línea
+    document.getElementById("btn_documentWrite").onclick = document_write
+    document.getElementById("btn_innerHTML").onclick = innerHTML
+}
+
+
+///////////////////
+// Objeto WINDOW //
+///////////////////
+
+console.log(window)
+
+//window es el objeto implícito que representa a la pestaña del navegador
+//Tiene un cerro de propiedades. 
+//En algunas se guardan valores
+//-location: la url que está escrita en la barra de navegacion
+//-posicion x e y del navegor
+//-tamaño de la pestaña y del navegador
+//-...
+//En otras se guardan funciones, pensadas para ejecutarse cuando se
+//disparan los eventos
+//-onclose: se va a cerrar el navegador/pestaña (no siempre funciona)
+//-onload : ha terminado la inicialización de la página
+//-...
+
+//for(let propiedad in window){
+//    console.log(propiedad+":"+window[propiedad])
+//}
+
+//Esto está perfectamente bien
+//window.onload = function(){
+//    console.log("Hola Radiola")
+//}
+
+window.onload = inicializar
 
 </script>
 
