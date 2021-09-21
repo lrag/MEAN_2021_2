@@ -47,6 +47,13 @@ function innerHTML(){
 
 }
 
+function vaciarInnerHTML(){
+    //let nodo = document.getElementById("div1")
+    //nodo.innerHTML = ""
+
+    //document.getElementById("div1").innerHTML = null
+    document.getElementById("div1").innerHTML = ""
+}
 
 //En esta función vamos a asignar manejadores de eventos a los 
 //botones que los necesiten
@@ -58,7 +65,11 @@ function inicializar(){
     //Lo mismo en una única línea
     document.getElementById("btn_documentWrite").onclick = document_write
     document.getElementById("btn_innerHTML").onclick = innerHTML
+    document.getElementById("btn_vaciarInnerHTML").onclick = vaciarInnerHTML
+
 }
+
+//TROLOLO
 
 
 ///////////////////
@@ -88,10 +99,6 @@ console.log(window)
 //window.onload = function(){
 //    console.log("Hola Radiola")
 //}
-
-
-
-//
 
 window.onload = inicializar
 
