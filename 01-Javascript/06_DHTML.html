@@ -55,6 +55,92 @@ function vaciarInnerHTML(){
     document.getElementById("div1").innerHTML = ""
 }
 
+function obtenerListadoPeliculas(){
+    //Esta función simula una llamada al servidor para obtener los datos
+    //de las películas
+
+    //Supongamos que hemos enviado una petición a un servicio remoto que nos ha entregado
+    //esta información:
+    let peliculas = [
+        { 
+          titulo   : 'Alien',
+          director : 'Ridley Scott',
+          genero   : 'Ci-Fi' 
+        },
+        { 
+          titulo   : 'Cazafantasmas',
+          director : 'Ivan Reitman',
+          genero   : 'Estupenda' 
+        },
+        { 
+          titulo   : 'Marea roja',
+          director : 'Tony Scott',
+          genero   : 'Fantasia' 
+        },
+        { 
+          titulo   : 'Don erre que erre',
+          director : 'Jose Luis Saez de Heredia',
+          genero   : 'Comedia' 
+        }
+    ]
+    return peliculas
+
+}
+
+function crearNodos(){
+
+    console.log("==============================")
+
+    //Funciones del objeto document para crear nodos
+    //document.createElement()   //Para crear nodos del tipo etiqueta
+    //document.createAttribute() //Para crear un nodo del tipo atributo
+    //document.createTextNode()  //Para crear un nodo de tipo texto
+
+    let tabla = document.createElement("table")
+    //Manera antígua de crear atributos
+    let atrBorder = document.createAttribute("border") //creamos el atributo
+    atrBorder.value = "1" //le damos valor
+    tabla.setAttributeNode(atrBorder) //se lo asignamos a la etiqueta 
+    //Manera actual:
+    tabla.setAttribute("align", "center") //Mucho mejor :)
+    tabla.setAttribute("id", "tablaPeliculas") 
+
+    let trCabecera = document.createElement("tr")
+    let th1 = document.createElement("th")
+    let th2 = document.createElement("th")
+    let th3 = document.createElement("th")
+    let txt1 = document.createTextNode("Título")
+    let txt2 = document.createTextNode("Director")
+    let txt3 = document.createTextNode("Género")
+
+    //Funciones para añadir hijos a los nodos
+    //AppendChild añade los hijos de uno en uno (y al final)
+    th1.appendChild(txt1) 
+    th2.appendChild(txt2)
+    th3.appendChild(txt3)
+    //la función 'append' permite añadir los nodos a granel
+    trCabecera.append(th1, th2, th3) //Los nodos pueden ser de cualquier tipo
+
+    tabla.append(trCabecera)
+
+    /*
+    -invocar a la funcion obtenerListadoPeliculas
+    -recorrer el array y por cada pelicula crear un tr con los datos de la peli
+    -añadir los tr a la tabla
+    */
+   
+
+
+
+
+
+    //Añadimos la tabla al div2
+    //let div2 = document.getElementById("div2")
+    //div2.append(tabla)
+    document.getElementById("div2").append(tabla)
+
+}
+
 //En esta función vamos a asignar manejadores de eventos a los 
 //botones que los necesiten
 function inicializar(){
@@ -66,10 +152,10 @@ function inicializar(){
     document.getElementById("btn_documentWrite").onclick = document_write
     document.getElementById("btn_innerHTML").onclick = innerHTML
     document.getElementById("btn_vaciarInnerHTML").onclick = vaciarInnerHTML
+    document.getElementById("btn_crearNodos").onclick = crearNodos
 
 }
 
-//TROLOLO
 
 
 ///////////////////
@@ -103,6 +189,7 @@ console.log(window)
 window.onload = inicializar
 
 </script>
+
 
 <body>
 
