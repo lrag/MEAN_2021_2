@@ -123,7 +123,14 @@ Y ya tenemos el repositorio clonado en nuestro directorio
 
 image::clonar-repo-06.jpg[,900,align="center"]
 
-Si queremos actualizar nuestra copia local repetimos el comando
+Si queremos actualizar nuestra copia local tenemos que utilizar el siguiente comando:
+
+* git pull
+
+image::clonar-repo-07.jpg[,900,align="center"]
+
+
+
 
 
 
