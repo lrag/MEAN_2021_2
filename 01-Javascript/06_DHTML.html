@@ -80,7 +80,7 @@ function obtenerListadoPeliculas(){
         { 
           titulo   : 'Don erre que erre',
           director : 'Jose Luis Saez de Heredia',
-          genero   : 'Comedia' 
+          genero   : "Comedia"
         }
     ]
     return peliculas
@@ -184,6 +184,52 @@ function inicializar(){
     document.getElementById("btn_vaciarInnerHTML").onclick = vaciarInnerHTML
     document.getElementById("btn_crearNodos").onclick = crearNodos
     document.getElementById("btn_crearNodos2").onclick = crearNodos2
+    document.getElementById("btn_vaciarSelect").onclick = vaciarSelect
+}
+
+
+function vaciarSelect(){
+
+    //A día de hoy esta es la manera más corta (pero no la mejor) de vaciar un desplegable:
+    //Vaciando el innerHTML no podemos ser selectivos
+    //ciudades.innerHTML = ''
+
+    //Eliminando nodos del árbol DOM
+
+    //Podemos solicitarle a un nodo su array de hijos y eliminar 'a mano'
+    //el nodo correspondiente. 
+    //Problemas:
+    //-los nodos de texto que se añaden al sangrar el código
+    //-hay que asegurarse de que no nos cargamos nada al tocar A MANO el array
+
+    //A cualquier nodo podemos solicitarle que elimine a un hijo
+    //let padre = document.getElementById("idDelPadre")
+    //let hijo  = document.getElementById("idDelHijo")
+    //padre.removeChild(hijo)
+    //
+    //let botones = document.getElementById("botones")
+    //let btnInnerHTML = document.getElementById("btn_innerHTML")
+    //botones.removeChild(btnInnerHTML)
+
+    //Todos los nodos tienen una referencia a su padre asi que podemos
+    //simplificar lo anterior asi:
+    //let hijo  = document.getElementById("idDelHijo")
+    //hijo.parentNode.removeChild(hijo)
+    //
+    //let btnInnerHTML = document.getElementById("btn_innerHTML")
+    //let padre = btnInnerHTML.parentNode
+    //padre.removeChild(btnInnerHTML)    
+    //Las dos líneas anteriores en una sola:
+    //btnInnerHTML.parentNode.removeChild(btnInnerHTML)
+
+    //La manera más sencilla es pedirselo directamente al nodo que queremos
+    //eliminar:
+    //let nodo  = document.getElementById("nodoABorrar")
+    //nodo.remove()
+    //
+    //let btnInnerHTML = document.getElementById("btn_innerHTML")
+    //btnInnerHTML.remove()
+
 }
 
 ///////////////////
@@ -216,8 +262,8 @@ console.log(window)
 
 window.onload = inicializar
 
-</script>
 
+</script>
 
 <body>
 
@@ -230,6 +276,9 @@ window.onload = inicializar
     </marquee>
 
     <hr/>
+
+    <h1>HOLA</h1>
+
 
     <div id="botones" align="center">
         <input type="button" id="btn_documentWrite"   value="Document.write"/>
