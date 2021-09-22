@@ -13,41 +13,12 @@ let contactos = []
 
 function insertarContacto(){
 
-    //Esto está bien
-    /*
-    let nombre    = document.getElementById("nombre").value    
-    let direccion = document.getElementById("direccion").value 
-    let telefono  = document.getElementById("telefono").value  
-    let correoE   = document.getElementById("correoE").value      
-
-    let contacto = { 
-        nombre    : nombre,
-        direccion : direccion,
-        telefono  : telefono,
-        correoE   : correoE
-    }
-    */
-
-    /*
     //Como más rabia nos de...
     let contacto = { 
         nombre    : document.getElementById("nombre").value,
         direccion : document.getElementById("direccion").value,
         telefono  : document.getElementById("telefono").value ,
         correoE   : document.getElementById("correoE").value 
-    }
-    */
-
-    console.log("====================================")
-    let contacto = {}
-    let nodos = document.querySelectorAll("#formulario input[type=text]")
-    for(let nodo of nodos){
-        let propiedad = nodo.id
-        let valor = nodo.value 
-        //Esto está...mal
-        //contacto.propiedad = valor
-        //Es asín:
-        contacto[propiedad] = valor
     }
 
     contactos.push(contacto)
@@ -58,39 +29,11 @@ function insertarContacto(){
 }
 
 
-let coche = {}
-coche.marca = "Ford"
-
-coche["modelo"] = "Focus"
-
-let x = "color"
-coche[x] = "Rojo"
-
-console.log(coche)
-
-
-
-
 function vaciarFormulario(){    
-    /*
-    //Esto es perfectamente válido
     document.getElementById("nombre").value    = ""
     document.getElementById("direccion").value = ""
     document.getElementById("telefono").value  = ""
     document.getElementById("correoE").value   = ""
-
-    //Selectores css
-    document.querySelectorAll("#formulario") //Encuentra el nodo cuyo id es 'formulario'
-    document.querySelectorAll("input")       //Encuentra los nodos de tipo 'input' (incluye los botones)
-    document.querySelectorAll("#formulario input") //Nodos de tipo input que cuelguen de el nodo cuyo id es 'formulario'
-    document.querySelectorAll("#formulario input[type=text]") //Nodos de tipo input que tengan la propiedad type='text' que cuelguen de el nodo cuyo id es 'formulario'
-    */
-
-    //Esto es más elaborado (solo funciona para cajas de texto)
-    let nodos = document.querySelectorAll("#formulario input[type=text]")
-    for(let nodo of nodos){
-        nodo.value = ""
-    }
 }
 
 function inicializar(){
