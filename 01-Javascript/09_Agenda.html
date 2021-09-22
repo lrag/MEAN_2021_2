@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+
+</script>
+
+<body>
+
+    <h1 align="center">
+        <font color="lightGreen">
+            AgendaGest 3000     
+        </font>
+    </h1>
+
+    <div align="center">
+        <input type="button" id="btnInsertar"  value="Insertar"/>
+        <input type="button" id="btnModificar" value="Modificar"/>
+        <input type="button" id="btnBorrar"    value="Borrar"/>
+        <input type="button" id="btnVaciar"    value="Vaciar"/>
+        <input type="button" id="btnGuardar"   value="GUARDAR"/>
+    </div>
+
+    <br/>
+
+    <form id="formulario">
+        <table align="center">
+            <tr>
+                <td>Nombre</td>
+                <td>
+                    <input type="text" name="nombre" id="nombre"/>
+                </td>  
+                <td id="msj_nombre"></td>              
+            </tr>
+            <tr>
+                <td>Dirección</td>
+                <td>
+                    <input type="text" name="direccion" id="direccion"/>
+                </td>                
+                <td id="msj_direccion"></td>              
+            </tr>
+            <tr>
+                <td>Telefono</td>
+                <td>
+                    <input type="text" name="telefono" id="telefono"/>
+                </td> 
+                <td id="msj_telefono"></td>              
+            </tr>
+            <tr>
+                <td>Correo E</td>
+                <td>
+                    <input type="text" name="correoE" id="correoE"/>
+                </td>                
+                <td id="msj_correoE"></td>              
+            </tr>
+        </table>        
+    </form>
+
+    <br/>
+
+    <table align="center" border="1">
+        <tr>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Correo E</th>
+        </tr>
+        <tbody id="tablaPersonas"></tbody>
+    </table>
+    
+    <hr/>
+
+    <table align="center" border="1">
+        <tr>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Correo E</th>
+        </tr>
+        <tbody id="tablaPersonas2"></tbody>
+    </table>
+
+</body>
+
+</html>
+

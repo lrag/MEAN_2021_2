@@ -230,6 +230,23 @@ function vaciarSelect(){
     //let btnInnerHTML = document.getElementById("btn_innerHTML")
     //btnInnerHTML.remove()
 
+
+    let ciudades = document.getElementById("ciudades")
+    let hijos = ciudades.childNodes
+
+    let numeroNodos = hijos.length
+    for(let a=0; a<numeroNodos; a++){
+        hijos[0].remove() //Eliminamos el primero!
+    }
+
+    /*
+    //Con un while
+    let sel = document.getElementById("ciudades")
+    while(sel.firstChild) {
+        sel.removeChild(sel.firstChild)
+    }
+    */
+
 }
 
 ///////////////////
@@ -262,7 +279,6 @@ console.log(window)
 
 window.onload = inicializar
 
-
 </script>
 
 <body>
@@ -276,9 +292,6 @@ window.onload = inicializar
     </marquee>
 
     <hr/>
-
-    <h1>HOLA</h1>
-
 
     <div id="botones" align="center">
         <input type="button" id="btn_documentWrite"   value="Document.write"/>
