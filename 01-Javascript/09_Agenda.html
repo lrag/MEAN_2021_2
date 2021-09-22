@@ -21,16 +21,18 @@ function insertarContacto(){
     let correoE   = document.getElementById("correoE").value      
 
     let contacto = { 
+        id        : Math.round(Math.random()*10000), //Licencia 
         nombre    : nombre,
         direccion : direccion,
         telefono  : telefono,
         correoE   : correoE
     }
-    */
-
+    */    
+    
     /*
     //Como más rabia nos de...
     let contacto = { 
+        id        : Math.round(Math.random()*10000), //Licencia 
         nombre    : document.getElementById("nombre").value,
         direccion : document.getElementById("direccion").value,
         telefono  : document.getElementById("telefono").value ,
@@ -39,7 +41,9 @@ function insertarContacto(){
     */
 
     console.log("====================================")
-    let contacto = {}
+    let contacto = {
+        id : Math.round(Math.random()*10000), //Licencia         
+    }
     let nodos = document.querySelectorAll("#formulario input[type=text]")
     for(let nodo of nodos){
         let propiedad = nodo.id
@@ -54,22 +58,9 @@ function insertarContacto(){
     console.log(contactos)
 
     vaciarFormulario()
+    rellenarTablaContactos()
 
 }
-
-
-let coche = {}
-coche.marca = "Ford"
-
-coche["modelo"] = "Focus"
-
-let x = "color"
-coche[x] = "Rojo"
-
-console.log(coche)
-
-
-
 
 function vaciarFormulario(){    
     /*
@@ -91,6 +82,45 @@ function vaciarFormulario(){
     for(let nodo of nodos){
         nodo.value = ""
     }
+}
+
+function seleccionarContacto(){
+    console.log("CLICK!")
+}
+
+function rellenarTablaContactos(){
+
+    //VACIAR EL TBODY (utilizando inerHTML)
+    //recorrer el array
+    //crear un tr por cada contacto
+    //añadirlo al tbody de la tabla
+
+    //Hay que hacerlo con la movida de los nodos
+
+    let tabla = document.getElementById("tablaPersonas")
+    tabla.innerHTML = ""
+
+    for(let contacto of contactos){
+
+        let tr = document.createElement("tr")
+        let td1 = document.createElement("td")
+        let td2 = document.createElement("td")
+        let td3 = document.createElement("td")
+        let td4 = document.createElement("td")
+        let txt1 = document.createTextNode(contacto.nombre)
+        let txt2 = document.createTextNode(contacto.direccion)
+        let txt3 = document.createTextNode(contacto.telefono)
+        let txt4 = document.createTextNode(contacto.correoE)
+        td1.append(txt1)
+        td2.append(txt2)
+        td3.append(txt3)
+        td4.append(txt4)
+        tr.append(td1, td2, td3, td4)
+
+        tabla.append(tr)
+
+    }
+
 }
 
 function inicializar(){
@@ -158,13 +188,18 @@ window.onload = inicializar
     <br/>
 
     <table align="center" border="1">
-        <tr>
-            <th>Nombre</th>
-            <th>Dirección</th>
-            <th>Teléfono</th>
-            <th>Correo E</th>
-        </tr>
-        <tbody id="tablaPersonas"></tbody>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Correo E</th>
+            </tr>
+        </thead>
+        <tbody id="tablaPersonas">
+
+
+        </tbody>
     </table>
     
 </body>
