@@ -170,24 +170,6 @@ function crearNodos2(){
     document.getElementById("div3").innerHTML = html
 }
 
-
-
-//En esta función vamos a asignar manejadores de eventos a los 
-//botones que los necesiten
-function inicializar(){
-    //let btnDocumentWrite = document.getElementById("btn_documentWrite")
-    //btnDocumentWrite.onclick = document_write //Percatense de que no tiene los paréntesis
-
-    //Lo mismo en una única línea
-    document.getElementById("btn_documentWrite").onclick = document_write
-    document.getElementById("btn_innerHTML").onclick = innerHTML
-    document.getElementById("btn_vaciarInnerHTML").onclick = vaciarInnerHTML
-    document.getElementById("btn_crearNodos").onclick = crearNodos
-    document.getElementById("btn_crearNodos2").onclick = crearNodos2
-    document.getElementById("btn_vaciarSelect").onclick = vaciarSelect
-}
-
-
 function vaciarSelect(){
 
     //A día de hoy esta es la manera más corta (pero no la mejor) de vaciar un desplegable:
@@ -247,6 +229,21 @@ function vaciarSelect(){
     }
     */
 
+}
+
+//En esta función vamos a asignar manejadores de eventos a los 
+//botones que los necesiten
+function inicializar(){
+    //let btnDocumentWrite = document.getElementById("btn_documentWrite")
+    //btnDocumentWrite.onclick = document_write //Percatense de que no tiene los paréntesis
+
+    //Lo mismo en una única línea
+    document.getElementById("btn_documentWrite").onclick = document_write
+    document.getElementById("btn_innerHTML").onclick = innerHTML
+    document.getElementById("btn_vaciarInnerHTML").onclick = vaciarInnerHTML
+    document.getElementById("btn_crearNodos").onclick = crearNodos
+    document.getElementById("btn_crearNodos2").onclick = crearNodos2
+    document.getElementById("btn_vaciarSelect").onclick = vaciarSelect
 }
 
 ///////////////////

@@ -8,6 +8,61 @@
 
 <script type="application/javascript">
 
+//Declaramos al array de contactos como una variable global
+let contactos = []
+
+function insertarContacto(){
+
+
+
+    //extraer los valores del formulario
+    //Crear el contacto
+    //Guardarlo en un array (habrá que declarar un array en algún sitio)
+
+    //El array se va a llamar 'contactos'
+
+    console.log(contactos)
+
+
+
+}
+
+
+function vaciarFormulario(){    
+    /*
+    //Esto es perfectamente válido
+    document.getElementById("nombre").value    = ""
+    document.getElementById("direccion").value = ""
+    document.getElementById("telefono").value  = ""
+    document.getElementById("correoE").value   = ""
+
+    //Selectores css
+    document.querySelectorAll("#formulario") //Encuentra el nodo cuyo id es 'formulario'
+    document.querySelectorAll("input")       //Encuentra los nodos de tipo 'input' (incluye los botones)
+    document.querySelectorAll("#formulario input") //Nodos de tipo input que cuelguen de el nodo cuyo id es 'formulario'
+    document.querySelectorAll("#formulario input[type=text]") //Nodos de tipo input que tengan la propiedad type='text' que cuelguen de el nodo cuyo id es 'formulario'
+    */
+
+    //Esto es más elaborado
+    let nodos = document.querySelectorAll("#formulario input[type=text]")
+    for(let nodo of nodos){
+        nodo.value = ""
+    }
+}
+
+function inicializar(){
+
+    document.getElementById("btnVaciar").onclick = vaciarFormulario
+
+}
+
+window.onload = inicializar
+
+
+
+
+
+
 
 </script>
 
