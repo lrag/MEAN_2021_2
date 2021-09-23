@@ -112,7 +112,7 @@ function seleccionarContacto(idContacto){
         }        
     }
     */
-
+    
     for(let contacto of contactos){
         if( contacto.id == idContacto ){
             for(let propiedad in contacto){
@@ -178,11 +178,7 @@ function guardarContactos(){
     //  sessionStorage.removeItem(clave)
     //  sessionStorage.clear()
 
-
-    sessionStorage.setItem("DESCANSO", "AR!")
-
-
-
+    localStorage.setItem("contactos", JSON.stringify(contactos))
 
 }
 
@@ -191,6 +187,16 @@ function inicializar(){
     document.getElementById("btnVaciar").onclick   = vaciarFormulario
     document.getElementById("btnInsertar").onclick = insertarContacto
     document.getElementById("btnGuardar").onclick = guardarContactos
+
+    console.log("ANTES:", contactos)
+    
+    let json = localStorage.getItem("contactos")
+    if(json != null){
+        contactos = JSON.parse(json)
+        rellenarTablaContactos()
+    }
+
+    console.log("DESPUES:", contactos)
 
 }
 

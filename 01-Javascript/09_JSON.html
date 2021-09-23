@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+/*
+
+CSV
+
+1,Ringo, C/Falsa 123, 123456789, ringo@noseque.es
+2,Bender, C/Falsa 123, 123456789, ringo@noseque.es
+3,Bud Spencer, C/Falsa 123, 123456789, ringo@noseque.es
+
+XML
+
+<contactos>
+    <contacto id="42">
+        <nombre>Ringo</nombre>
+        <direccion>C/Tal, 123</direccion>
+        <telefono>123456789</telefono>
+    </contacto>
+    <contacto id="82">
+        <nombre>Harry Callahan</nombre>
+        <direccion>C/Tal, 123</direccion>
+        <telefono>123456789</telefono>
+    </contacto>
+</contactos>
+
+JSON
+
+[
+    {
+        "id"        : "53",
+        "nombre"    : "Ringo Starr",
+        "direccion" : "bbb",
+        "telefono"  : "cc"
+    },
+    {
+        "id"        : "87",
+        "nombre"    : "Harry Callahan",
+        "direccion" : "ddd",
+        "telefono"  : "eee"
+    }
+]
+*/
+
+let peliculas = [
+        { 
+          titulo   : 'Alien',
+          director : 'Ridley Scott',
+          genero   : 'Ci-Fi',
+          actores  : [
+              {
+                nombre : 'Harrison For'
+              },
+              {
+                nombre : 'While Smith'
+              },
+          ] 
+        },
+        { 
+          titulo   : 'Cazafantasmas',
+          director : 'Ivan Reitman',
+          genero   : 'Estupenda' 
+        },
+        { 
+          titulo   : 'Marea roja',
+          director : 'Tony Scott',
+          genero   : 'Submarinos' 
+        },
+        { 
+          titulo   : 'Don erre que erre',
+          director : 'Jose Luis Saez de Heredia',
+          genero   : "Comedia"
+        }
+    ]
+console.log(peliculas)
+
+console.log("=============================================")
+//Para pasar de objeto a JSON
+//Es en profundidad
+let json = JSON.stringify(peliculas)
+
+console.log(json)
+
+//Para pasar de JSON a objeto
+let peliculas2 = JSON.parse(json)
+
+console.log(peliculas2)
+
+console.log("=============================================")
+//
+let coche = {
+    marca  : "Renault",
+    modelo : "8",
+    saludar  : function(){
+        console.log("PI PIIIIII!")
+    }
+}
+console.log(coche)
+let json2 = JSON.stringify(coche)
+console.log(json2)
+let coche2 = JSON.parse(json2)
+console.log(coche2)
+
+</script>
+
+    <h1>09_JSON</h1>
+
+<body>
+    
+</body>
+</html>
