@@ -84,6 +84,7 @@ function vaciarFormulario(){
     for(let nodo of nodos){
         nodo.value = ""
     }
+    idContactoSel = null
 }
 
 function seleccionarContacto(idContacto){
@@ -170,6 +171,24 @@ function modificarContacto(){
     //actualizar la tabla
     //vaciar el formulario
 
+    let nombre    = document.getElementById("nombre").value    
+    let direccion = document.getElementById("direccion").value 
+    let telefono  = document.getElementById("telefono").value  
+    let correoE   = document.getElementById("correoE").value   
+
+    for(let contacto of contactos){
+        if(contacto.id == idContactoSel){
+            contacto.nombre    = nombre
+            contacto.direccion = direccion
+            contacto.telefono  = telefono
+            contacto.correoE   = correoE
+
+            vaciarFormulario()
+            rellenarTablaContactos()
+            break
+        }
+    }
+    
 
 }
 
