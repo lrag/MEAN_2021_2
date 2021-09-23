@@ -193,7 +193,16 @@ function modificarContacto(){
 
 function borrarContacto(){
 
-    //SAFDFGFSDHGFJHTD
+    for(let a=0; a<contactos.length; a++){
+        let contacto = contactos[a]
+        if(contacto.id == idContactoSel){
+            contactos.splice(a,1)
+
+            vaciarFormulario()
+            rellenarTablaContactos()            
+            break
+        }
+    }
 
 
 }
