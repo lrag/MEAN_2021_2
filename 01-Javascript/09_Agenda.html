@@ -11,7 +11,6 @@
 //Declaramos al array de contactos como una variable global
 let contactos = []
 
-
 function insertarContacto(){
 
     //Esto está bien
@@ -89,8 +88,41 @@ function vaciarFormulario(){
 function seleccionarContacto(idContacto){
     console.log("ID:"+idContacto)
 
+    /*Con un for normal
+    for(let a=0; a<contactos.length; a++){
+        let contacto = contactos[a]
+        if( contacto.id == idContacto ){
+            document.getElementById("nombre").value    = contacto.nombre
+            document.getElementById("direccion").value = contacto.direccion
+            document.getElementById("telefono").value  = contacto.telefono
+            document.getElementById("correoE").value   = contacto.correoE   
+            break //Nos salimos del for         
+        }
+    }
+    */
 
-    
+    /*
+    for(let contacto of contactos){
+        if( contacto.id == idContacto ){
+            document.getElementById("nombre").value    = contacto.nombre
+            document.getElementById("direccion").value = contacto.direccion
+            document.getElementById("telefono").value  = contacto.telefono
+            document.getElementById("correoE").value   = contacto.correoE   
+            break //Nos salimos del for         
+        }        
+    }
+    */
+
+    for(let contacto of contactos){
+        if( contacto.id == idContacto ){
+            for(let propiedad in contacto){
+                let nodo = document.getElementById(propiedad)
+                if(nodo != null){
+                    nodo.value = contacto[propiedad]
+                }
+            }
+        }
+    }
 }
 
 function rellenarTablaContactos(){
@@ -128,10 +160,37 @@ function rellenarTablaContactos(){
     }
 }
 
+function guardarContactos(){
+
+    //Session y Local storage son dos estructuras de datos clave-valor
+    //que se almacenan en el navegador
+    //
+    //Los valores guardados en el SessionStorage permanecen en el navegador mientras la 
+    //pestaña está abierta
+    //
+    //Los valores guardados en el localStorage se asocian al sitio y permanecen en el navegador
+    //aunque se cierre (PEro si el usuario vacía la caché se borra)
+    //
+    //Tanto la clave como el valor serán cadenas de texto
+    //Session y Local storage tienen las mismas funciones:
+    //  sessionStorage.setItem(clave,valor)
+    //  sessionStorage.getItem(clave)
+    //  sessionStorage.removeItem(clave)
+    //  sessionStorage.clear()
+
+
+    sessionStorage.setItem("DESCANSO", "AR!")
+
+
+
+
+}
+
 function inicializar(){
 
     document.getElementById("btnVaciar").onclick   = vaciarFormulario
     document.getElementById("btnInsertar").onclick = insertarContacto
+    document.getElementById("btnGuardar").onclick = guardarContactos
 
 }
 
