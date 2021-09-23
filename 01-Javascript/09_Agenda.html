@@ -10,6 +10,7 @@
 
 //Declaramos al array de contactos como una variable global
 let contactos = []
+let idContactoSel = null
 
 function insertarContacto(){
 
@@ -121,6 +122,8 @@ function seleccionarContacto(idContacto){
                     nodo.value = contacto[propiedad]
                 }
             }
+            idContactoSel = idContacto
+            break
         }
     }
 }
@@ -161,6 +164,12 @@ function rellenarTablaContactos(){
 }
 
 function modificarContacto(){
+
+    //recoger los datos del formulario
+    //modificar el objeto que está en el array
+    //actualizar la tabla
+    //vaciar el formulario
+
 
 }
 
