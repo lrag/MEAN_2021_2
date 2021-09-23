@@ -160,6 +160,14 @@ function rellenarTablaContactos(){
     }
 }
 
+function modificarContacto(){
+
+}
+
+function borrarContacto(){
+
+}
+
 function guardarContactos(){
 
     //Session y Local storage son dos estructuras de datos clave-valor
@@ -184,19 +192,17 @@ function guardarContactos(){
 
 function inicializar(){
 
-    document.getElementById("btnVaciar").onclick   = vaciarFormulario
-    document.getElementById("btnInsertar").onclick = insertarContacto
-    document.getElementById("btnGuardar").onclick = guardarContactos
+    document.getElementById("btnVaciar").onclick    = vaciarFormulario
+    document.getElementById("btnInsertar").onclick  = insertarContacto
+    document.getElementById("btnModificar").onclick = modificarContacto
+    document.getElementById("btnBorrar").onclick    = borrarContacto
+    document.getElementById("btnGuardar").onclick   = guardarContactos
 
-    console.log("ANTES:", contactos)
-    
     let json = localStorage.getItem("contactos")
     if(json != null){
         contactos = JSON.parse(json)
         rellenarTablaContactos()
     }
-
-    console.log("DESPUES:", contactos)
 
 }
 
