@@ -129,8 +129,11 @@ Si queremos actualizar nuestra copia local tenemos que utilizar el siguiente com
 
 image::clonar-repo-07.jpg[,900,align="center"]
 
+Si por cualquier motivo hubieramos modificado nuestros ficheros locales y queremos
+obtener nuevmente una copia exacta de lo existente en el repositorio remoto
+debemos ejecutar estos dos parámetros en orden:
 
-
-
+* git stash
+* git pull
 
 

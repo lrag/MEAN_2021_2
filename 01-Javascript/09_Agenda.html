@@ -11,6 +11,7 @@
 //Declaramos al array de contactos como una variable global
 let contactos = []
 
+
 function insertarContacto(){
 
     //Esto está bien
@@ -21,7 +22,7 @@ function insertarContacto(){
     let correoE   = document.getElementById("correoE").value      
 
     let contacto = { 
-        id        : Math.round(Math.random()*10000), //Licencia 
+        id        : Date.now(), //Licencia 
         nombre    : nombre,
         direccion : direccion,
         telefono  : telefono,
@@ -32,7 +33,7 @@ function insertarContacto(){
     /*
     //Como más rabia nos de...
     let contacto = { 
-        id        : Math.round(Math.random()*10000), //Licencia 
+        id        : Date.now(), //Licencia 
         nombre    : document.getElementById("nombre").value,
         direccion : document.getElementById("direccion").value,
         telefono  : document.getElementById("telefono").value ,
@@ -42,7 +43,8 @@ function insertarContacto(){
 
     console.log("====================================")
     let contacto = {
-        id : Math.round(Math.random()*10000), //Licencia         
+        //id : Math.round(Math.random()*10000), //Licencia   
+        id : Date.now()      
     }
     let nodos = document.querySelectorAll("#formulario input[type=text]")
     for(let nodo of nodos){
@@ -86,17 +88,12 @@ function vaciarFormulario(){
 
 function seleccionarContacto(idContacto){
     console.log("ID:"+idContacto)
+
+
+    
 }
 
 function rellenarTablaContactos(){
-
-    //VACIAR EL TBODY (utilizando inerHTML)
-    //recorrer el array
-    //crear un tr por cada contacto
-    //añadirlo al tbody de la tabla
-
-    //Hay que hacerlo con la movida de los nodos
-
     let tabla = document.getElementById("tablaPersonas")
     tabla.innerHTML = ""
 
@@ -117,15 +114,18 @@ function rellenarTablaContactos(){
         td4.append(txt4)
         tr.append(td1, td2, td3, td4)
 
-        tr.onclick = seleccionarContacto
-
+        //Esta es una función anidada porque está declarada dentro de otra
+        //Además está utilizando una variable declarada en el nido
+        //y por lo tanto es un closure
+        tr.onclick = function(){
+            //En JS se crea una copia de la variable del nido con el valor correspondiente
+            //para que cuando por fin se ejecute siga existiendo
+            //contacto.id=11
+            seleccionarContacto(contacto.id)
+        }
 
         tabla.append(tr)
-
-        //OLA KE TAL
-
     }
-
 }
 
 function inicializar(){
@@ -201,13 +201,14 @@ window.onload = inicializar
                 <th>Correo E</th>
             </tr>
         </thead>
-        <tbody id="tablaPersonas">
-
-
-        </tbody>
+        <tbody id="tablaPersonas"></tbody>
     </table>
     
 </body>
 
 </html>
+
+
+
+
 
