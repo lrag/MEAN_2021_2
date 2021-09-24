@@ -49,14 +49,45 @@
     //  THIS  //
     ////////////
     
+    //This es una palabra reservada en JS
+    //Es una variable implícita, disponible en el contexto de las funciones, que guardará una REFERENCIA
+
+    //This, en una función, es una referencia al objeto que posee dicha función
+
     let coche = {
         marca     : "Talbot",
         modelo    : "Samba S",
         matricula : "M-1234-DS",
         color     : "rojo",
         toCSV     : function(){
+            return `${this.marca},${this.modelo},${this.matricula},${this.color}`
         }
     }
+
+    console.log(coche)
+    console.log(coche.marca)
+    console.log(coche.toCSV)
+    console.log(coche.toCSV())
+
+    //Las funciones SIEMPRE se asocian a un objeto
+    //Aquellas funciones no estan explícitamente asociadas a un objeto
+    //se convierten en propiedades del objeto WINDOW
+    console.log("=======================================")
+    function sumar(s1, s2){
+        console.log(s1+s2)
+        console.log(this) //Window
+    }
+    sumar(10,20)
+    window.sumar(10,20)
+        
+    console.log("=======================================")
+    let calculadora = {
+        sumar : sumar
+    }
+    calculadora.sumar(25,75)
+    
+
+
 
 
 
