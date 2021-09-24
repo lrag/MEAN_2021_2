@@ -82,15 +82,145 @@
         
     console.log("=======================================")
     let calculadora = {
+        nombre : "Casio FX-82", 
         sumar : sumar
     }
     calculadora.sumar(25,75)
     
+    //
+    //Reutilizando la misma función en distintos objetos para ahorrar código
+    //
+    console.log("=======================================")    
+    let pelicula1 = { titulo:"Die Hard" } 
+    let pelicula2 = { titulo:"Batman (1989)" } 
+    let pelicula3 = { titulo:"Los Bingueros" } 
+
+    //Cuidado que las funciones anonimas no se asocian al objeto WINDOW (aunque ese sea el valor por defecto de this)
+    let funcionToString = function(){
+        console.log("Gracias por inventar JS:",this)
+        return "Titulo: "+this.titulo
+    }
+    //window.funcionToString() Esto falla!
+    //Aunque no se haya asociado a window como propiedad, si la invocamos así
+    //'this' sigue siendo window
+    //funcionToString() //Aqui 'this' es window
+
+    pelicula1.toString = funcionToString    
+    pelicula2.toString = funcionToString
+    pelicula3.toString = funcionToString
+
+    //Cuando la misma función es utilizada por varios objetos el valor de 'this'
+    //es la variable que se está utilizando para invocar a la función
+    console.log(pelicula1.toString()) //this será 'pelicula1'
+    console.log(pelicula2.toString()) //this será 'pelicula2'
+    console.log(pelicula3.toString()) //this será 'pelicula3'
+
+    ///////////////////////
+    //FUNCIONES PROTOTIPO//
+    ///////////////////////
+    console.log("=========================================================")
+    //
+    //Sirven para 'centralizar' en un único lugar la definicion de un tipo de objetos
+    //Por convenio de nombrado su nombre es
+    //-un sustantivo en lugar de un verbo, que será el tipo de objeto que define
+    //-el nombre escrito en Pascal Case (UpperCamelCase)
+    //
+    //Las funciones prototipo se usan para crear objetos que cuenten con unas características
+    //predefinidas
+
+    function Avion(){
+        //Cuando se invoca una función con 'new' antes de ejectutar su primera línea
+        //ya se ha creado un objeto sin propiedades
+        //el valor de 'this' será ese objeto
+        this.fabricante = ""
+        this.modelo     = ""
+        this.year       = 0
+        //No hay return, pero se devuelve el objeto que se ha creado
+    }
+    //Las funciones prototipo se invocan utilizando la palabra reservada 'new'
+    let avion1 = new Avion()
+    avion1.fabricante = "Airbus"
+    //Cada vez que invoquemos la función con 'new' tendremos un objeto diferente
+    let avion2 = new Avion()
+    avion2.fabricante = "Boeing"
+    console.log(avion1)
+    console.log(avion2)
+
+    //
+    //Prototipos, simulando un constructor
+    //
+    console.log("=========================================================")
+    function Barco(nombre, year, eslora, TRB){
+        this.nombre = nombre,
+        this.year   = year,
+        this.eslora = eslora,
+        this.TRB    = TRB
+    }
+    
+    let barco1 = new Barco("USS Nimitz",1968,330,100000)
+    let barco2 = new Barco("Graf Spee",1932,200)
+    let barco3 = new Barco("Andrea Doria",1950)
+    let barco4 = new Barco("Amoco Cádiz")
+    let barco5 = new Barco()
+
+    console.log(barco1)
+    console.log(barco2)
+    console.log(barco3)
+    console.log(barco4)
+    console.log(barco5)
+
+    //
+    //Añadiendo funcionalidad a los objetos dentro de la función prototipo (cutre)
+    //
+    console.log("=========================================================")
+    function Ordenador(tipo, fabricante, procesador, memoria, discoDuro){
+        this.tipo       = tipo
+        this.fabricante = fabricante
+        this.procesador = procesador
+        this.memoria    = memoria
+        this.discoDuro  = discoDuro
+        this.toCSV = function(){
+            return `${this.tipo},${this.fabricante},${this.procesador},
+                    ${this.memoria},${this.discoDuro}`
+        }
+    }
+
+    let ordenador1 = new Ordenador("PC sobremesa","IBM","8088",512,"10Mb")
+    let ordenador2 = new Ordenador("Microordenador","AMSTRAD","z80",64,"Cassette")
+    let ordenador3 = new Ordenador("Portatil","Apple","Powerpc",1024,"250Mb")
+    console.log(ordenador1)
+    console.log(ordenador2)
+    console.log(ordenador3)
+    console.log(ordenador1.toCSV())
+    console.log(ordenador2.toCSV())
+    console.log(ordenador3.toCSV())
 
 
+    //
+    //Añadiendo la funcionalidad al prototipo
+    //
+    console.log("=========================================================")
+    function Volcan(nombre,pais,tipo){
+        this.nombre = nombre
+        this.pais   = pais
+        this.tipo   = tipo
+    }
+    //Si queremos que todas las instancias compartan algo (funciones)
+    //debemos añadirlo al prototipo
+    Volcan.prototype.toCSV = function(){
+        return `${this.nombre},${this.pais},${this.tipo}`
+    }
 
+    let volcan1 = new Volcan("Stromboli","Italia","Estromboliano")
+    let volcan2 = new Volcan("Mauna Kea","USA","Hawaiano")
+    let volcan3 = new Volcan("Misti","Perú","Estratovolcan")
 
-
+    console.log(volcan1)
+    console.log(volcan2)
+    console.log(volcan3)
+    console.log(volcan1.toCSV())
+    console.log(volcan2.toCSV())
+    console.log(volcan3.toCSV())
 
 </script>
 
