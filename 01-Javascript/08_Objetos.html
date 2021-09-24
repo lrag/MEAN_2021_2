@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+    //Ej JS los objetos son arrays asociativos definidos con {}
+    //Lo que en un array asociativo se llama clave, aqui se llama 'propiedad'
+    //Como valores de las propiedades podremos tener:
+    //-un valor (identidad)
+    //-una funcion -> funcionalidad del objeto
+    //Podemos utilizar la notación del punto o la de los corchetes
+    
+    //No es lo mismo declarar un objeto con [] que con {}
+    let persona1 = [] //ESTO ES UN ARRAY
+    persona1['nombre'] = "Bart"
+    persona1['direccion'] = "C/Evergreen Terrace"
+    persona1.telefono = "123456789"
+    //Usamos el array 'persona1' para representar a una persona
+    //pero no deja de ser un array
+    persona1.push("ALGO") //Esto no tiene sentido, pero funciona!
+    
+    let persona2 = {}
+    persona2['nombre'] = "Bender Bending Rodriguez"
+    persona2.direccion = "NNY"
+    //persona2.push() //ZASCA!
+
+    //Utilizando las llaves para inicializar el objeto (más económico)
+    let libro = {
+        titulo : '20000 leguas de viaje submarino',
+        autor  : 'Julio Verne'
+    }    
+
+    //En JS los objetos no están cerrados. En cualquier momento podemos 
+    //añadirles nuevas propiedades, cambiarles el valor a las existentes
+    //y eliminarlas
+    //Esto es así porque en realidad son arrays asociativos
+    console.log(libro)
+    libro.saludar = function(){
+        console.log("Hola, soy un libro")
+    } 
+    
+    ////////////
+    //  THIS  //
+    ////////////
+    
+    let coche = {
+        marca     : "Talbot",
+        modelo    : "Samba S",
+        matricula : "M-1234-DS",
+        color     : "rojo",
+        toCSV     : function(){
+        }
+    }
+
+
+
+
+</script>
+
+<body>
+    
+    <h1>08_Objetos</h1>
+
+</body>
+</html>
