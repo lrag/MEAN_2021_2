@@ -85,6 +85,7 @@ function vaciarFormulario(){
         nodo.value = ""
     }
     idContactoSel = null
+    modoInsercion()
 }
 
 function seleccionarContacto(idContacto){
@@ -127,6 +128,9 @@ function seleccionarContacto(idContacto){
             break
         }
     }
+
+    modoSeleccion()
+    
 }
 
 function rellenarTablaContactos(){
@@ -192,7 +196,6 @@ function modificarContacto(){
 }
 
 function borrarContacto(){
-
     for(let a=0; a<contactos.length; a++){
         let contacto = contactos[a]
         if(contacto.id == idContactoSel){
@@ -203,8 +206,6 @@ function borrarContacto(){
             break
         }
     }
-
-
 }
 
 function guardarContactos(){
@@ -229,6 +230,18 @@ function guardarContactos(){
 
 }
 
+function modoSeleccion(){
+    document.getElementById("btnInsertar").disabled  = true 
+    document.getElementById("btnModificar").disabled = false 
+    document.getElementById("btnBorrar").disabled    = false  
+}
+
+function modoInsercion(){
+    document.getElementById("btnInsertar").disabled  = false
+    document.getElementById("btnModificar").disabled = true
+    document.getElementById("btnBorrar").disabled    = true  
+}
+
 function inicializar(){
 
     document.getElementById("btnVaciar").onclick    = vaciarFormulario
@@ -242,6 +255,8 @@ function inicializar(){
         contactos = JSON.parse(json)
         rellenarTablaContactos()
     }
+
+    modoInsercion()
 
 }
 

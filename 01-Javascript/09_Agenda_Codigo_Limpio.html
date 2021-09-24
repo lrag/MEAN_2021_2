@@ -10,48 +10,16 @@
 
 //Declaramos al array de contactos como una variable global
 let contactos = []
-
+let idContactoSel = null
 
 function insertarContacto(){
-
-    //Esto está bien
-    /*
-    let nombre    = document.getElementById("nombre").value    
-    let direccion = document.getElementById("direccion").value 
-    let telefono  = document.getElementById("telefono").value  
-    let correoE   = document.getElementById("correoE").value      
-    let contacto = { 
-        id        : Date.now(), //Licencia 
-        nombre    : nombre,
-        direccion : direccion,
-        telefono  : telefono,
-        correoE   : correoE
-    }
-    */    
-    
-    /*
-    //Como más rabia nos de...
-    let contacto = { 
-        id        : Date.now(), //Licencia 
-        nombre    : document.getElementById("nombre").value,
-        direccion : document.getElementById("direccion").value,
-        telefono  : document.getElementById("telefono").value ,
-        correoE   : document.getElementById("correoE").value 
-    }
-    */
-
-    console.log("====================================")
     let contacto = {
-        //id : Math.round(Math.random()*10000), //Licencia   
         id : Date.now()      
     }
     let nodos = document.querySelectorAll("#formulario input[type=text]")
     for(let nodo of nodos){
         let propiedad = nodo.id
         let valor = nodo.value 
-        //Esto está...mal
-        //contacto.propiedad = valor
-        //Es asín:
         contacto[propiedad] = valor
     }
 
@@ -60,65 +28,32 @@ function insertarContacto(){
 
     vaciarFormulario()
     rellenarTablaContactos()
-
 }
 
 function vaciarFormulario(){    
-    /*
-    //Esto es perfectamente válido
-    document.getElementById("nombre").value    = ""
-    document.getElementById("direccion").value = ""
-    document.getElementById("telefono").value  = ""
-    document.getElementById("correoE").value   = ""
-    //Selectores css
-    document.querySelectorAll("#formulario") //Encuentra el nodo cuyo id es 'formulario'
-    document.querySelectorAll("input")       //Encuentra los nodos de tipo 'input' (incluye los botones)
-    document.querySelectorAll("#formulario input") //Nodos de tipo input que cuelguen de el nodo cuyo id es 'formulario'
-    document.querySelectorAll("#formulario input[type=text]") //Nodos de tipo input que tengan la propiedad type='text' que cuelguen de el nodo cuyo id es 'formulario'
-    */
-
-    //Esto es más elaborado (solo funciona para cajas de texto)
     let nodos = document.querySelectorAll("#formulario input[type=text]")
     for(let nodo of nodos){
         nodo.value = ""
     }
+    idContactoSel = null
+    modoInsercion()
 }
 
 function seleccionarContacto(idContacto){
-    console.log("ID:"+idContacto)
-
-    /* 
-    for(let a= 0; contactos.length; a++){
-        let contacto = contactos[a]
-        Con un for normal
+    for(let contacto of contactos){
         if( contacto.id == idContacto ){
-                document.getElementById("nombre").value    = contacto.nombre
-                document.getElementById("direccion").value = contacto.direccion
-                document.getElementById("telefono").value  = contacto.telefono
-                document.getElementById("correoE").value   = contacto.correoE
-                break //Nos salimos del bucle
+            for(let propiedad in contacto){
+                let nodo = document.getElementById(propiedad)
+                if(nodo != null){
+                    nodo.value = contacto[propiedad]
+                }
+            }
+            idContactoSel = idContacto
+            break
         }
     }
-    */
-   /*
-   for(let contacto of contactos){
-    if( contacto.id == idContacto ){
-                document.getElementById("nombre").value    = contacto.nombre
-                document.getElementById("direccion").value = contacto.direccion
-                document.getElementById("telefono").value  = contacto.telefono
-                document.getElementById("correoE").value   = contacto.correoE
-                break //Nos salimos del bucle
-        }
-   }
-   */
 
-   
-
-
-
-
-
-    
+    modoSeleccion()    
 }
 
 function rellenarTablaContactos(){
@@ -142,13 +77,7 @@ function rellenarTablaContactos(){
         td4.append(txt4)
         tr.append(td1, td2, td3, td4)
 
-        //Esta es una función anidada porque está declarada dentro de otra
-        //Además está utilizando una variable declarada en el nido
-        //y por lo tanto es un closure
         tr.onclick = function(){
-            //En JS se crea una copia de la variable del nido con el valor correspondiente
-            //para que cuando por fin se ejecute siga existiendo
-            //contacto.id=11
             seleccionarContacto(contacto.id)
         }
 
@@ -156,48 +85,73 @@ function rellenarTablaContactos(){
     }
 }
 
-function guardarContacto(){
-    //Session y Locan storage son dos estructuras de datos clave-valor
-    //que se almacenan en el navegador
-    //Los valores guardados en el session storage permanecen en el navegador mientras
-    //la personaña esté abierta
+function modificarContacto(){
+    let nombre    = document.getElementById("nombre").value    
+    let direccion = document.getElementById("direccion").value 
+    let telefono  = document.getElementById("telefono").value  
+    let correoE   = document.getElementById("correoE").value   
 
-    //Los valores guardados en el local storage se asocian al sitio y permanecen en el navegador
-    //aunque se cierre (Pero si el usuario vacía el chaché, se borra.)
+    for(let contacto of contactos){
+        if(contacto.id == idContactoSel){
+            contacto.nombre    = nombre
+            contacto.direccion = direccion
+            contacto.telefono  = telefono
+            contacto.correoE   = correoE
 
-    //Tanto la clave como el valor serán cadenas de texto
-    //Session y local storage tienen las mismas funciones/métodos
+            vaciarFormulario()
+            rellenarTablaContactos()
+            break
+        }
+    }
+}
 
-    // sessionStorage.setItem(clave, valor)
-    // sessionStorage.getItem(clave)
-    // sessionStorage.removeItem(clave)
-    // sessionStorage.clear()
+function borrarContacto(){
+    for(let a=0; a<contactos.length; a++){
+        let contacto = contactos[a]
+        if(contacto.id == idContactoSel){
+            contactos.splice(a,1)
+
+            vaciarFormulario()
+            rellenarTablaContactos()            
+            break
+        }
+    }
+}
+
+function guardarContactos(){
+    localStorage.setItem("contactos", JSON.stringify(contactos))
+}
+
+function modoSeleccion(){
+    document.getElementById("btnInsertar").disabled  = true 
+    document.getElementById("btnModificar").disabled = false 
+    document.getElementById("btnBorrar").disabled    = false  
+}
+
+function modoInsercion(){
+    document.getElementById("btnInsertar").disabled  = false
+    document.getElementById("btnModificar").disabled = true
+    document.getElementById("btnBorrar").disabled    = true  
 }
 
 function inicializar(){
 
-    document.getElementById("btnVaciar").onclick   = vaciarFormulario
-    document.getElementById("btnInsertar").onclick = insertarContacto
-    document.getElementById("btnGuardar").onclick = guardarContacto
+    document.getElementById("btnVaciar").onclick    = vaciarFormulario
+    document.getElementById("btnInsertar").onclick  = insertarContacto
+    document.getElementById("btnModificar").onclick = modificarContacto
+    document.getElementById("btnBorrar").onclick    = borrarContacto
+    document.getElementById("btnGuardar").onclick   = guardarContactos
+
+    let json = localStorage.getItem("contactos")
+    if(json != null){
+        contactos = JSON.parse(json)
+        rellenarTablaContactos()
+    }
+
+    modoInsercion()
 }
 
 window.onload = inicializar
-
-console.log("====================================")
-let array1 = [1,2,3,4]
-let array2 = []
-array2["clave1"] = "valor1"
-array2["clave2"] = "valor2"
-array2["clave3"] = "valor3"
-
-let coche = {
-    marca : "Renault",
-    modelo : "8"
-}
-
-console.log(array1)
-console.log(array2)
-console.log(coche)
 
 </script>
 
@@ -269,6 +223,7 @@ console.log(coche)
 </body>
 
 </html>
+
 
 
 
