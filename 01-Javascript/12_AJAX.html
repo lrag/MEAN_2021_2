@@ -21,10 +21,13 @@
 //Identidad
 //-responseText: el contenido de la respuesta como un texto en bruto
 //-responseXML: el contenido de la respuesta como un árbol DOM (solo si la respuesta es un XML)
+//-status: código de respuesta HTTP
+//-readyState: estado del objeto xhr
 //
 //Funcionalidad
 //-open(metodo, url, asincrono=true)
 //-send( opcional:contenido del body de la respuesta )
+//-onreadystatechange: por defecto null
 
 
 //////////////////////////
@@ -74,15 +77,55 @@ function enviarPeticionSincrona(){
 
 function enviarPeticionAsincrona(){
 
+    document.getElementById("mensaje").innerHTML = "<h2 align='center'>Espere por favor</h2>"
+
     let xhr = new XMLHttpRequest()
 
+    //xhr.readyState
+    //---------------------------
+    //0-UNSENT
+    //1-OPEN
+    //2-HEADERS_RECEIVED
+    //3-LOADING
+    //4-DONE
+    xhr.onreadystatechange = function(){
+        console.log("Valor de readyState:"+this.readyState)
+        if(this.readyState == 4){
+            console.log("DONE!")
+            if(this.status != 200){
+                alert("ERROR AL LISTAR LOS USUARIOS!!!")
+                return
+            }
+            let json = this.responseText
+            let objeto = JSON.parse(json)
+            rellenarTabla(objeto.data)
+
+            document.getElementById("mensaje").innerHTML = ""
+        }
+    }
+
+    xhr.open("GET", "https://reqres.in/api/users?delay=10", true) //El valor por defecto del tercer parámetro es 'true'
+    xhr.send()
     
-
-
+    console.log("DESPUES:"+xhr.responseText) //nasti de plasti
 }
 
+/*
+//INTENTANDO UNA ESPERA ACTIVA
+//
+function enviarPeticionAsincrona(){
+    let xhr = new XMLHttpRequest()
+    xhr.open("GET", "https://reqres.in/api/users?delay=3", true) //El valor por defecto del tercer parámetro es 'true'
+    xhr.send()
 
+    //Esto deja bloqueado al navegador para siempre!!!
+    while(xhr.readyState != 4){
+        //A dar vueltas
+    }
 
+    rellenarTabla(JSON.parse(xhr.responseText).data) //La lista de usuarios está en la propiedad 'data'
+}
+*/
 
 function rellenarTabla(usuarios){
     let html = ""
