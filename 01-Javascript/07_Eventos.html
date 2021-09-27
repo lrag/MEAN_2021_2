@@ -17,6 +17,33 @@ function btn4Pulsado(){
     console.log(arguments)
 }
 
+//Esta funcion nos limita a que solo se pueda dibujar un círculo cuando el usuario
+//hace click...
+//function dibujarRedondel(evento){
+//    console.log(`dibujando un círculo en ${evento.x}, ${evento.y}`)
+//}
+//
+//Esta es CORRECTA
+function dibujarRedondel(x, y, radio, color, relleno, grosorTrazo){
+    console.log(`Dibujando un círculo en ${x}, ${y} de radio ${radio} y color ${color}`)
+}
+
+function concatenarCaracter(caracter){
+    //let div = document.getElementById("div1")
+    //div.innerHTML = div.innerHTML + caracter
+    document.getElementById("div1").innerHTML += caracter
+}
+
+//Para el ejemplo de addEventListener
+function btn6Pulsado(){
+    console.log("Botón 6 pulsado")
+}
+function btn6PulsadoBis(){
+    console.log("Botón 6 pulsado (Bis)")
+}
+
+
+/////////////////////////////////////////////////////////////////////////
 
 function inicializar(){
 
@@ -66,10 +93,111 @@ function inicializar(){
     document.getElementById("btn5").onclick = function(evento){
         console.log("Botón 5 pulsado")
         console.log(evento)
-        console.log(evento.x, evento.y)
+        console.log(arguments[0].x, arguments[0].y) //Esto es engorroso
+        console.log(evento.x, evento.y) //Esto es bonito
     }    
 
+    //Cuando queremos que se ejecuta una función que recibe 
+    //parámetros QUE NO SON EL EVENTO lo mejor que podemos hacer es
+    //definir una función anónima que invoque la otra función
+    document.getElementById("lienzo").onclick = function(evento){
+        let x = evento.x
+        let y = evento.y
+        dibujarRedondel(x, y, 10, "negro")
+    }
+
+    //
+    //keydown: el usuario ha 'hundido' la tecla
+    //keyup  : el usuario ha soltado la tecla
+    //  
+    document.getElementById("cajaTexto").onkeydown = function(evento){
+        //Recopilamos aqui los parámetros para la función a la que hay
+        //que llamar 
+        let char = evento.key
+        concatenarCaracter(char)
+    }
+
+    //
+    //Otra manera de añadir manejadores de eventos: add event listener
+    //
+    //El primer párametro es un string con el evento al que nos referimos (sin el 'on')
+    //El segundo parámetro es la referencia a la funcion
+    //
+    //Nos permita añadir vários manejadores para un mismo evento (en el mismo nodo):
+    //Se ejecutan en el orden en el que han sido añadidos
+    document.getElementById("btn6").addEventListener('click', btn6Pulsado)
+    document.getElementById("btn6").addEventListener('click', btn6PulsadoBis) 
+
+
+    //
+    //Cancelación de eventos: event.preventDefault()
+    //
+    document.getElementById("btnEnviar").onclick = function(evento){
+        //let resultado = validarFormulario()
+        //if( resultado == false){
+        //}
+
+        //if( validarFormulario() == false){
+        //}        
+        
+        if(!validarFormulario()){
+            alert("Datos incorrectos")
+            evento.preventDefault()
+        }
+    }
+
+    //
+    //Cancelando un evento en una cadena de manejadores
+    //
+    let f1 = function(){
+        console.log("F1")
+    }
+    let f2 = function(e){
+        console.log("F2")
+        //Con esto le paramos los pies al evento
+        e.stopImmediatePropagation()
+    }
+    let f3 = function(){
+        console.log("F3")
+    }
+
+    document.getElementById("botoncillo").addEventListener('click', f1)
+    document.getElementById("botoncillo").addEventListener('click', f2)
+    document.getElementById("botoncillo").addEventListener('click', f3)    
+
+    //RESUMEN
+    //
+    //Si cuando se pulsa un botón queremos que se ejecute una función que no recibe parametros 
+    //la colocamos directamente como manejadora del evento
+    //document.getElementById("btnInsertar").onclick = insertarPersona <--se invocará con el evento pero lo ignoraremos
+    //
+    //Si la funcion que ha de ejecutarse necesita el evento tambien la colocamos directamente
+    //como manejadora del mismo
+    //Esto suele ser un poco guarrete porque solo se podrá usar esa función cuando se produzca el evento
+    //
+    //Si la función que manejará el evento recibe parámetros pero ninguno es el evento crearemos
+    //una función intermedia (mejor que sea anónima) que extraiga del evento lo que hace falta y recopile
+    //los parámetros para invocar a la otra función
+    //function dibujarRedondel(x,y,radio){ ... }
+    //document.getElementById("xXx").onclick = function(e){
+    //  dibujarRedondel(e.x, e.y, 10)
+    //}
+
 }
+
+function validarFormulario(){
+    let marca     = document.getElementsByName("marca")[0].value
+    let modelo    = document.getElementsByName("modelo")[0].value
+    let matricula = document.getElementsByName("matricula")[0].value
+
+    if(marca.trim()=="" || modelo.trim()=="" || matricula.trim()==""){
+        return false
+    }
+    return true
+}
+
+
+
 
 
 window.onload = inicializar
@@ -102,7 +230,7 @@ window.onload = inicializar
 
     <hr/>
 
-    <form action="http://www.noexiste.es/altaCoche">
+    <form action="http://www.noexiste.es/altaCoche" method="GET">
         Marca <input type="text" name="marca"/>
         Modelo <input type="text" name="modelo"/>
         Matrícula <input type="text" name="matricula"/>
