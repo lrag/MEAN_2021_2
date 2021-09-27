@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+//El objeto XMLHttpRequest
+//----------------------------------------------
+//Identidad
+//-responseText: guarda el contenido del body de la respuesta. por defecto ""
+//-responseXML: si la respuesta incluia un XML nos dan el árbol DOM del documento XML
+//-status: código de respuesta HTTP
+//-readyState: estado del objeto xhr
+//
+//Funcionalidad
+//-open(metodo, url, asincrono=true)
+//-send(xXx)
+//-onreadystatechange: por defecto null
+//-onload
+//-onerror
+
+//////////////////////////
+// Peticiones SÍNCRONAS //
+//////////////////////////
+
+
+window.onload = function(){
+
+}
+
+</script>
+
+
+<body>
+
+    <h1>12_AJAX</h1>
+
+    <input type="text"/>
+
+    <hr/>
+
+    <p align="center">
+        <button id="btnListarUsuariosSincrono">Listar Síncrono</button>
+        <button id="btnListarUsuariosAsincrono">Listar Asíncrono</button>
+        <button id="btnListarUsuariosMillenial">Listar Millenial</button>
+        <!--
+        <button id="btnListarUsuariosFuncionGenerica">Listar Funcion Genérica</button>
+        -->
+    </p>
+
+
+    <div id="mensaje"></div>
+
+    <h1 align="center" id="mensaje"></h1>
+
+    <table align="center" border="1">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Correo E</th>
+            <th>Afoto</th>
+        </tr>
+        <tbody id="tablaUsuarios"></tbody>
+    </table>
+    
+</body>
+</html>
+
+
+
