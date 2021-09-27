@@ -121,7 +121,7 @@ function enviarPeticionAsincrona(){
     //Esto deja bloqueado al navegador para siempre!!!
     while(xhr.readyState != 4){
         //A dar vueltas
-    }
+    }    
 
     rellenarTabla(JSON.parse(xhr.responseText).data) //La lista de usuarios está en la propiedad 'data'
 }
