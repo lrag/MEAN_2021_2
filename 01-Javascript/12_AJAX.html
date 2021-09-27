@@ -9,28 +9,102 @@
 
 <script type="application/javascript">
 
+//////////////////
+// AJAX         //
+// Asynchronous //
+// Javasccript  //
+// XML          //
+//////////////////
+
 //El objeto XMLHttpRequest
 //----------------------------------------------
 //Identidad
-//-responseText: guarda el contenido del body de la respuesta. por defecto ""
-//-responseXML: si la respuesta incluia un XML nos dan el árbol DOM del documento XML
-//-status: código de respuesta HTTP
-//-readyState: estado del objeto xhr
+//-responseText: el contenido de la respuesta como un texto en bruto
+//-responseXML: el contenido de la respuesta como un árbol DOM (solo si la respuesta es un XML)
 //
 //Funcionalidad
 //-open(metodo, url, asincrono=true)
-//-send(xXx)
-//-onreadystatechange: por defecto null
-//-onload
-//-onerror
+//-send( opcional:contenido del body de la respuesta )
+
 
 //////////////////////////
 // Peticiones SÍNCRONAS //
 //////////////////////////
 
+//function enviarPeticionSincrona(){
+//    let xhr = new XMLHttpRequest()
+//    xhr.open("GET", "https://reqres.in/api/users?delay=5", false)
+//    xhr.send()  
+//    rellenarTabla(JSON.parse(xhr.responseText).data) //La lista de usuarios está en la propiedad 'data'
+//}
+
+function enviarPeticionSincrona(){
+
+    //Esto no va a salir:
+    document.getElementById("mensaje").innerHTML = "<h2 align='center'>Espere por favor</h2>"
+
+    //Para enviar una petición ajax primero necesitamos un objeto XMLHttpRequest
+    let xhr = new XMLHttpRequest()
+
+    //Open sirve para inicializar el objeto XMLHttpRequest. Recibe tres parámetros
+    //-Método HTTP
+    //-Url
+    //-Sincrono/asincrono false/true. Por defecto es true    
+    xhr.open("GET", "https://reqres.in/api/users?delay=5", false)
+
+    console.log("ANTES:", xhr.responseText) //Inicialmente está vacío
+    
+    //Si la petición es síncrona el hilo de ejecución no pasará a la 
+    //siguiente línea hasta que haya llegado la respuesta
+    xhr.send(null) //No hace falta escribir el 'null' 
+    
+    console.log("DESPUES:", xhr.responseText) 
+
+    document.getElementById("mensaje").innerHTML = ""
+
+    let json = xhr.responseText
+    let objeto = JSON.parse(json)
+    rellenarTabla(objeto.data) //La lista de usuarios está en la propiedad 'data'
+
+}
+
+///////////////////////////
+// Peticiones ASINCRONAS //
+///////////////////////////
+
+function enviarPeticionAsincrona(){
+
+    let xhr = new XMLHttpRequest()
+
+    
+
+
+}
+
+
+
+
+function rellenarTabla(usuarios){
+    let html = ""
+    for(let usuario of usuarios){
+        html += `
+            <tr>
+                <td>${usuario.first_name}</td>
+                <td>${usuario.last_name}</td>
+                <td>${usuario.email}</td>
+                <td>
+                    <img src="${usuario.avatar}"/>
+                </td>
+            </tr>`
+    }
+    document.getElementById("tablaUsuarios").innerHTML = html
+}
+
 
 window.onload = function(){
-
+    document.getElementById("btnListarUsuariosSincrono").onclick = enviarPeticionSincrona
+    document.getElementById("btnListarUsuariosAsincrono").onclick = enviarPeticionAsincrona
+    
 }
 
 </script>
@@ -70,6 +144,5 @@ window.onload = function(){
     
 </body>
 </html>
-
 
 
