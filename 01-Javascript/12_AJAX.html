@@ -81,6 +81,8 @@ function enviarPeticionAsincrona(){
 
     let xhr = new XMLHttpRequest()
 
+    xhr.open("GET", "https://reqres.in/api/users?delay=10", true) //El valor por defecto del tercer parámetro es 'true'
+
     //xhr.readyState
     //---------------------------
     //0-UNSENT
@@ -92,6 +94,12 @@ function enviarPeticionAsincrona(){
         console.log("Valor de readyState:"+this.readyState)
         if(this.readyState == 4){
             console.log("DONE!")
+            //Status HTTP
+            //1XX - Informativas (no las usa ni petrosky)
+            //2XX - Todo fue bien 
+            //3XX - Vámonos (redirects)
+            //4XX - Te has equivocato tu (error del cliente)
+            //5XX - Nos hemos equivocado nosotros (error del servidor)
             if(this.status != 200){
                 alert("ERROR AL LISTAR LOS USUARIOS!!!")
                 return
@@ -104,7 +112,7 @@ function enviarPeticionAsincrona(){
         }
     }
 
-    xhr.open("GET", "https://reqres.in/api/users?delay=10", true) //El valor por defecto del tercer parámetro es 'true'
+    //Cuando la petición es asíncrona la llamada a 'send' no es bloqueante
     xhr.send()
     
     console.log("DESPUES:"+xhr.responseText) //nasti de plasti
@@ -127,6 +135,39 @@ function enviarPeticionAsincrona(){
 }
 */
 
+
+//////////////////////
+// onload y onerror //
+//////////////////////
+function enviarPeticionMillenial(){
+    
+    let xhr = new XMLHttpRequest()
+    
+    xhr.open("GET", "https://reqres.in/api/users?delay=5",true) 
+
+    //On load se invoca cuando:
+    //-readyState = 4
+    //-status     = CUALQUIERA
+    xhr.onload = function(){
+        if(this.status != 200){
+            console.log("NO HA SIDO UN 200!!!")
+            return
+        }
+        rellenarTabla(JSON.parse(this.responseText).data)        
+    }
+
+    //On error se invoca cuando:
+    //-readyState = 4
+    //-status     = 4XX | 5XX  
+    //Solo se invoca si la petición ha fallado  
+    xhr.onerror = function(){
+        console.log("ERROR!!!")
+    }
+
+    //Esta llamada no es bloqueante
+    xhr.send()
+}
+
 function rellenarTabla(usuarios){
     let html = ""
     for(let usuario of usuarios){
@@ -143,15 +184,13 @@ function rellenarTabla(usuarios){
     document.getElementById("tablaUsuarios").innerHTML = html
 }
 
-
 window.onload = function(){
     document.getElementById("btnListarUsuariosSincrono").onclick = enviarPeticionSincrona
     document.getElementById("btnListarUsuariosAsincrono").onclick = enviarPeticionAsincrona
-    
+    document.getElementById("btnListarUsuariosMillenial").onclick = enviarPeticionMillenial    
 }
 
 </script>
-
 
 <body>
 
@@ -165,11 +204,7 @@ window.onload = function(){
         <button id="btnListarUsuariosSincrono">Listar Síncrono</button>
         <button id="btnListarUsuariosAsincrono">Listar Asíncrono</button>
         <button id="btnListarUsuariosMillenial">Listar Millenial</button>
-        <!--
-        <button id="btnListarUsuariosFuncionGenerica">Listar Funcion Genérica</button>
-        -->
     </p>
-
 
     <div id="mensaje"></div>
 
