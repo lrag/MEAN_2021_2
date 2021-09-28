@@ -28,6 +28,7 @@ class Avion {
     }
 
 }
+
 //Si lo hacemos asi todos los aviones compartiran las funciones
 //Pero claro...se pierde lo bonito
 Avion.prototype.saludar = function(){
@@ -37,8 +38,10 @@ Avion.prototype.saludar = function(){
 
 let avion1 = new Avion("Panavia", "Tornado", 1978)
 console.log(avion1)
-console.log(avion1.toCSV())
-console.log(avion1.saludar())
+//console.log(avion1.toCSV())
+//console.log(avion1.saludar())
+let avion2 = new Avion("Supermarine", "Spitfire", 1936)
+console.log(avion2)
 
 </script>
 
