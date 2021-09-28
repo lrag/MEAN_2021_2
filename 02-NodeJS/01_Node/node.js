@@ -18,3 +18,23 @@
 
 //La consola en node es la consola del sistema
 console.log("Hola mundo")
+
+//Módulos en node
+const http = require("http")
+
+
+//let funcioncilla = function(request, response){
+//    ...
+//}
+//let servidorHTTP = http.createServer(funcioncilla)
+
+let servidorHTTP = http.createServer( function(request, response){
+    console.log("Petición recibida en el puerto 1000")
+} )
+
+servidorHTTP.listen(1000)
+
+
+
+
+
