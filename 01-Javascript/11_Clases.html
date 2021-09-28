@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+class Avion {
+
+    fabricante = null
+    modelo     = null
+    year       = 0
+
+    constructor(fabricante, modelo, year){
+        this.fabricante = fabricante
+        this.modelo     = modelo
+        this.year       = year
+    }
+
+    //Esto es una caca de la vaca porque cada avión tendrá su copia de la funcion
+    //Lo suyo es añadir las funciones al prototipo para que todas las instancias las compartan
+    toCSV = function(){
+        return this.fabricante+","+this.modelo+","+this.year
+    }
+
+}
+//Si lo hacemos asi todos los aviones compartiran las funciones
+//Pero claro...se pierde lo bonito
+Avion.prototype.saludar = function(){
+    console.log("Hola, soy el avion "+this.fabricante+" "+this.modelo)
+}
+
+
+let avion1 = new Avion("Panavia", "Tornado", 1978)
+console.log(avion1)
+console.log(avion1.toCSV())
+console.log(avion1.saludar())
+
+</script>
+
+<body>
+
+    <h1>11_Clases</h1>
+    
+</body>
+</html>
