@@ -1,0 +1,33 @@
+//////////
+//      //
+// HTTP //
+//      //
+//////////
+
+Peticiones HTTP
+
+Método + Ruta a uno o a varios recursos
+
+
+MÉTODOS HTTP
+
+Métodos que sirven para trabajar con los recursos:
+
+GET	- Solicita al servidor los recursos identificados por la ruta
+POST    - Solicita al servidor la creación de un nuevo recurso en la ruta indicada
+PUT     - Solicita al servidor que sustituya los recursos identificados por la ruta por otro 
+PATCH	- Solicita al servidor que modifique los recursos identificados por la ruta
+DELETE  - Solicita al servidor la eliminación de los recursos identificados por la ruta
+
+Métodos para otras cosas
+
+HEAD
+OPTIONS
+
+
+
+
+
+
+
+
