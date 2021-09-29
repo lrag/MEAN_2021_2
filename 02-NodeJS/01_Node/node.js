@@ -37,7 +37,6 @@ let servidorHTTP = http.createServer( function(request, response){
 
 servidorHTTP.listen(1000)
 
-
 function crearHTML(){
 
     let html = `
@@ -52,20 +51,31 @@ function crearHTML(){
                         Contenido HTML generado dinámicamente
                     </font>
                 </h2>
-
                 <table align="center" border="1">
                     <tr>
                         <th>Titulo</th>
                         <th>Director</th>
                     </tr>
-               </table>
+                    ${generarTablaPeliculas()}
+                </table>
             </body>
         </html>`
 
     return html
-
 }
 
+function generarTablaPeliculas(){
+    let tabla = ""
+    let peliculas = listarPeliculas()
+    for(let pelicula of peliculas){
+        tabla += 
+            `<tr>
+                <td>${pelicula.titulo}</td>
+                <td>${pelicula.director}</td>
+             </tr>`
+    }
+    return tabla
+}
 
 function listarPeliculas(){
     //Simulamos una consulta a la bb.dd.
@@ -79,16 +89,16 @@ function listarPeliculas(){
             director : 'John McTiernan'
         },
         {
-            titulo : 'Los Gremlins',
-            director : 'Joe Dante'
+            titulo : 'Los Goonies',
+            director : 'Richerd Donner'
         },
         {
             titulo : 'Tron',
             director : 'Steven Lisberger'
         },
         {
-            titulo : 'El padrino',
-            director : 'Scorsese'
+            titulo : 'Los violentos de Kelly',
+            director : 'Brian G. Hutton'
         }
     ]    
 }
