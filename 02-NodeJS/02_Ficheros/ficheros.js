@@ -41,9 +41,9 @@ const fs = require("fs")
 ////Una función asíncrona jamás devolverá el fruto de su trabajo
 //console.log(contenido) //undefined
 
-let contenidoFichero1 = null
-let contenidoFichero2 = null
-let contenidoFichero3 = null
+//let contenidoFichero1 = null
+//let contenidoFichero2 = null
+//let contenidoFichero3 = null
 
 //Si lo hacemos así se leen los tres ficheros en paralelo, no nos garantiza el orden
 //y encima no podemos acceder al valor del contenido con las variables declaradas arriba
@@ -71,27 +71,31 @@ fs.readFile("./recursos/fichero3.txt", function(error, contenido){
 //}
 //console.log(contenidoFichero1) 
 
+
+//                                                    //
+// CONCATENANDO LLAMADAS ASINCRONAS CON CALLBACK HELL //
+//                                                    //
+
 fs.readFile("./recursos/fichero1.txt", function(error, contenido){
     if(error){
         console.log("Error!",error)
         return
     }    
-    contenidoFichero1 = contenido.toString()   
+    let contenidoFichero1 = contenido.toString()   
 
     fs.readFile("./recursos/fichero2.txt", function(error, contenido){
         if(error){
             console.log("Error!",error)
             return
         }  
-        contenidoFichero2 = contenido.toString()    
+        let contenidoFichero2 = contenido.toString()    
 
         fs.readFile("./recursos/fichero3.txt", function(error, contenido){
             if(error){
                 console.log("Error!",error)
                 return
             }              
-            contenidoFichero3 = contenido.toString()    
-
+            let contenidoFichero3 = contenido.toString()    
             let contenidoFichero4 = contenidoFichero1+contenidoFichero2+contenidoFichero3
 
             fs.writeFile("./recursos/fichero4.txt", contenidoFichero4, function(error){
@@ -100,10 +104,15 @@ fs.readFile("./recursos/fichero1.txt", function(error, contenido){
                     return
                 }                   
                 console.log("FIN")
-            })
-        })
-    })
-})
+                
+            }) //escribir el resultado
+
+        }) //leer el tercer fichero
+
+    }) //leer el segundo fichero
+    
+}) //leer el primer fichero
 
 console.log("FIN en falso")
+
 
