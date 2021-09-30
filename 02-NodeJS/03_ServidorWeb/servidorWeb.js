@@ -1,6 +1,12 @@
 const http = require("http")
 const fs   = require("fs")
 
+
+
+///////////////////////////////////////////////////////////////////////////
+// SERVER                                                                //
+///////////////////////////////////////////////////////////////////////////
+
 let servidor = http.createServer(procesarPeticion)
 
 //La funcion 'listen' es asíncrona
@@ -8,7 +14,19 @@ servidor.listen(2000, function(){
     console.log("Esperando peticiones en el puerto 2000") 
 })
 
-////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+// VALORES GLOBALES                                                      //
+///////////////////////////////////////////////////////////////////////////
+
+let statusCodes = {
+    404 : 'Recurso no encontrado',
+    405 : 'Método no permitido',
+    400 : 'Petición incorrecta'
+} 
+
+///////////////////////////////////////////////////////////////////////////
+// CÓDIGO                                                                //
+///////////////////////////////////////////////////////////////////////////
 
 function procesarPeticion(request, response){
 
@@ -20,7 +38,7 @@ function procesarPeticion(request, response){
 
     //Solo vamos a aceptar peticiones GET
     if( metodo.toUpperCase() != "GET"){
-        devolverError(response, 405, "Método no permitido")
+        devolverError(response, 405)
         return
     }
     
@@ -35,18 +53,24 @@ function leerRecurso(url, response){
     let ruta = "./recursos"+url
     fs.readFile(ruta, function(error, buffer){
         if(error){
-            console.log("Fallo al leer el fichero:", error)
-            devolverError(response, 404, "Recurso no encontrado")
+            console.log("Fallo al leer el fichero:") //, error)
+            devolverError(response, 404, "Recurso no encontrado!!!!!!!!!")
             return
         } 
         let contenido = buffer.toString()
-        
         response.end(contenido)
     })
 }
 
+
 function devolverError(response, statusCode, mensaje){
+    
+
     response.statusCode = statusCode
+
+    if(!mensaje){
+        mensaje = statusCodes[statusCode]
+    }
 
     let html = `
         <html>
