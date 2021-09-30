@@ -20,8 +20,7 @@ function procesarPeticion(request, response){
 
     //Solo vamos a aceptar peticiones GET
     if( metodo.toUpperCase() != "GET"){
-        response.statusCode = 405
-        response.end("<html><body>METODO NO SOPORTADO</body></html>")
+        devolverError(response, 405, "Método no permitido")
         return
     }
     
@@ -37,8 +36,7 @@ function leerRecurso(url, response){
     fs.readFile(ruta, function(error, buffer){
         if(error){
             console.log("Fallo al leer el fichero:", error)
-            response.statusCode = 404
-            response.end("<html><body>RECURSO NO ENCONTRADO</body></html>")
+            devolverError(response, 404, "Recurso no encontrado")
             return
         } 
         let contenido = buffer.toString()
@@ -47,3 +45,34 @@ function leerRecurso(url, response){
     })
 }
 
+function devolverError(response, statusCode, mensaje){
+    response.statusCode = statusCode
+
+    let html = `
+        <html>
+            <head>
+                <meta charset="UTF-8">
+            </head>
+            <body>
+                <h1 align="center">
+                    <font color="lightGreen">
+                        WebServer 3000
+                    </font>
+                </h1>
+                <h2 align="center">
+                    <font color="lightBlue">
+                        Se ha producido un error
+                    </font>
+                </h2>
+                <h1 align="center">
+                    <font color="red">
+                        ${statusCode}
+                    </font>
+                    ${mensaje}
+                </h1>
+            </body>
+        </html>`
+
+
+    response.end(html)
+}
