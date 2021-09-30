@@ -24,6 +24,13 @@ let statusCodes = {
     400 : 'Petición incorrecta'
 } 
 
+let mimeTypes = {
+    html : 'text/html',
+    css  : 'text/css',
+    js   : 'application/javascript',
+    ico  : 'image/x-icon'
+}
+
 ///////////////////////////////////////////////////////////////////////////
 // CÓDIGO                                                                //
 ///////////////////////////////////////////////////////////////////////////
@@ -57,6 +64,13 @@ function leerRecurso(url, response){
             devolverError(response, 404, "Recurso no encontrado!!!!!!!!!")
             return
         } 
+
+
+        // /noseque/nosecuantos . html
+
+        let extensionRecurso = url.split(".")[1]
+
+
         let contenido = buffer.toString()
         response.end(contenido)
     })
@@ -64,8 +78,8 @@ function leerRecurso(url, response){
 
 
 function devolverError(response, statusCode, mensaje){
-    
 
+    response.setHeader('Content-type', mimeTypes.html)
     response.statusCode = statusCode
 
     if(!mensaje){
@@ -96,7 +110,6 @@ function devolverError(response, statusCode, mensaje){
                 </h1>
             </body>
         </html>`
-
 
     response.end(html)
 }
