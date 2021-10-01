@@ -24,6 +24,14 @@ Métodos para otras cosas
 HEAD
 OPTIONS
 
+//////////
+//      //
+// REST //
+//      //
+//////////
+
+
+TOMARSE UN CAFE
 
 
 
