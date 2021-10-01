@@ -61,12 +61,12 @@ capitulos
 4- Diseñar el api
 
 
-Método  URL            Parametros   Respuesta             Funcionalidad
-GET     /peliculas     -            [ {pelicula} ]        listar peliculas
-GET     /peliculas/:id -            { pelicula }          buscar película
-POST                                                        insertar peliculas
-PUT                                                         modificar pelicula
-DELETE                                                      borrar pelicula
+Método  URL            Query Params   Body           Respuesta             Funcionalidad
+GET     /peliculas     filtro         -              [ {pelicula} ]        listar peliculas
+GET     /peliculas/:id -              -              { pelicula }          buscar película
+POST    /peliculas     -              {pelicula}     {pelicula}            insertar peliculas
+PUT     /peliculas/:id -              {pelicula}     {pelicula}            modificar pelicula
+DELETE  /peliculas/:id -              -              -                     borrar pelicula
 
 /////////
 // GET //
@@ -141,6 +141,152 @@ DELETE /peliculas?year=2021
 // POST //
 //////////
 
-Las rutas de una petición post siempre acaban en carpeta
+Las rutas de una petición post acaban en carpeta
+
+POST /peliculas
+CT: app/json
+---------------
+{
+    "titulo" : "",
+    "genero" : ""
+}
+
+201 CREATED
+CT: app/json
+---------------
+{
+    "_id"    : "",
+    "titulo" : "",
+    "genero" : ""
+}
+
+201 CREATED
+CT: app/json
+---------------
+{
+    "_id"    : ""
+}
+
+400 BAD REQUEST
+CT: app/json
+---------------
+{
+    "codigo"  : "400",
+    "mensaje" : "El título es obligatorio"
+}
+
+
+/////////
+// PUT //
+/////////
+
+Se solicita al servidor que sustituya al recurso identificado en la ruta por otro que se proporciona
+
+BB.DD:
+
+id  titulo  director    genero   año
+-------------------------------------
+8   Batman  Tim Burton  Accion   1990
+
+
+PUT /peliculas/8
+CT: app/json
+----------------
+{
+    "year" : 1989
+}
+
+id  titulo  director    genero   año
+-------------------------------------
+8   null    null        null     1989
+
+
+Tambien tenemos sustituciones a granel
+
+PUT /productos
+CT: app/json
+--------------
+{
+    "existencias" : 1000
+}
+
+¿Que pasa si el id no existe?
+
+Segun el protocolo HTTP se debe insertar un recurso nuevo con los datos suministrados
+y devolver un 201 CREATED :(
+
+Tambien podemos ignorar esto último y devolver un 404 NOT FOUND!!!!!!!!!!
+
+
+
+///////////
+// PATCH //
+///////////
+
+BB.DD:
+
+id  titulo  director    genero   año
+-------------------------------------
+8   Batman  Tim Burton  Accion   1990
+
+
+PATCH /peliculas/8
+CT: app/json
+----------------
+{
+    "year" : 1989
+}
+
+id  titulo  director    genero   año
+-------------------------------------
+8   Batman  Tim Burton  Accion   1989
+
+Si el id no existe se debe responder con un 404 NOT FOUND
+
+
+///////////////////////////////////
+// RELACIONES ENTRE LOS RECURSOS //
+///////////////////////////////////
+
+cliente
+
+{
+    id :
+    nombre :
+    direccion :
+    cuentaBancaria : 
+}
+
+factura 
+
+{
+    id :
+    codigo :
+    fecha :
+    cliente :
+}
+
+
+/clientes
+
+    /c1
+        cliente1
+        /facturas
+            f2
+            f8
+            f15
+
+    /c2
+        cliente2
+        /facturas   
+            f1
+            f4
+            f13
+            f20
+
+
+
+
+
 
 
