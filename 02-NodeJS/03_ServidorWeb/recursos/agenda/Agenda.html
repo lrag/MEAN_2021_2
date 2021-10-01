@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+//Declaramos al array de contactos como una variable global
+let contactos = []
+let idContactoSel = null
+
+function insertarContacto(){
+
+    //Esto está bien
+    /*
+    let nombre    = document.getElementById("nombre").value    
+    let direccion = document.getElementById("direccion").value 
+    let telefono  = document.getElementById("telefono").value  
+    let correoE   = document.getElementById("correoE").value      
+
+    let contacto = { 
+        id        : Date.now(), //Licencia 
+        nombre    : nombre,
+        direccion : direccion,
+        telefono  : telefono,
+        correoE   : correoE
+    }
+    */    
+    
+    /*
+    //Como más rabia nos de...
+    let contacto = { 
+        id        : Date.now(), //Licencia 
+        nombre    : document.getElementById("nombre").value,
+        direccion : document.getElementById("direccion").value,
+        telefono  : document.getElementById("telefono").value ,
+        correoE   : document.getElementById("correoE").value 
+    }
+    */
+    console.log("====================================")
+    let contacto = {
+        //id : Math.round(Math.random()*10000), //Licencia   
+        id : Date.now()      
+    }
+    let nodos = document.querySelectorAll("#formulario input[type=text]")
+    for(let nodo of nodos){
+        let propiedad = nodo.id
+        let valor = nodo.value 
+        //Esto está...mal
+        //contacto.propiedad = valor
+        //Es asín:
+        contacto[propiedad] = valor
+    }
+
+    contactos.push(contacto)
+    console.log(contactos)
+
+    vaciarFormulario()
+    rellenarTablaContactos()
+
+}
+
+function vaciarFormulario(){    
+    /*
+    //Esto es perfectamente válido
+    document.getElementById("nombre").value    = ""
+    document.getElementById("direccion").value = ""
+    document.getElementById("telefono").value  = ""
+    document.getElementById("correoE").value   = ""
+
+    //Selectores css
+    document.querySelectorAll("#formulario") //Encuentra el nodo cuyo id es 'formulario'
+    document.querySelectorAll("input")       //Encuentra los nodos de tipo 'input' (incluye los botones)
+    document.querySelectorAll("#formulario input") //Nodos de tipo input que cuelguen de el nodo cuyo id es 'formulario'
+    document.querySelectorAll("#formulario input[type=text]") //Nodos de tipo input que tengan la propiedad type='text' que cuelguen de el nodo cuyo id es 'formulario'
+    */
+
+    //Esto es más elaborado (solo funciona para cajas de texto)
+    let nodos = document.querySelectorAll("#formulario input[type=text]")
+    for(let nodo of nodos){
+        nodo.value = ""
+    }
+    idContactoSel = null
+    modoInsercion()
+}
+
+function seleccionarContacto(idContacto){
+    console.log("ID:"+idContacto)
+
+    /*Con un for normal
+    for(let a=0; a<contactos.length; a++){
+        let contacto = contactos[a]
+        if( contacto.id == idContacto ){
+            document.getElementById("nombre").value    = contacto.nombre
+            document.getElementById("direccion").value = contacto.direccion
+            document.getElementById("telefono").value  = contacto.telefono
+            document.getElementById("correoE").value   = contacto.correoE   
+            break //Nos salimos del for         
+        }
+    }
+    */
+
+    /*
+    for(let contacto of contactos){
+        if( contacto.id == idContacto ){
+            document.getElementById("nombre").value    = contacto.nombre
+            document.getElementById("direccion").value = contacto.direccion
+            document.getElementById("telefono").value  = contacto.telefono
+            document.getElementById("correoE").value   = contacto.correoE   
+            break //Nos salimos del for         
+        }        
+    }
+    */
+    
+    for(let contacto of contactos){
+        if( contacto.id == idContacto ){
+            for(let propiedad in contacto){
+                let nodo = document.getElementById(propiedad)
+                if(nodo != null){
+                    nodo.value = contacto[propiedad]
+                }
+            }
+            idContactoSel = idContacto
+            break
+        }
+    }
+
+    modoSeleccion()
+    
+}
+
+function rellenarTablaContactos(){
+    let tabla = document.getElementById("tablaPersonas")
+    tabla.innerHTML = ""
+
+    for(let contacto of contactos){
+
+        let tr = document.createElement("tr")
+        let td1 = document.createElement("td")
+        let td2 = document.createElement("td")
+        let td3 = document.createElement("td")
+        let td4 = document.createElement("td")
+        let txt1 = document.createTextNode(contacto.nombre)
+        let txt2 = document.createTextNode(contacto.direccion)
+        let txt3 = document.createTextNode(contacto.telefono)
+        let txt4 = document.createTextNode(contacto.correoE)
+        td1.append(txt1)
+        td2.append(txt2)
+        td3.append(txt3)
+        td4.append(txt4)
+        tr.append(td1, td2, td3, td4)
+
+        //Esta es una función anidada porque está declarada dentro de otra
+        //Además está utilizando una variable declarada en el nido
+        //y por lo tanto es un closure
+        tr.onclick = function(){
+            //En JS se crea una copia de la variable del nido con el valor correspondiente
+            //para que cuando por fin se ejecute siga existiendo
+            //contacto.id=11
+            seleccionarContacto(contacto.id)
+        }
+
+        tabla.append(tr)
+    }
+}
+
+function modificarContacto(){
+
+    //recoger los datos del formulario
+    //modificar el objeto que está en el array
+    //actualizar la tabla
+    //vaciar el formulario
+
+    let nombre    = document.getElementById("nombre").value    
+    let direccion = document.getElementById("direccion").value 
+    let telefono  = document.getElementById("telefono").value  
+    let correoE   = document.getElementById("correoE").value   
+
+    for(let contacto of contactos){
+        if(contacto.id == idContactoSel){
+            contacto.nombre    = nombre
+            contacto.direccion = direccion
+            contacto.telefono  = telefono
+            contacto.correoE   = correoE
+
+            vaciarFormulario()
+            rellenarTablaContactos()
+            break
+        }
+    }    
+
+}
+
+function borrarContacto(){
+    for(let a=0; a<contactos.length; a++){
+        let contacto = contactos[a]
+        if(contacto.id == idContactoSel){
+            contactos.splice(a,1)
+
+            vaciarFormulario()
+            rellenarTablaContactos()            
+            break
+        }
+    }
+}
+
+function guardarContactos(){
+
+    //Session y Local storage son dos estructuras de datos clave-valor
+    //que se almacenan en el navegador
+    //
+    //Los valores guardados en el SessionStorage permanecen en el navegador mientras la 
+    //pestaña está abierta
+    //
+    //Los valores guardados en el localStorage se asocian al sitio y permanecen en el navegador
+    //aunque se cierre (Pero si el usuario vacía la caché se borra)
+    //
+    //Tanto la clave como el valor serán cadenas de texto
+    //Session y Local storage tienen las mismas funciones:
+    //  sessionStorage.setItem(clave,valor)
+    //  sessionStorage.getItem(clave)
+    //  sessionStorage.removeItem(clave)
+    //  sessionStorage.clear()
+
+    localStorage.setItem("contactos", JSON.stringify(contactos))
+
+}
+
+function modoSeleccion(){
+    document.getElementById("btnInsertar").disabled  = true 
+    document.getElementById("btnModificar").disabled = false 
+    document.getElementById("btnBorrar").disabled    = false  
+}
+
+function modoInsercion(){
+    document.getElementById("btnInsertar").disabled  = false
+    document.getElementById("btnModificar").disabled = true
+    document.getElementById("btnBorrar").disabled    = true  
+}
+
+function inicializar(){
+
+    document.getElementById("btnVaciar").onclick    = vaciarFormulario
+    document.getElementById("btnInsertar").onclick  = insertarContacto
+    document.getElementById("btnModificar").onclick = modificarContacto
+    document.getElementById("btnBorrar").onclick    = borrarContacto
+    document.getElementById("btnGuardar").onclick   = guardarContactos
+
+    let json = localStorage.getItem("contactos")
+    if(json != null){
+        contactos = JSON.parse(json)
+        rellenarTablaContactos()
+    }
+
+    modoInsercion()
+
+}
+
+window.onload = inicializar
+
+</script>
+
+<body>
+
+    <h1 align="center">
+        <font color="lightGreen">
+            AgendaGest 3000     
+        </font>
+    </h1>
+
+    <div align="center">
+        <input type="button" id="btnInsertar"  value="Insertar"/>
+        <input type="button" id="btnModificar" value="Modificar"/>
+        <input type="button" id="btnBorrar"    value="Borrar"/>
+        <input type="button" id="btnVaciar"    value="Vaciar"/>
+        <input type="button" id="btnGuardar"   value="GUARDAR"/>
+    </div>
+
+    <br/>
+
+    <form id="formulario">
+        <table align="center">
+            <tr>
+                <td>Nombre</td>
+                <td>
+                    <input type="text" name="nombre" id="nombre"/>
+                </td>  
+                <td id="msj_nombre"></td>              
+            </tr>
+            <tr>
+                <td>Dirección</td>
+                <td>
+                    <input type="text" name="direccion" id="direccion"/>
+                </td>                
+                <td id="msj_direccion"></td>              
+            </tr>
+            <tr>
+                <td>Telefono</td>
+                <td>
+                    <input type="text" name="telefono" id="telefono"/>
+                </td> 
+                <td id="msj_telefono"></td>              
+            </tr>
+            <tr>
+                <td>Correo E</td>
+                <td>
+                    <input type="text" name="correoE" id="correoE"/>
+                </td>                
+                <td id="msj_correoE"></td>              
+            </tr>
+        </table>        
+    </form>
+
+    <br/>
+
+    <table align="center" border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Correo E</th>
+            </tr>
+        </thead>
+        <tbody id="tablaPersonas"></tbody>
+    </table>
+    
+</body>
+
+</html>
+
+
+
+
+
