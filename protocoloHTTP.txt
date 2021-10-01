@@ -30,13 +30,117 @@ OPTIONS
 //      //
 //////////
 
+1- Identificar los recursos
 
-TOMARSE UN CAFE
+peliculas
+    titulo
+    año
+    sinopsis
+    foto
+
+actores
+
+directores
+
+criticas
+    puntuacion
+
+series
+
+capitulos
+
+2- Decidir las carpetitas
+
+3- Decidir cuál será la representacion de los recursos
+
+    -json
+    -xml
+    -csv
+    -uno que me invente
+
+4- Diseñar el api
 
 
+Método  URL            Parametros   Respuesta             Funcionalidad
+GET     /peliculas     -            [ {pelicula} ]        listar peliculas
+GET     /peliculas/:id -            { pelicula }          buscar película
+POST                                                        insertar peliculas
+PUT                                                         modificar pelicula
+DELETE                                                      borrar pelicula
+
+/////////
+// GET //
+/////////
+
+GET /peliculas/5
+
+Respuestas
+
+200 OK
+CT: app/json
+--------------------
+{p5} 
 
 
+404 NOT FOUND
+CT: app/json
+--------------------
+{
+    "codigo"  : "404",
+    "mensaje" : "La película no existe"
+}
 
 
+GET /peliculas
+
+Respuestas:
+
+200 OK
+CT: app/json
+--------------------
+[ {p1}, {p2}, {p3} ]
+
+
+Filtrando los recursos identificados por la ruta con los QUERY PARAMETERS (?)
+No son exclusivos de GET
+
+    url       |esto ya no es la url
+GET /peliculas?year=1984
+GET /peliculas?year=1984&genero=accion
+GET /peliculas?activo
+GET /peliculas?genero=accion,cienciaFiccion,tiros
+    
+              |
+////////////
+// DELETE //
+////////////
+
+DELETE /peliculas/87
+
+200 OK
+CT:app/json
+--------------------
+{ "mensaje" : "La película se borró correctamenete" }
+
+404 NOT FOUND
+CT: app/json
+--------------------
+{
+    "codigo"  : "404",
+    "mensaje" : "La película no existe"
+}
+
+Bulk DELETES. Cuidado con ellos!!!!
+
+DELETE /peliculas
+
+DELETE /peliculas?year=2021
+
+
+//////////
+// POST //
+//////////
+
+Las rutas de una petición post siempre acaban en carpeta
 
 
