@@ -12,7 +12,7 @@
     
     //Algunas funciones
     texto.toUpperCase();
-    //Cuidado que las cadenas de texto en JS son inmutables!
+    //Cuidado que las cadenas de texto en JS son INMUTABLES!
     //Cuando invocamos una función que cambia la cadena lo que hacen es
     //crear un nuevo string con los cambios y devolverlo, quedando la 
     //otra igual
@@ -46,6 +46,38 @@
     cadena = "siete caballos vienen de bonanza"
     cadena = cadena.substring(0,4)
     console.log(cadena) //siet
+
+    //Expresiones regulares
+
+
+    /*
+
+    /discos/a   <- false
+    /discos/    <- false
+
+    /discos/5   <- true
+    /discos/15  <- true
+    /discos/314 <- true
+
+    /discos/123456789012345678901234
+    /discos/0123456789ABCDEF01234567 
+    /discos/0123456789abcdef01234567 
+
+
+
+    */
+
+    let txt = "/discos/0123456789ABCDEF01234567"
+
+    txt.match("TERROBLE EXPRESIÓN REGULAR REVIENTA CEREBROS")
+
+
+
+
+
+
+
+
 
 </script>
 

@@ -3,13 +3,15 @@ const { getFips } = require("crypto")
 const http = require("http")
 
 /*
-//API
+API
 
-GET    /discos      -      [{json}] listar todos los discos
-GET    /discos/:id  -      {json}   buscar disco por id
-POST   /discos      {json} {json}   insertar un disco
-PATCH  /discos/:id  {json} {json}   modificar un disco
-DELETE /discos/:id  -      -        borrar un disco
+Método  Url          Body    Respuesta  Funcionalidad
+---------------------------------------------------------------
+GET     /discos      -       [{json}]   listar todos los discos
+GET     /discos/:id  -       {json}     buscar disco por id
+POST    /discos      {json}  {json}     insertar un disco
+PATCH   /discos/:id  {json}  {json}     modificar un disco
+DELETE  /discos/:id  -       -          borrar un disco
 */
 
 //////////////////////////////////////////////////////////////////
