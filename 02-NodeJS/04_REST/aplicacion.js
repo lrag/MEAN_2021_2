@@ -1,6 +1,6 @@
-const { SIGBREAK } = require("constants")
-const { getFips } = require("crypto")
 const http = require("http")
+
+const negocioDiscos = require("./negocioDiscos.js") //La extensión 'js' es opcional
 
 /*
 API
@@ -72,8 +72,12 @@ Las tareas de la lógica de control en un api REST son las siguientes:
     -valores en los headers
     -cualquier combinación de los anteriores
 
--X
--Y
+-Invocar la función con la lógica de negocio
+
+-Componer y entregar la respuesta
+
+-Y YA!
+*/
 
 
 /*
@@ -114,6 +118,8 @@ function insertar(request, response){
         console.log("Body:",contenidoBody.toString())
         console.log("Body:",disco)
 
+        //llamadita a la lógica de negocio
+
         response.end("OK (que no se me olvide quitar este response.end)")
     })
 
@@ -152,3 +158,18 @@ function borrar(request, response){
     response.end("OK")
 }
 
+
+
+
+/*
+
+POST /sumar?s1=10&s2=20
+
+
+let s1 = trocear para sacar s1
+let s2 = trocear para sacar s2
+
+console.log(s1+s2)  //1020
+
+
+*/
