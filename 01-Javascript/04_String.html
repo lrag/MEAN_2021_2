@@ -67,17 +67,69 @@
 
     */
 
+    console.log("===================================");    
     let txt = "/discos/0123456789ABCDEF01234567"
 
-    txt.match("TERROBLE EXPRESIÓN REGULAR REVIENTA CEREBROS")
+    let txt1 = "HOLA"
+    console.log(txt1.match("HOLA"))
+    console.log(txt1.match("hola"))
 
+    console.log(txt.match("/discos/")) //Lo encuentra en la posición 0
+    
+    let txt2 = "algo/discos/otra movida"
+    console.log(txt2.match("/discos/")) //Lo encuentra en la posicion 4
+    
+    // ^ Indica que la cadena a buscar debe estar al principio
+    console.log(txt.match("^/discos/")) //Si
+    console.log(txt2.match("^/discos/")) //NO
 
+    // Un caracter busca ese caracter
+    console.log(txt.match("o")) //Lo encuentra en la posición 5
+    // Podemos escribir vários caracteres y buscará la primera ocurrencia
+    console.log(txt.match("123")) //Lo encuentra en la posición 9
 
+    // Con los corchetes indicamos una serie de caracteres a buscar
+    let txt3 = "abcdefghijk"
+    console.log(txt3.match("[fnp]"))
+    // Podemos añadir rangos
+    let txt4 = "abcdef6ghijk"
+    console.log(txt4.match("[0-9]")) //Lo encuentra en la posición 6
+    // Tambien con caracteres
+    let txt5 = "01234J56789"
+    console.log(txt5.match("[a-z]")) //NO
+    console.log(txt5.match("[A-Z]")) //En la 5
 
+    // Comodin para indicar cualquier número de caracteres (*)
+    let txt6 = "1234567890"
+    console.log(txt6.match("[0-9]*")) //Está txt6 formado únicamente por dígitos? Encuentra la cadena entera
+    let txt7 = "123A67890"
+    console.log(txt7.match("[0-9]*")) //Está txt7 formado únicamente por dígitos? Encuentra solo 123
 
+    //Se pueden juntar várias cosas
+    console.log(txt.match("/discos/[0-9a-fA-F]")) //Encuentra /discos/0
+    
+    let txt8 = "/discos/0ZZZZZZZZ"
+    console.log(txt8.match("/discos/[0-9a-fA-F]")) //Encuentra /discos/0
+    let txt9 = "NO/discos/0ZZZZZZZZ"
+    console.log(txt9.match("/discos/[0-9a-fA-F]")) //Encuentra /discos/0
 
-
-
+    //tiene que empezar por /discos/
+    //tiene que continuar con 24 caracteres a-f,A-F,0-9
+    
+    console.log(txt.match("^/discos/[0-9a-fA-F]*"))
+    let txt10 = "/discos/0123456789ABCDEF01234567-MOVIDAS-GORDÍSIMAS"
+    console.log(txt10.match("^/discos/[0-9a-fA-F]*"))
+    
+    //tiene que terminar por los 24 caracteres
+    console.log(txt.match("^/discos/[0-9a-fA-F]*$")) //OK
+    console.log(txt10.match("^/discos/[0-9a-fA-F]*$")) //NULL
+    
+    //Nos faltaría indicar que han de ser 24 caracteres
+    let txt11 = "/discos/0123456789ABCDEF01234567890ABCDEF"
+    console.log(txt11.match("^/discos/[0-9a-fA-F]*$")) //No da null :(
+        
+    console.log(txt.match("^/discos/[0-9a-fA-F]{24}$")) //OK
+    console.log(txt11.match("^/discos/[0-9a-fA-F]{24}$")) //Null
 
 </script>
 
