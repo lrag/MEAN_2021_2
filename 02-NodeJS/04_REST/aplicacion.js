@@ -63,37 +63,92 @@ function procesarPeticion(request, response){
 //////////////////////////////////////////////////////////////////
 
 /*
+Las tareas de la lógica de control en un api REST son las siguientes:
+
+-Extraer de la petición los valores necesarios
+    -query parameters
+    -parámetros interpolados en la ruta
+    -contenido del body
+    -valores en los headers
+    -cualquier combinación de los anteriores
+
+-X
+-Y
+
+
+/*
 GET /discos
-Aqui no hay qye extraer nada del request
 */
 function listar(request, response){
+    //Aqui no hay que extraer nada del request
     console.log("listando...")
     response.end("OK")
 }
 
 /*
 GET /discos/:id
-Aqui hay que extraer un valor de la URL
 */
-function buscarPorId(request, response){
-
+function buscarPorId(request, response){    
+    //Aqui hay que extraer un valor de la URL
     let id = request.url.split("/")[2]
     console.log("buscando un disco por el id:"+id)
     response.end("OK")
 }
 
+/*
+POST /discos
+CT: app/json
+------------
+{ disco }
+*/
 function insertar(request, response){
     console.log("insertando...")
-    response.end("OK")
+    //Leemos el body con request.on()
+    //'on' es asíncrona y recibe dos parámetros:
+    //-el evento
+    //-el callback 
+
+    //Si no llamamos a on con "data" el body no se leerá
+    request.on("data", function(contenidoBody){     
+        let disco = JSON.parse(contenidoBody)
+        console.log("Body:",contenidoBody.toString())
+        console.log("Body:",disco)
+
+        response.end("OK (que no se me olvide quitar este response.end)")
+    })
+
 }
 
+/*
+PATCH /discos/:id
+CT: app/json
+------------
+{ disco }
+*/
 function modificar(request, response){
+
+    //Tenemos que leer el body y sacar el id de la url
+    let id = request.url.split("/")[2]
+    request.on("data", function(contenidoBody){     
+        let disco = JSON.parse(contenidoBody)
+        console.log("Body:",contenidoBody.toString())
+        console.log("Body:",disco)
+
+        response.end("OK (que no se me olvide quitar este response.end)")
+    })
+
     console.log("modificando...")
     response.end("OK")
 }
 
+/*
+DELETE /discos/:id
+*/
 function borrar(request, response){
     console.log("borrando...")
+
+    //Tenemos que el id de la url
+    let id = request.url.split("/")[2]
     response.end("OK")
 }
 
