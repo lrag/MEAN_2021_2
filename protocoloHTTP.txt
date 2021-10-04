@@ -267,15 +267,22 @@ factura
 }
 
 
-/clientes
+/facturas 
+    f1
+    f2
+    f4
+    f8
+    f13
+    f15
+    f20
 
+/clientes
     /c1
         cliente1
         /facturas
             f2
             f8
             f15
-
     /c2
         cliente2
         /facturas   
@@ -285,8 +292,16 @@ factura
             f20
 
 
+Dame el cliente 43
 
+GET /clientes/43
+GET /facturas/87
 
+GET /clientes/43/facturas
+GET /clientes/43/incidencias
 
+//Siempre podemos prescindir de las subcarpetas y filtrar por los query parameters:
 
+GET /facturas?idCliente=43
+GET /incidencias?idCliente=43
 
