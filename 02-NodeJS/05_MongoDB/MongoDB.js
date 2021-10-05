@@ -10,6 +10,7 @@ const mongoDB = require("mongodb")
 
 //Funciones síncronas:
 //-dbs.db("nombre_esquema")
+//-db.collection("nombre_coleccion")
 
 //////////////////////////////////
 //Obtener una conexión a MongoDB//
@@ -42,11 +43,32 @@ client.connect(function(err, dbs){
     let coleccionDiscos = esquemaDiscos.collection("discos")
 
     //A la colección le pedimos que ejecute consultas
-      
+
+    /////////////
+    //insertOne//
+    /////////////
+
+    let disco = {
+        //_id : "TOCOTO",
+        titulo : "Purpendicular",
+        grupo  : "Deep Purple",
+        year   : 1996,
+        discografica : "BMG"
+    }
+
+    coleccionDiscos.insertOne(disco, function(err, result){
+        if(err){
+            console.log("Error al insertar",err)
+            return
+        }
+        console.log("Result:", result)
+
+        
+    })
 
 })
 
-console.log("FIN")
+console.log("FIN en falso")
 
 
 
