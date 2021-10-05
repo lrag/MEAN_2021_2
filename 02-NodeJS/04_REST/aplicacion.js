@@ -79,7 +79,6 @@ Las tareas de la lógica de control en un api REST son las siguientes:
 -Y YA!
 */
 
-
 /*
 GET /discos
 */
@@ -155,21 +154,8 @@ function borrar(request, response){
 
     //Tenemos que el id de la url
     let id = request.url.split("/")[2]
-    response.end("OK")
+
+
 }
 
 
-
-
-/*
-
-POST /sumar?s1=10&s2=20
-
-
-let s1 = trocear para sacar s1
-let s2 = trocear para sacar s2
-
-console.log(s1+s2)  //1020
-
-
-*/
