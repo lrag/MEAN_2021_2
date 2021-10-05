@@ -7,10 +7,16 @@ const mongoDB = require("mongodb")
 
 //Funciones asíncronas:
 //-mongoClient.connect
+//-dbs.close
+//-collection.insert
+//-collection.insertOne
+//-collection.findOne
+//-cursor.toArray
 
 //Funciones síncronas:
 //-dbs.db("nombre_esquema")
 //-db.collection("nombre_coleccion")
+//-collection.find() 
 
 //////////////////////////////////
 //Obtener una conexión a MongoDB//
@@ -50,10 +56,10 @@ client.connect(function(err, dbs){
 
     let disco = {
         //_id : "TOCOTO",
-        titulo : "Purpendicular",
-        grupo  : "Deep Purple",
-        year   : 1996,
-        discografica : "BMG"
+        titulo : "Hotel California",
+        grupo  : "Eagles",
+        year   : 1976,
+        discografica : "Elektra"
     }
 
     coleccionDiscos.insertOne(disco, function(err, result){
@@ -63,13 +69,27 @@ client.connect(function(err, dbs){
         }
         console.log("Result:", result)
 
-        
+        //coleccionDiscos.find({})
+        let cursor = coleccionDiscos.find() //Esto es síncrono y devuelve un cursor
+        //toArray (o cualquier otro modo de recorrer el cursor) es asóincrono
+        cursor.toArray(function(err, discos){
+            if(err){
+                console.log("Error al insertar",err)
+                return
+            }  
+            console.log("Discos:", discos)          
+            dbs.close(function(err){
+                if(err){
+                    console.log("Fallo al desconectar", err)
+                    return
+                }
+                console.log("Conexión cerrada")
+            })
+            console.log("Otro fin en falso")
+        })        
     })
-
 })
 
 console.log("FIN en falso")
-
-
 
 
