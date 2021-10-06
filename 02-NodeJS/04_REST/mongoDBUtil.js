@@ -7,10 +7,12 @@ exports.esquema = null
 
 exports.conectarBBDD = function(){
 
+    console.log("Conectando con la base de datos...")
     let url = "mongodb://localhost:27017"
     let client = new mongodb.MongoClient(url)
     client.connect()
         .then( function(dbs){
+            console.log("Conexion establecida")
             exports.esquema = dbs.db("esquema_discos")
         })
         .catch(function(err){
