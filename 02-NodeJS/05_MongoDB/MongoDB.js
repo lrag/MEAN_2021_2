@@ -30,6 +30,11 @@ const url = "mongodb://localhost:27017"
 //Creamos el objeto 'MongoClient'
 const client = new mongoDB.MongoClient(url)
 
+//1-Conectar
+//2-Insertar un disco
+//3-Listar los discos
+//4-Desconectar
+
 //La función connect es asíncrona
 //Nos dan un objeto que representa al servidor de bases de datos
 console.log("Conectando a mongoDB...")

@@ -26,8 +26,7 @@ fs.readFile("./recursos/fichero2.txt")
     .catch(function(err){
         console.log( {err} )
     })
-*/
-  
+*/  
 
 //
 //Concatenando tareas asíncronas con promesas
@@ -72,6 +71,7 @@ fs.readFile("./recursos/fichero1.txt")
     })
 */
 
+
 //
 //Para concatenar tareas asíncoras utilzando promesas hacemos lo siguiente:
 //
@@ -100,13 +100,7 @@ fs.readFile("./recursos/fichero1.txt")
     })
     .catch(function(err){
         console.log(err)
-    })
+     })
 
-
-
-
-
-
-
-
+    
 console.log("FIN en falso")
