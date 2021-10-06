@@ -1,3 +1,6 @@
+const mongodb = require("mongodb")
+const mongoDBUtil = require("./mongoDBUtil")
+
 //'exports' es un objeto implícito que de entrada no tiene propiedades
 //Le vamos añadiendo lo que queremos exportar como valores de propiedades
 
@@ -8,13 +11,12 @@ exports.modificar   = modificar
 exports.borrar      = borrar
 
 function listar(){
-
-
-
 }
 
 function buscarPorId(id){
-   
+    let coleccionDiscos = mongoDBUtil.esquema.collection("discos")
+    let objectId = new mongodb.ObjectId(id)
+    return coleccionDiscos.findOne( { _id : objectId } )
 }
 
 function insertar(disco){
