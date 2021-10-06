@@ -22,12 +22,10 @@ const mongoDB = require("mongodb")
 //Obtener una conexión a MongoDB//
 //////////////////////////////////
 
-
 //
 //mongodb://<ip>:<puerto>[/esquema]
 //
 const url = "mongodb://localhost:27017"
-
 
 //Creamos el objeto 'MongoClient'
 const client = new mongoDB.MongoClient(url)
@@ -69,6 +67,10 @@ client.connect(function(err, dbs){
         }
         console.log("Result:", result)
 
+        ///////////////////////
+        //listar por criterio//
+        ///////////////////////
+
         //coleccionDiscos.find({})
         let cursor = coleccionDiscos.find() //Esto es síncrono y devuelve un cursor
         //toArray (o cualquier otro modo de recorrer el cursor) es asóincrono
@@ -78,6 +80,10 @@ client.connect(function(err, dbs){
                 return
             }  
             console.log("Discos:", discos)          
+            
+            ///////////////
+            //desconectar//
+            ///////////////
             dbs.close(function(err){
                 if(err){
                     console.log("Fallo al desconectar", err)
@@ -91,5 +97,7 @@ client.connect(function(err, dbs){
 })
 
 console.log("FIN en falso")
+
+
 
 

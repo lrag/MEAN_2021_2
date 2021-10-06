@@ -51,6 +51,9 @@ function procesarPeticion(request, response){
         modificar(request, response)          
     } else if( metodo=="DELETE" && url.match("^/discos/[0-9a-fA-F]{24}$") ){
         borrar(request, response)  
+    } else if( metodo=="POST" && url=="/hasta_luego_lucas" ){
+        console.log("Adiós mundo cruel!")
+        process.exit(0)  
     } else {
         //404!
         response.end("MAL")
@@ -95,7 +98,7 @@ function buscarPorId(request, response){
     //Aqui hay que extraer un valor de la URL
     let id = request.url.split("/")[2]
     console.log("buscando un disco por el id:"+id)
-    response.end("OK")
+
 }
 
 /*

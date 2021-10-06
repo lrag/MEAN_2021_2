@@ -1,16 +1,20 @@
 //'exports' es un objeto implícito que de entrada no tiene propiedades
 //Le vamos añadiendo lo que queremos exportar como valores de propiedades
 
-exports.listar = listar
-exports.buscar = buscar
-exports.insertar = insertar
-exports.modificar = modificar
-exports.borrar = borrar
+exports.listar      = listar
+exports.buscarPorId = buscarPorId
+exports.insertar    = insertar
+exports.modificar   = modificar
+exports.borrar      = borrar
 
 function listar(){
+
+
+
 }
 
-function buscar(id){
+function buscarPorId(id){
+   
 }
 
 function insertar(disco){
