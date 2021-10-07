@@ -137,13 +137,6 @@ POST /discos
 CT: app/json
 ------------
 { disco }
-
-201 CREATED
-CT: app/json
-------------
-{ _id : ID }
-
-
 */
 function insertar(request, response){
     console.log("insertando...")

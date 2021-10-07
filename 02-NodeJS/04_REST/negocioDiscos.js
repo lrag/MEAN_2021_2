@@ -11,6 +11,13 @@ exports.modificar   = modificar
 exports.borrar      = borrar
 
 function listar(){
+    //PUT YOUR CODE HERE
+    let coleccionDiscos = mongoDBUtil.esquema.collection("discos")
+
+    let cursor = coleccionDiscos.find() 
+    return cursor.toArray()
+
+
 }
 
 function buscarPorId(id){
@@ -20,6 +27,10 @@ function buscarPorId(id){
 }
 
 function insertar(disco){
+
+
+
+    
 }
 
 function modificar(disco){

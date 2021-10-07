@@ -7,6 +7,8 @@ exports.esquema = null
 
 exports.conectarBBDD = function(callback, callbackError){
 
+    //¿deberíamos comprobar que los parámetros recibidos son funciones?
+
     console.log("Conectando con la base de datos...")
     let url = "mongodb://localhost:27017"
     let client = new mongodb.MongoClient(url)
