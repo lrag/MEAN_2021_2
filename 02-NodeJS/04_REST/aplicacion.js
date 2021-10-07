@@ -3,9 +3,27 @@ const http = require("http")
 const mongoDBUtil = require("./mongoDBUtil")
 const negocioDiscos = require("./negocioDiscos.js") //La extensión 'js' es opcional
 
+//////////////////////////////////////////////////////////////////
+//CONECTAMOS CON LA BASE DE DATOS/////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-//Esto todavía es cutre, pero funciona
-mongoDBUtil.conectarBBDD()
+mongoDBUtil.conectarBBDD(arrancarServidor)
+
+//////////////////////////////////////////////////////////////////
+//CREAMOS, CONFIGURAMOS Y ARRANCAMOS EL SERVIDOR//////////////////
+//////////////////////////////////////////////////////////////////
+
+function arrancarServidor(){
+    console.log("Arrancando el servidor HTTP")
+    let servidor = http.createServer(procesarPeticion)
+    servidor.listen(3000, function(){
+        console.log("Esperando peticiones en el puerto 3000")
+    })
+}
+
+//////////////////////////////////////////////////////////////////
+//FUNCIÓN QUE PROCESARÁ TODAS LAS PETICIONES//////////////////////
+//////////////////////////////////////////////////////////////////
 
 /*
 API
@@ -18,19 +36,6 @@ POST    /discos      {json}  {json}     insertar un disco
 PATCH   /discos/:id  {json}  {json}     modificar un disco
 DELETE  /discos/:id  -       -          borrar un disco
 */
-
-//////////////////////////////////////////////////////////////////
-//CREAMOS, CONFIGURAMOS Y ARRANCAMOS EL SERVIDOR//////////////////
-//////////////////////////////////////////////////////////////////
-
-let servidor = http.createServer(procesarPeticion)
-servidor.listen(3000, function(){
-    console.log("Esperando peticiones en el puerto 3000")
-})
-
-//////////////////////////////////////////////////////////////////
-//FUNCIÓN QUE PROCESARÁ TODAS LAS PETICIONES//////////////////////
-//////////////////////////////////////////////////////////////////
 
 function procesarPeticion(request, response){
     
