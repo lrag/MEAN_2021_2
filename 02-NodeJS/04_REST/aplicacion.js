@@ -177,7 +177,13 @@ function insertar(request, response){
 PATCH /discos/:id
 CT: app/json
 ------------
-{ disco }
+{ 
+    _id : ABCDEF <-- este id será ignorado de manera activa
+    titulo :
+    grupo :
+    year :
+    discografica :      
+}
 */
 function modificar(request, response){
 
@@ -188,11 +194,20 @@ function modificar(request, response){
         console.log("Body:",contenidoBody.toString())
         console.log("Body:",disco)
 
-        response.end("OK (que no se me olvide quitar este response.end)")
+        disco._id = id
+        negocioDiscos.modificar(disco)
+            .then(function(resultado){
+
+                console.log(resultado)
+
+                response.end("OK?")
+
+            })
+            .catch(function(err){
+                devolverError(500, "Hubo un error con la bb.dd.", response)
+            })
     })
 
-    console.log("modificando...")
-    response.end("OK")
 }
 
 /*

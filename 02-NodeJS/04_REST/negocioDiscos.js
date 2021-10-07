@@ -28,11 +28,6 @@ function buscarPorId(id){
 
 function insertar(disco){
     
-    /*
-    y el tema de crear un pool de conexiones y demás, será con otra 
-    librería. Aquí es como si usásemos un JDBC no?
-    */
-
     //Habría que validar que el disco es correcto
     //-que tiene las porpiedades esperadas
     //-que tiene valores legales
@@ -43,6 +38,30 @@ function insertar(disco){
 }
 
 function modificar(disco){
+    let coleccionDiscos = mongoDBUtil.esquema.collection("discos")
+    return coleccionDiscos.findOneAndUpdate( 
+            { _id : new mongodb.ObjectId(disco._id) },
+            {
+                $set : {
+                    //Aqui no podemos colocar el _id (es inmutable)
+                    titulo       : disco.titulo,
+                    grupo        : disco.grupo,
+                    year         : disco.year,
+                    discografica : disco.discografica
+                },
+                //Con $unset indicamos que propiedades queremos ELIMINAR
+                //$unset : {
+                //    discografica : true
+                //}
+            },
+            {
+                //returnOriginal : false,
+                //Con la opcion upsert a true si el criterio de búsqueda no ha dado
+                //resultado se insertará un nuevo documento con los valores disponibles
+                //Es decir, convertimos la consulta en un 'modificar o insertar'
+                //upsert : true            
+            }
+        )
 }
 
 function borrar(id){
