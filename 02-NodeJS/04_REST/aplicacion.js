@@ -197,17 +197,17 @@ function modificar(request, response){
         disco._id = id
         negocioDiscos.modificar(disco)
             .then(function(resultado){
-
-                console.log(resultado)
-
-                response.end("OK?")
-
+                if(!resultado.value){
+                    devolverError(404, `No existe un disco con el id ${id}`, response)
+                    return             
+                }
+                response.setHeader("Content-type","application/json")
+                response.end(JSON.stringify(resultado.value))
             })
             .catch(function(err){
                 devolverError(500, "Hubo un error con la bb.dd.", response)
             })
     })
-
 }
 
 /*
@@ -219,6 +219,23 @@ function borrar(request, response){
     //Tenemos que el id de la url
     let id = request.url.split("/")[2]
 
+    negocioDiscos.borrar(id)
+        .then(function(result){
+            if(!result.value){
+                devolverError(404, `No existe un disco con el id ${id}`, response)
+                return                  
+            }
+            response.setHeader('Content-Type','/application/json')
+            let respuesta = {
+                codigo : 200,
+                mensaje : `El disco ${id} se ha borrado`
+            }
+            response.end(JSON.stringify(respuesta))            
+
+        })
+        .catch(function(err){
+            devolverError(500, "Hubo un error con la bb.dd.", response)
+        })
 
 }
 

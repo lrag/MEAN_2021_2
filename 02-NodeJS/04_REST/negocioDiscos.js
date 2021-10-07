@@ -65,6 +65,8 @@ function modificar(disco){
 }
 
 function borrar(id){
+    let coleccionDiscos = mongoDBUtil.esquema.collection("discos")
+    return coleccionDiscos.findOneAndDelete({ _id : new mongodb.ObjectId(id) })
 }
 
 //Tambien podemos definir las funciones como anónimas en el export:
