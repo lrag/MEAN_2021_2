@@ -27,10 +27,19 @@ function buscarPorId(id){
 }
 
 function insertar(disco){
-
-
-
     
+    /*
+    y el tema de crear un pool de conexiones y demás, será con otra 
+    librería. Aquí es como si usásemos un JDBC no?
+    */
+
+    //Habría que validar que el disco es correcto
+    //-que tiene las porpiedades esperadas
+    //-que tiene valores legales
+    
+    let coleccionDiscos = mongoDBUtil.esquema.collection("discos")
+    return coleccionDiscos.insertOne(disco)
+
 }
 
 function modificar(disco){

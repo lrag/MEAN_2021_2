@@ -142,8 +142,6 @@ CT: app/json
 CT: app/json
 ------------
 { _id : ID }
-
-
 */
 function insertar(request, response){
     console.log("insertando...")
@@ -159,10 +157,20 @@ function insertar(request, response){
         console.log("Body:",disco)
 
         //llamadita a la lógica de negocio
-
-        response.end("OK (que no se me olvide quitar este response.end)")
+        negocioDiscos.insertar(disco)
+            .then(function(result){
+                response.statusCode = 201
+                response.setHeader('Content-Type','/application/json')
+                let respuesta = {
+                    codigo : 201,
+                    _id : result.insertedId
+                }
+                response.end(JSON.stringify(respuesta))
+            })
+            .catch(function(err){
+                devolverError(500, "Hubo un error con la bb.dd.", response)
+            })
     })
-
 }
 
 /*
