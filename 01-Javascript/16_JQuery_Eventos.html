@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="./jquery.js"></script>
+</head>
+
+<script type="text/javascript">
+
+
+function dale1(){
+    console.log("=1======================")
+    console.log(arguments)
+}
+
+function dale2(){
+    console.log("=2======================")
+    console.log(arguments)
+}
+
+function validar(evento){    
+    if($("#dato").val().trim().length == 0){
+        alert("Dato es obligatorio")
+        evento.preventDefault()
+    }
+}
+
+$(pruebas)
+
+function pruebas(){
+
+    //Con JS
+    //document.getElementById("DALE").onclick = dale
+    //document.getElementById("DALE").addEventListener('click', dale)
+
+    //Así no:
+    //let nodos = $("#DALE")  
+    //nodos[0].onclick = dale   
+
+    //Asi:
+    //$("#DALE").click(dale1)
+    //$("#DALE").click(dale2) //JQuery utiliza 'addEventListener'. Se ejecutarán las dos funciones al pulsar
+
+    //Así es más JQuery
+    $("#DALE")
+        .click(dale1)
+        .click(dale2)   
+
+    //Añade el mismo manejador a varios botones
+    $("#botonera input[type=button]").click(dale1)
+
+    $("#enviar").click(validar)
+}
+
+
+</script>
+
+<body>
+
+    <h1>JQuery. Eventos</h1>
+
+    <input type="button" id="DALE" value="DALE"/>
+    
+    <hr/>
+    
+    <form action="XXX">
+        <input type="text" id="dato" name="dato" value=""/>
+        <input type="submit" id="enviar" value="Enviar" />
+    </form>
+    
+    <div id="botonera">
+        <input type="button" id="boton1" value="Boton 1"/>
+        <input type="button" id="boton2" value="Boton 2"/>
+        <input type="button" id="boton3" value="Boton 3"/>
+        <input type="button" id="boton4" value="Boton 4"/>
+        <input type="button" id="boton5" value="Boton 5"/>
+    </div>
+
+</body>
+</html>

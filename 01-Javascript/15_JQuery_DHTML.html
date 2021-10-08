@@ -81,15 +81,27 @@ function pruebas(){
     $("<h2>Siete</h2><h2>caballos</h2><h2>vienen</h2><h2>de</h2><h2>Bonanza</h2>")
         .appendTo("#span4")
 
-    //
-    $("<h2><font color='lightBlue'>!Hola Raffaella¡</font></h2>")
+    //Este ejemplo añade hijos a todos los espanes que haya o haiga
+    $("<h2><font color='lightBlue'>!Hola Rafaela¡</font></h2>")
         .appendTo("span")
 
-    nodo = $("#span3").get(0)
-    console.log(nodo.childNodes)
-    nodo = $("#span5").get(0)
-    console.log(nodo.childNodes)
-
+    //
+    //Añadiendo nodos a posiciones concretas
+    //
+    $("#lista").append("<li>List item 1</li>")
+    $("#lista").append("<li>List item 2</li>")
+    $("#lista").append("<li>List item 3</li>")
+    $("#lista").append("<li id='separador'>====================</li>")
+    $("#lista").append("<li>List item 4</li>")
+    $("#lista").append("<li>List item 5</li>")
+    $("#lista").append("<li>List item 6</li>")
+    
+    //prepend y prependTo añaden al principio
+    $("#lista").prepend("<li>PRIMERO</li>")
+    
+    //antes o despues de un node concreto
+    $("#separador").before("<li>ANTES</li>")
+    $("#separador").after("<li>DESPUES</li>")            
 
 }
 
