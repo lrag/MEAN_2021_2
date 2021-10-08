@@ -5,7 +5,192 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <!--
+    Content
+    Delivery
+    Network
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" 
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" 
+    crossorigin="anonymous"></script>
+    -->
+
+
+    <!-- 
+    Podemos ahorrarnos el './' si queremos indicar una ruta relativa
+    src="./jquery.js" 
+    -->
+    <script type="application/javascript" src="jquery.js"></script>
+
 </head>
+
+<script type="application/javascript">
+
+//La librería JQuery define la función jQuery
+//Tambien define un 'alias' para esa función: $
+//function jQuery(){
+//    //...
+//    console.log("Ola ke tal")
+//}
+//let $ = jQuery
+//jQuery()
+//$()
+
+function pruebas1(){
+    console.log("Funcion 1")
+}
+function pruebas2(){
+    console.log("Funcion 2")
+}
+function pruebas3(){
+    console.log("Funcion 3")
+}
+
+////////////////////////////////////////////
+//Asociando una funcion al evento 'onload'//
+////////////////////////////////////////////
+
+//Con JS
+//window.onload = pruebas
+
+//Con JQuery, manera antigua
+//$(document).ready(pruebas)
+
+//Con JQuery 
+//$(pruebas1)
+//Podemos añadir varias funciones y se invocarán todas, en el orden en el que se añadieron
+//$(pruebas2)
+//$(pruebas3)
+
+$(pruebas)
+
+function pruebas(){
+
+    /*
+    //JQuery nos permitirá seleccionar nodos del árbol DOM con total precision
+    //gracias a sus selectores que utilizan la misma sintaxis que los de CSS
+    //
+    //Lo consiguen utilizando querySelectorAll
+
+    ///////////////////////////////
+    //Localizando todos los nodos//
+    ///////////////////////////////
+
+    //El objeto JQuery es una suerte de array extendido
+    let objetoJQuery = $("*")
+    console.log(objetoJQuery)
+    console.log(objetoJQuery.length) //Numero de nodos localizados
+
+    /////////////////////////
+    //Buscando nodos por id//
+    /////////////////////////
+    console.log("=======================================")
+    //let nodo = document.querySelector("#div1") Con JS
+    
+    let jQueryObj = $("#div1")
+    //Cuidado que no nos dan el nodo. Siempre será un array
+    let nodo = jQueryObj[0]
+    console.log(nodo)    
+
+    //Jquery tiene además la función 'get'
+    nodo = jQueryObj.get(0)
+    console.log(nodo)  
+    
+    ///////////////////////////////////////
+    //Buscando nodos por tipo de etiqueta//
+    ///////////////////////////////////////
+    console.log("=======================================")
+    //Todos los <th> del árbol DOM
+    jQueryObj = $("th") //Muy parecido a document.getElementsByTagName("th") ó document.querySelectorAll("th")
+    //Localizando todos los 'input'
+    jQueryObj = $("input")
+    //Despues de todo el objeto jQuery es un array...
+    for(let nodo of jQueryObj){
+        nodo.value = "hola"
+    }
+
+    //El objeto JQuery tiene una serie de funciones de utilidad que
+    //se aplican a todos los nodos contenidos en el array
+    //La funcion val trabaja con la propiedad 'value' de los nodos
+    //si recibe un parámetro lo asigna (nodo.value = valor)    
+
+    //jQueryObj = $("input")
+    //jQueryObj.val("HOLO, que es más gordo")
+
+    $("input").val("HOLO, que es más gordo")
+    //si no recibe parámetros devuelve el value (return nodo.value)
+    console.log($("#txt1").val())
+
+    //////////////////////////////
+    //Buscando nodos por 'class'//
+    //////////////////////////////
+    console.log("=======================================")
+
+    let nodo1 = $(".titulo")[0]
+    let nodo2 = $(".titulo").get(0) //hace lo mismo
+    //Con JS
+    //nodo1.style.color = "orange"
+    //nodo1.style.background = "lightGreen"
+
+    //Más funciones del objeto jQuery
+    $(".titulo").css('color','yellow')
+    $(".titulo").css('background-color','lightGreen')
+
+    //css() y otras funciones de jquery admiten distintos tipos de parámetros
+    $(".titulo").css({
+        'color' : 'lightGreen',
+        'background-color' : 'yellow'
+    })    
+
+    //css tambien sirve para acceder al valor
+    console.log($(".titulo").css('color'))
+
+    //Las funciones del objeto jQuery se peden concatenar, porque todas devuelven THIS
+
+    $(".titulo")
+        .css("color","lightGreen")
+        .css("background-color","orange")    
+
+    */
+
+
+    function _jQuery(selector){
+        this.nodos = document.querySelectorAll(selector)
+    }
+    _jQuery.prototype.val = function(valor){
+        for(let nodo of this.nodos){
+            nodo.value = valor
+        }
+        return this
+    }
+    _jQuery.prototype.css = function(clave, valor){
+        for(let nodo of this.nodos){
+            nodo.style[clave] = valor
+        }
+        return this
+    }
+
+    let J = _jQuery
+
+    new J("input").val("A VER QUE PASA")
+    new J("input").css("color","blue")
+
+    new J("input")
+        .val("HABER QUE PASA")
+        .css("color","pink")
+        
+
+
+
+
+}
+
+
+
+
+
+</script>
 
 <body>    
 
