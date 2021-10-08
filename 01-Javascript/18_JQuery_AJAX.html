@@ -7,16 +7,58 @@
     <title>Document</title>
 
     <script src="./jquery.js" type="application/javascript"></script>    
-    <script src="./09_Libreria.js" type="application/javascript"></script>    
 
 </head>
 
 <script type="application/javascript">
 
+function listarDiscos(){
+
+    //Directamente con javascript
+    
+    let xhr = new XMLHttpRequest()
+    xhr.open('GET', 'http://localhost:3000/discos')
+    xhr.onload = function(){
+        if(this.status != 200){
+            console.log("NO HA SIDO UN 200!!!")
+            return
+        }
+        rellenarTabla(JSON.parse(this.responseText))
+    }
+    xhr.onerror = function(){
+        procesarError('ZASCA!')
+    }    
+    xhr.send()
+
+}
+
+function procesarError(){
+    alert("ERROR!")
+}
+
+function rellenarTabla(discos){
+
+    $("#tablaDiscos").html('')
+
+    for(let disco of discos){
+        $(`
+        <tr>
+            <td>${disco.titulo}</td>
+            <td>${disco.grupo}</td>
+            <td>${disco.year}</td>
+            <td>${disco.discografica}</td>
+        </tr>        
+        `)
+        .appendTo("#tablaDiscos")
+    }
+
+}
+
+
 $(inicializar)
 
 function inicializar(){
-    
+    $("#btnListar").click(listarDiscos)
 }
 
 </script>
@@ -33,7 +75,19 @@ function inicializar(){
 
     <div id="mensaje"></div>
 
-    <div id="divTablaDiscos"></div>
+    <div>
+        <table border="1" align="center">
+            <tr>
+                <th>Título</th>
+                <th>Grupo</th>
+                <th>Año</th>
+                <th>Discográfica</th>
+            </tr>
+            <tbody id="tablaDiscos"></tbody>
+        </table>
+
+
+    </div>
        
 </body>
 
