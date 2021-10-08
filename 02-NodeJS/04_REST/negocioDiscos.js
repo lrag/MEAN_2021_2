@@ -16,8 +16,6 @@ function listar(){
 
     let cursor = coleccionDiscos.find() 
     return cursor.toArray()
-
-
 }
 
 function buscarPorId(id){
@@ -34,7 +32,6 @@ function insertar(disco){
     
     let coleccionDiscos = mongoDBUtil.esquema.collection("discos")
     return coleccionDiscos.insertOne(disco)
-
 }
 
 function modificar(disco){
