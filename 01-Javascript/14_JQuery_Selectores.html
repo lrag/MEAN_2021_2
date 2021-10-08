@@ -67,7 +67,6 @@ $(pruebas)
 
 function pruebas(){
 
-    /*
     //JQuery nos permitirá seleccionar nodos del árbol DOM con total precision
     //gracias a sus selectores que utilizan la misma sintaxis que los de CSS
     //
@@ -152,9 +151,74 @@ function pruebas(){
         .css("color","lightGreen")
         .css("background-color","orange")    
 
-    */
+
+    $("input")
+        .css("color", "red")
+        .val("AC/DC")      
+        
+    //Solo el primero
+    $("input")
+        .first()
+        .css("color", "purple")
+        .val("DEEP PURPLE")   
+        
+    /////////////////////////
+    //Buscando por atributo//
+    /////////////////////////
+    console.log("=======================================")    
+    //Dame los nodos que tengan el atributo 'dato' no importando su valor
+    $("[dato]").css('border','3px solid green')
+
+    //buscando nodos con cierto atributo y valor
+    $("[dato=1000]") //El valor es exactamente igual
+    $("[dato!=100]") //El valor es distinto
+    $("[dato*=123]") //El valor del atributo contiene '123'
+    $("[dato$=123]") //El valor del atributo termina por '123'
+    $("[dato^=123]") //El valor del atributo comienza por '123'
+    $("[dato~=123]") //El valor del atributo contiene la palabra ' 123 '     
+
+    ////////////////////////////
+    //Selector de pseudoclases//
+    ////////////////////////////
+    console.log("=======================================")
+
+    //Una lista con las opciones que estén seleccionadas en todos desplegables 
+    let opcionesSeleccionadas = $("option:selected")
+    for(let opcion of opcionesSeleccionadas){
+        console.log(opcion)
+    }
+    
+    let checkboxMarcados = $("input:checked")
+    for(let chk of checkboxMarcados){
+        console.log(chk.id)
+    }    
+
+    let inputDeshabilitados = $("input:disabled")    
+
+    ///////////////////////////
+    //Concatenando selectores//
+    ///////////////////////////
+    console.log("=======================================")
+
+    //Si los selectores se separan por comas se suman
+    //Es un OR
+    //Es decir: se buscan nodos que cumplan al menos uno de los selectores
+    $("[type=text], th").css('background-color','pink')
+
+    //Si los selectores se colocan juntos se multiplican
+    //Es un AND
+    //Es decir: se buscan nodos que cumplan todos los selectores indicados
+    $("[type=text][movida]").css('backgroundColor', 'yellow')
+
+    //Descendientes (no importa el nivel)
+    $("#div3 [type=text]").css("border", "3px blue solid")    
+    
+    //Descendientes directos
+    $("#div3 > [type=text]").css("border", "3px green solid")      
 
 
+
+    /*
     function _jQuery(selector){
         this.nodos = document.querySelectorAll(selector)
     }
@@ -173,13 +237,10 @@ function pruebas(){
 
     let J = _jQuery
 
-    new J("input").val("A VER QUE PASA")
-    new J("input").css("color","blue")
-
     new J("input")
         .val("HABER QUE PASA")
         .css("color","pink")
-        
+    */
 
 
 
