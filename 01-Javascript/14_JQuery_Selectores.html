@@ -58,6 +58,7 @@ function pruebas3(){
 //$(document).ready(pruebas)
 
 //Con JQuery 
+
 //$(pruebas1)
 //Podemos añadir varias funciones y se invocarán todas, en el orden en el que se añadieron
 //$(pruebas2)
@@ -70,8 +71,8 @@ function pruebas(){
     //JQuery nos permitirá seleccionar nodos del árbol DOM con total precision
     //gracias a sus selectores que utilizan la misma sintaxis que los de CSS
     //
+    
     //Lo consiguen utilizando querySelectorAll
-
     ///////////////////////////////
     //Localizando todos los nodos//
     ///////////////////////////////
@@ -89,6 +90,7 @@ function pruebas(){
     
     let jQueryObj = $("#div1")
     //Cuidado que no nos dan el nodo. Siempre será un array
+    
     let nodo = jQueryObj[0]
     console.log(nodo)    
 
@@ -101,8 +103,8 @@ function pruebas(){
     ///////////////////////////////////////
     console.log("=======================================")
     //Todos los <th> del árbol DOM
-    jQueryObj = $("th") //Muy parecido a document.getElementsByTagName("th") ó document.querySelectorAll("th")
-    //Localizando todos los 'input'
+        //Localizando todos los 'input'
+        jQueryObj = $("th") //Muy parecido a document.getElementsByTagName("th") ó document.querySelectorAll("th")
     jQueryObj = $("input")
     //Despues de todo el objeto jQuery es un array...
     for(let nodo of jQueryObj){
@@ -204,24 +206,57 @@ function pruebas(){
     //Es un OR
     //Es decir: se buscan nodos que cumplan al menos uno de los selectores
     $("[type=text], th").css('background-color','pink')
-
+    
     //Si los selectores se colocan juntos se multiplican
     //Es un AND
     //Es decir: se buscan nodos que cumplan todos los selectores indicados
     $("[type=text][movida]").css('backgroundColor', 'yellow')
-
+        
     //Descendientes (no importa el nivel)
     $("#div3 [type=text]").css("border", "3px blue solid")    
-    
+
+
     //Descendientes directos
     $("#div3 > [type=text]").css("border", "3px green solid")      
 
 
+    ////////////////////////////////////
+    //Trabajando con el array de nodos//
+    ////////////////////////////////////
+
+    $("table").get(1) //La segunda tabla (devuelve el nodo)
+    $("table")[1]     //La segunda tabla (devuelve el nodo)
+
+    
+    //Las funciones que concatenamos a la llamada a '$' se aplican
+    //a todos los nodos encontrados
+    $("table").css("background-color", "grey")
+    
+    //Solo al primero
+    $("table").first().css("background-color", "grey")
+        
+    //Solo al último
+    $("table").last().css("background-color", "grey")
+    
+    
+    $("#tabla tr") //todos los tr de la tabla cuyo id es 'tabla'
+        
+    $("#tabla tr:even").css("background-color",'lightGray')
+    $("#tabla tr:odd").css("background-color",'white')
+    $("#tabla tr:eq(5)").css("background-color",'yellow')
+    $("#tabla tr:lt(3)").css("background-color",'blue')
+    $("#tabla tr:gt(7)").css("background-color",'lightGreen')
+
+    //////////////////////////////
+    //Buscando en nodos de texto//
+    //////////////////////////////
+    $("h1:contains('JQuery')").html("<font color='lightGreen'>JQUERY GRÁN RESERVA</font>")
+
 
     /*
     function _jQuery(selector){
-        this.nodos = document.querySelectorAll(selector)
     }
+    this.nodos = document.querySelectorAll(selector)
     _jQuery.prototype.val = function(valor){
         for(let nodo of this.nodos){
             nodo.value = valor
@@ -242,20 +277,15 @@ function pruebas(){
         .css("color","pink")
     */
 
-
-
-
 }
-
-
-
-
 
 </script>
 
 <body>    
 
-    <h1 id="X" class="titulo">JQuery gran reserva</h1>
+    <marquee>
+        <h1 id="X" class="titulo">JQuery gran reserva</h1>
+    </marquee>
     
     <hr/>
 
