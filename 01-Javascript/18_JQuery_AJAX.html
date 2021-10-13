@@ -141,9 +141,7 @@ function procesarError(){
 }
 
 function rellenarTabla(discos){
-
     $("#tablaDiscos").html('')
-
     for(let disco of discos){
         $(`
         <tr>
@@ -155,7 +153,6 @@ function rellenarTabla(discos){
         `)
         .appendTo("#tablaDiscos")
     }
-
 }
 
 $(inicializar)
@@ -170,7 +167,6 @@ function inicializar(){
         fallo : procesarError,
     })
     */
-
 }
 
 </script>
