@@ -9,6 +9,45 @@
 <script type="text/javascript">
 
 
+$(inicializar)
+
+function inicializar(){
+
+    $("h2")             //Todos los H2
+    $("h2[id]")         //Todos los h2 que tengan id
+    $("h2[id^=color-]") //Todos los h2 que tengan un id que comience por "color-"
+
+    //Sin la función each
+    //let jQueryObj = $("h2[id^=color-]")
+    //for(let nodo of jQueryObj){
+    //    nodo.innerHTML = "Tocotó"
+    //}
+
+    ////////////////
+    //Función EACH//
+    ////////////////
+
+    //
+    //Ejecuta la función que recibe por parámetro por cada uno de los nodos contenidos en el array
+    //    
+    $("h2[id^=color-").each(function(pos, nodo){
+        //Dentro de esta función 'this' es cada uno de los nodos
+        console.log(pos, this)
+        console.log(pos, nodo)
+    })
+
+    //
+    //Tambien nos sirve cuando estamos generando nodos
+    //
+    //$("<p>Vamos</p><p>que</p><p>nos</p><p>vamos</p>").each( function(){
+    //    console.log(this)
+    //})    
+
+
+
+}
+
+
 </script>
 
 <body>
@@ -27,6 +66,8 @@
     <h2 id="color-10">Amarillo</h2>
     <h2 id="color-11">Fabada</h2>
     <h2 id="color-12">Cocido</h2>
+
+
 
     <div id="div"></div>
 
