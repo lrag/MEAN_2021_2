@@ -32,8 +32,8 @@ function inicializar(){
     //    
     $("h2[id^=color-").each(function(pos, nodo){
         //Dentro de esta función 'this' es cada uno de los nodos
-        console.log(pos, this)
-        console.log(pos, nodo)
+        //console.log(pos, this)
+        //console.log(pos, nodo)
     })
 
     //
@@ -43,7 +43,60 @@ function inicializar(){
     //    console.log(this)
     //})    
 
+    //                   //
+    //Método GRAN FAJADOR//
+    /*                   //
+    $("h2[id^=color-").each(function(){        
+        let nombrecolor = this.innerText
+        switch(nombrecolor){
+            case "Rojo" : 
+                //Cuidado que nos dan el nodo del árbol DOM y no tiene las funciones fashion de JQuery
+                //this.css('color','red') //Esto peta!
 
+                //Podemos hacerlo directamente con JS
+                //this.style.color = "red"
+
+                //O podemos hacerlo JQuery style
+                $(this).css('color', 'red')
+                break
+            case "Verde" : 
+                $(this).css('color', 'green')
+                break
+            case "Azul" : 
+                $(this).css('color', 'blue')
+                break
+            case "Amarillo" : 
+                $(this).css('color', 'yellow')
+                break
+            case "Cocido" : 
+                $(this).css('color', '#C0C1D0')
+                break
+            case "Fabada" : 
+                $(this).css('color', '#FABAFA')
+                break
+            default :
+                $(this).css('color', 'black')
+                break
+        }
+    })
+    */
+
+    //                     //
+    //Método FINO ESTILISTA//
+    //                     //
+    let colores = {
+        Rojo     : 'red',
+        Verde    : 'green',
+        Azul     : 'blue',
+        Amarillo : 'yellow',
+        Fabada   : '#FABADA',
+        Cocido   : '#C0C1D0'
+    }    
+
+    $("h2[id^=color-").each(function(){
+        let nombreColor = this.innerText
+        $(this).css('color', colores[nombreColor])
+    })
 
 }
 
@@ -66,8 +119,6 @@ function inicializar(){
     <h2 id="color-10">Amarillo</h2>
     <h2 id="color-11">Fabada</h2>
     <h2 id="color-12">Cocido</h2>
-
-
 
     <div id="div"></div>
 

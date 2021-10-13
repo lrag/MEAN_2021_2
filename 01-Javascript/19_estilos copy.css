@@ -1,0 +1,134 @@
+
+/*Selector universal*/
+
+
+
+/*Selector de etiqueta*/
+h1 {
+    color: lightgreen;
+}
+h5 {
+    color: gray;
+}
+
+/*Selector de identificador*/
+#cabecera {
+    background-color: yellow;
+    height: 75px;
+}
+
+/*Selector de clase*/
+.botonera {
+    background-color: #DDDDDD;
+}
+
+/*Agrupando selectores                 */
+/*Si se separan por comas se suman (OR)*/
+table, .botonera, .formulario {
+    width        : 500px;
+    border       : 1px;
+    border-style : solid;
+    border-color : black;
+    margin-top   : 10px;
+
+    margin-left  : auto; 
+    margin-right : auto;
+    padding: 5px;
+
+    text-align: left;
+} 
+
+/*Concatenando selectores, AND*/
+/*Selectores de hijos, nietos, biznietos...*/
+/*Descendiente*/
+.formulario label {
+    color: green;
+}
+/*
+div > label {} Descendiente directo
+div + p {}     Adyacente
+div ~ p {}     Selector de hermanos
+*/
+
+/*Selector de atributos*/
+[obligatorio] {
+    border-color: orange;
+}
+
+/*Pseudo clases. Para cuando el elemento tiene más de un estado
+  y queremos que se vea de manera diferente en cada uno de ellos
+:visited
+:hover
+:focus
+:link
+:selected
+:disabled
+
+input:disabled
+input:checked
+*/
+a {
+    color: green;
+    text-decoration: none; /*para quitarle el subrayado*/
+}
+a:hover {
+    color: lightGreen;
+}
+/*a:visited {
+    color: red;
+}*/
+a:focus {
+    color: yellow;
+}
+
+/*Repetimos #cabecera, pero esto está muy feo*/
+/*
+display block
+-puede tener ancho, alto, color de fondo
+-hace 'salto de línea'. 
+-div, table, hX, p...
+
+display inline
+-no puede tener ancho, alto, color de fondo...
+-no hace salto de linea
+-input, label, span...
+*/
+
+
+#cabecera {
+    background-color : yellow;
+    width            : 100%;
+    height           : 75px;    
+}
+
+#menu {
+    background-color : lightblue;
+    width            : 175px;
+    height           : 400px;  
+    float            : left;
+}
+
+#contenido {
+    background-color: lightgray;
+    text-align: center;
+}
+
+#pie {
+    clear           : both;
+    border-top      : 1px;
+    border-color    : black;
+    border-top-style: solid;  
+}
+
+#contenedor {
+    width: 1000px;
+    margin-left  : auto; 
+    margin-right : auto;    
+}
+
+label {
+    background-color: pink;
+    width: 125px;
+    display: block;
+    float: left;
+}
