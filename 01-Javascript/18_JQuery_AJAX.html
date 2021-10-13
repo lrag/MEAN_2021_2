@@ -12,10 +12,10 @@
 
 <script type="application/javascript">
 
-function listarDiscos(){
-
-    //Directamente con javascript
-    
+//                           //
+//Directamente con javascript//
+//                           //
+function listarDiscos_JS(){
     let xhr = new XMLHttpRequest()
     xhr.open('GET', 'http://localhost:3000/discos')
     xhr.onload = function(){
@@ -29,7 +29,111 @@ function listarDiscos(){
         procesarError('ZASCA!')
     }    
     xhr.send()
+}
 
+
+//                           //
+//Ejemplo de función genérica//
+//                           //
+//url 
+//metodo
+//sincrono/asíncrono
+//función éxito
+//funcion fallo
+//contenido del body
+//content-type
+//añadir otros headers
+function enviarPeticionAJAX(parametros){
+
+    let url    = parametros.url
+    let metodo = parametros.metodo
+    if(!metodo){
+        metodo = 'GET'
+    }
+    let asincrono = parametros.asincrono
+    if(!asincrono){
+        asincrono = true
+    }
+
+    let xmlHttp = new XMLHttpRequest()
+    xmlHttp.open(metodo, url, asincrono)
+
+    //Si nos dan la funcion 'exito' la invocamos con la respuesta
+    //transformada de JSON a objetos
+    if(parametros.exito){
+        xmlHttp.onload = function(){
+            parametros.exito(JSON.parse(this.responseText))
+        }
+    }
+    //Si nos dan la funcion 'fallo' la invocamos con el status de la respuesta
+    if(parametros.fallo){
+        xmlHttp.onerror = function(){
+            parametros.fallo(this.status)
+        }
+    }
+
+    xmlHttp.send(/*body*/)
+}
+
+//          //
+//Con JQuery//
+//          //
+function listarDiscos(){
+
+    /*
+    $(funcion)    -> la asigna como manejadora del evento 'load'
+    $("selector") -> devuelve un objeto JQuery con los nodos que coincidan con el selector
+    $("<HTML>")   -> devuelve un objeto JQuery con los nodos creados a partir del html 
+    */
+
+    /*Manera antígua de pasar los callbacks
+    //JQUery invoca la función success pasando como primer parámetro
+    //el contenido del body de la respuesta
+    //Si ha sido Content-type:app/json hace el JSON.parse por nosotros     
+    $.ajax({
+        type  : "GET", //Por defecto el valor es 'GET'
+        url   : "http://localhost:3000/discos",
+        async : true, //Por defecto el valor es 'true'
+        success  : rellenarTabla,
+        error    : procesarError,
+        complete : movida
+    })
+    */
+
+    //Manera actual
+    $.ajax({
+        //type  : 'GET', //Por defecto es GET
+        url   : 'http://localhost:3000/discos', //Por defecto es '/'
+        //async : true  //Por defecto es true
+    })
+    .done(rellenarTabla) //Solo se llama si ha sido un 200
+    .fail(procesarError) 
+    .always(movida)      //Siempre se invoca    
+
+
+    //Tambien disponemos de las funciones
+    //$.get
+    //$.post
+    //$.put
+    //$.delete
+
+    //Para envíar una peticion POST con un JSON en el body
+    //usando jQuery:
+    /*
+    $.ajax( {
+            type        : 'POST', 
+            url         : '...',
+            contentType : 'application/json'
+            data        : JSON.stringify(objeto),
+        })
+        .done( f )
+        .fail( f )
+    */    
+
+}
+
+function movida(){
+    console.log("FIN")
 }
 
 function procesarError(){
@@ -54,11 +158,19 @@ function rellenarTabla(discos){
 
 }
 
-
 $(inicializar)
 
 function inicializar(){
     $("#btnListar").click(listarDiscos)
+
+    /*
+    enviarPeticionAJAX({
+        url   : 'http://localhost:3000/discos',
+        exito : rellenarTabla,
+        fallo : procesarError,
+    })
+    */
+
 }
 
 </script>

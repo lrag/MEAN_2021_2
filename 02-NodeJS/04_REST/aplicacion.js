@@ -39,6 +39,7 @@ DELETE  /discos/:id  -       -          borrar un disco
 
 function procesarPeticion(request, response){
     
+    //Cross Origin Resource Sharing
     //Vamos a añadir estos headers a todas las respuestas que demos, sean options o no:
     response.setHeader("Access-Control-Allow-Origin", "*")
     response.setHeader('Access-Control-Allow-Methods', 
