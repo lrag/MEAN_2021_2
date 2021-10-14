@@ -41,7 +41,7 @@ exports.devolverContenidoEstatico = function(request, response){
     //ruta = "./recursos"+ruta
 
     console.log("Buscando el recurso:"+ruta)
-    let extension = ruta.split(".").pop() //html, js, css, jpg, ico...
+    let extension = ruta.split(".").pop().toLowerCase() //html, js, css, jpg, ico...
 
     /*
     if(extension=="html" || extension=="js" || extension=="css"){
