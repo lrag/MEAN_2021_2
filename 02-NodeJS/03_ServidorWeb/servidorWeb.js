@@ -65,7 +65,7 @@ function leerRecurso(url, response){
             return
         } 
 
-        let extensionRecurso = url.split(".")[1]
+        let extensionRecurso = url.split(".").pop()
         let mimeType = mimeTypes[extensionRecurso]
         if(!mimeType){
             devolverError(response, 415)
@@ -116,3 +116,5 @@ function devolverError(response, statusCode, mensaje){
 
     response.end(html)
 }
+
+

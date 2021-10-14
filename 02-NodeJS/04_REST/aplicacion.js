@@ -2,6 +2,7 @@ const http = require("http")
 
 const mongoDBUtil = require("./mongoDBUtil")
 const negocioDiscos = require("./negocioDiscos.js") //La extensión 'js' es opcional
+const servidorWeb = require("./servidorWeb")
 
 //////////////////////////////////////////////////////////////////
 //CONECTAMOS CON LA BASE DE DATOS/////////////////////////////////
@@ -73,7 +74,7 @@ function procesarPeticion(request, response){
         console.log("Adiós mundo cruel!")
         process.exit(0)  
     } else {
-        devolverError(404, "Petición desconocida", response)
+        servidorWeb.devolverContenidoEstatico(request, response)
     }
     
 }
