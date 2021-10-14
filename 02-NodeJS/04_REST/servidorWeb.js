@@ -16,9 +16,9 @@ let contentTypes = {
     css  : { contentType : "text/css"              , funcion : lectorTexto },
     js   : { contentType : "application/javascript", funcion : lectorTexto },
     ico  : { contentType : "image/x-icon"          , funcion : lectorBinario },
-    jpg  : { contentType : "image/jpeg"            , funcion : lectorBinario }    
+    jpg  : { contentType : "image/jpeg"            , funcion : lectorBinario },
+    png  : { contentType : "image/png"             , funcion : lectorBinario }    
 }
-
 
 //Esta es la función que comenzará a procesar todas las peticiones
 //Será ejecutada por el hilo del event loop
@@ -43,10 +43,19 @@ exports.devolverContenidoEstatico = function(request, response){
     console.log("Buscando el recurso:"+ruta)
     let extension = ruta.split(".").pop() //html, js, css, jpg, ico...
 
-    let contentType = contentTypes[extension]
-    contentType.funcion(ruta, contentType.contentType, response) //La línea con la que te estalla el celebro
+    /*
+    if(extension=="html" || extension=="js" || extension=="css"){
+        lectorTexto(ruta, "", response)
+    } else if(extension=="ico" || extension=="jpg" || extension=="png"){
+        lectorBinario(ruta, "", response)
+    } else {
+        //NO SE QUE ME PIDES
+    }
+    */
 
-    //contentTypes[extension].funcion(ruta, contentTypes[extension].contentType, response) //La línea con la que te estallan el celebro y el cerebelo (y el bulbo raquídeo)
+    let contentType = contentTypes[extension]
+    //La línea con la que te estalla el celebro:
+    contentType.funcion(ruta, contentType.contentType, response)
 }
 
 function lectorTexto(ruta, contentType, response){
