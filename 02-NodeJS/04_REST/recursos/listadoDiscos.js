@@ -13,13 +13,13 @@ rellenar la tabla
 */
 
 function nuevoDisco(){
-    console.log("Nuevo disco")
+    window.location.href = "formularioDiscos.html"
 }
 
 function listarDiscos(){
     $.ajax({
         //url : "http://localhost:3000/discos",
-        url : "discos",
+        url : "discos"
     })
     .done(rellenarTablaDiscos)
     .fail(mostrarError)

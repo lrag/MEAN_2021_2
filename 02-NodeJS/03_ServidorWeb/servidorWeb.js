@@ -58,9 +58,13 @@ function leerRecurso(url, response){
     //return fs.readFileSync("./recursos"+url)
 
     let ruta = "./recursos"+url
+    
+    //Evitando el 'path traversal'
+    //Pendiente
+
     fs.readFile(ruta, function(error, buffer){
         if(error){
-            console.log("Fallo al leer el fichero:") //, error)
+            console.log("Fallo al leer el fichero:", error)
             devolverError(response, 404, "Recurso no encontrado!!!!!!!!!")
             return
         } 
