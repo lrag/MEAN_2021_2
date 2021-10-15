@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+</head>
+
+<script type="application/javascript">
+
+let array1 = []
+array1.push(function (){
+        console.log("uno")
+        document.getElementById("textArea1").value += "uno\n"
+    })
+array1.push(function (){
+        console.log("dos")
+        document.getElementById("textArea1").value += "dos\n"
+    })
+array1.push(function (){
+        console.log("tres")
+        document.getElementById("textArea1").value += "tres\n"
+    })
+array1.push(function (){
+        console.log("cuatro")
+        document.getElementById("textArea1").value += "cuatro\n"
+    })
+array1.push(function (){
+        console.log("cinco")
+        document.getElementById("textArea1").value += "cinco\n"
+    })
+
+function ejemplo1(){
+    for(let funcion of array1){
+        funcion()
+    }
+}
+
+let funciones = {
+    funcion1 : function(){
+            console.log("AAA")
+            document.getElementById("textArea2").value += "AAA\n"
+        },
+    funcion2 : function(){
+            console.log("BBB")
+            document.getElementById("textArea2").value += "BBB\n"
+        },
+    funcion3 : function(){
+            console.log("CCC")
+            document.getElementById("textArea2").value += "CCC\n"
+        },
+    funcion4 : function(){
+            console.log("DDD")
+            document.getElementById("textArea2").value += "DDD\n"
+        },
+    funcion5 : function(){
+            console.log("EEE")
+            document.getElementById("textArea2").value += "EEE\n"
+        }
+}
+
+function ejemplo2(){
+    //funcion4
+    let nombrePropiedad = document.getElementById("propiedad").value
+    funciones[nombrePropiedad]()
+}
+
+function limpiar(){
+    document.getElementById("textArea1").value = ""
+    document.getElementById("textArea2").value = ""
+}
+
+window.onload = function(){
+    document.getElementById("btnEjemplo1").onclick = ejemplo1
+    document.getElementById("btnEjemplo2").onclick = ejemplo2
+    document.getElementById("btnLimpiar").onclick  = limpiar
+}
+
+</script>
+
+<body>
+
+    <div class="jumbotron">
+        <h1>
+            22_Funciones en arrays
+        </h1>
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-4 offset-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <input type="button" id="btnEjemplo1" class="btn btn-primary" value="Ejemplo 1"/>
+                    <textarea id="textArea1" class="form-control mt-3" rows="5"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">            
+            <div class="card">              
+                <div class="card-body">
+                    
+                    <div class="row">
+                        <div class="col-8">
+                            <select id="propiedad" class="form-control">
+                                <option>Seleccione...</option>
+                                <option value="funcion1">Función 1</option>
+                                <option value="funcion2">Función 2</option>
+                                <option value="funcion3">Función 3</option>
+                                <option value="funcion4">Función 4</option>
+                                <option value="funcion5">Función 5</option>
+                            </select>
+                        </div>
+                        <div class="col-4 text-right">
+                            <input type="button" id="btnEjemplo2" class="btn btn-primary" value="Ejemplo 2"/>
+                        </div>
+                    </div>
+                    <textarea id="textArea2" class="form-control mt-3" rows="5"></textarea>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8 offset-2">
+            <div class="card mt-3">
+                <div class="card-body text-center">
+                    <input type="button" id="btnLimpiar" class="btn btn-primary" value="Limpiar"/>
+                </div>
+            </div>
+        </div>       
+    </div>
+    
+</body>
+</html>
+
