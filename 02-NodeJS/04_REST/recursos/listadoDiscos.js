@@ -29,6 +29,14 @@ function mostrarError(){
 
 }
 
+function seleccionarDisco(idDisco){
+    console.log(idDisco)
+
+    //Podemos guardar el id en el session storage y es estupendo
+    //Pero lo vamos a pasar por la url
+    window.location.href = "formularioDiscos.html?idDisco="+idDisco
+}
+
 function rellenarTablaDiscos(discos){
 
     $("#tablaDiscos").html('')
@@ -41,9 +49,12 @@ function rellenarTablaDiscos(discos){
             <td>${disco.discografica}</td>
         </tr>        
         `)
+        //funcion anónima, síncrona, anidada y además es un closure porque utiliza una variable que está declarada en el 'nido'
+        .click(function(){
+            seleccionarDisco(disco._id)
+        })
         .appendTo("#tablaDiscos")
     }
-
 
 }
 
@@ -51,7 +62,7 @@ $(inicializar)
 
 function inicializar(){
     $("#btnNuevo").click(nuevoDisco)
-    //$("#btnActualizar").click(???)
+    $("#btnActualizar").click(listarDiscos)
 
     listarDiscos()
 }

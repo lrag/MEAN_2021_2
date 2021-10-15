@@ -11,7 +11,7 @@ function insertarDisco(){
     */
 
     /*
-    /7Poniendo nosotros el for
+    //Poniendo nosotros el for
     let disco = {}
     let objJQuery = $("#formulario input[type=text], textarea")
     for(let nodo of objJQuery){
