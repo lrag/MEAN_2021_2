@@ -50,4 +50,7 @@ $(inicializar)
 function inicializar(){
     $("#btnInsertar").click(insertarDisco)
     $("#btnVolver").click(verListado)
+
+
+    
 }
