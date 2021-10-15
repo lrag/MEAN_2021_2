@@ -29,8 +29,22 @@ function mostrarError(){
 
 }
 
-function rellenarTablaDiscos(){
-    console.log("rellenando la tabla")
+function rellenarTablaDiscos(discos){
+
+    $("#tablaDiscos").html('')
+    for(let disco of discos){
+        $(`
+        <tr>
+            <td>${disco.titulo}</td>
+            <td>${disco.grupo}</td>
+            <td>${disco.year}</td>
+            <td>${disco.discografica}</td>
+        </tr>        
+        `)
+        .appendTo("#tablaDiscos")
+    }
+
+
 }
 
 $(inicializar)
@@ -41,4 +55,3 @@ function inicializar(){
 
     listarDiscos()
 }
-
