@@ -44,7 +44,7 @@ app.get('/pagina', function(request, response){
         <html>
             <body>
                 <marquee>
-                    <h1>Html generado dinamicamente con Node.JS + Express</h1>
+                    Html generado dinamicamente con Node.JS + Express
                 </marquee>
             </body>
         </html>`;
