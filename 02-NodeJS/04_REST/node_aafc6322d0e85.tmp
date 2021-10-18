@@ -4,7 +4,6 @@ const mongoDBUtil = require("./mongoDBUtil")
 const negocioDiscos = require("./negocioDiscos.js") //La extensión 'js' es opcional
 const servidorWeb = require("./servidorWeb")
 
-
 //////////////////////////////////////////////////////////////////
 //CONECTAMOS CON LA BASE DE DATOS/////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -76,8 +75,6 @@ function procesarPeticion(request, response){
         process.exit(0)  
     } else {
         servidorWeb.devolverContenidoEstatico(request, response)
-        //leerRecurso(url, response) // aqui ve si hay algun archivo dentro de la carpeta recursos(cliente)
-        //devolverError(404, "Petición desconocida", response)
     }
     
 }

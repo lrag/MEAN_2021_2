@@ -44,7 +44,8 @@ function modificar(disco){
                     titulo       : disco.titulo,
                     grupo        : disco.grupo,
                     year         : disco.year,
-                    discografica : disco.discografica
+                    discografica : disco.discografica,
+                    comentario   : disco.comentario
                 },
                 //Con $unset indicamos que propiedades queremos ELIMINAR
                 //$unset : {
