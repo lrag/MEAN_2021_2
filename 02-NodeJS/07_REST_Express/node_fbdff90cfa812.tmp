@@ -4,6 +4,7 @@ const express = require("express")
 
 const mongoDBUtil = require("./mongoDBUtil")
 const negocioDiscos = require("./negocioDiscos.js") //La extensión 'js' es opcional
+const servidorWeb = require("./servidorWeb")
 
 //////////////////////////////////////////////////////////////////
 //CONECTAMOS CON LA BASE DE DATOS/////////////////////////////////
@@ -41,16 +42,61 @@ function arrancarServidor(){
 
     app.use(express.static("./recursos"))
 
-    //let servidor = http.createServer(app)
-    //servidor.listen(5000, function(){
-    //    console.log("Esperando peticiones en el puerto 5000")
-    //})
-
-    app.listen(5000, function(){
+    let servidor = http.createServer(app)
+    servidor.listen(5000, function(){
         console.log("Esperando peticiones en el puerto 5000")
     })
 
+    //app.listen(5000, function(){
+    //    console.log("Esperando peticiones en el puerto 5000")
+    //})
+
 }
+
+
+
+/*
+function procesarPeticion(request, response){
+
+    //Cross Origin Resource Sharing
+    //Vamos a añadir estos headers a todas las respuestas que demos, sean options o no:
+    response.setHeader("Access-Control-Allow-Origin", "*")
+    response.setHeader('Access-Control-Allow-Methods', 
+                    'GET,PUT,POST,DELETE,PATCH,OPTIONS')
+    response.setHeader("Access-Control-Allow-Headers", 
+                    "Origin, X-Requested-With, Content-Type, Accept, Authorization")  
+
+    let metodo = request.method.toUpperCase()
+    let url = request.url
+    
+    console.log("====================================")
+    console.log(`Petición recibida ${metodo} ${url}`)
+
+    //Expresión regular
+    // ^/discos/[0-9a-fA-F]{24}$
+    //-debe comenzar por '/discos/
+    //-debe continuar con 24 caracteres a escoger entre 0-9,a-f,A-F
+    //-debe terminar ahí
+
+    if( metodo=="GET" && url=="/discos" ){
+        listar(request, response)
+    } else if( metodo=="GET" && url.match("^/discos/[0-9a-fA-F]{24}$") ){
+        buscarPorId(request, response)        
+    } else if( metodo=="POST" && url=="/discos" ){
+        insertar(request, response)  
+    } else if( metodo=="PATCH" && url.match("^/discos/[0-9a-fA-F]{24}$") ){
+        modificar(request, response)          
+    } else if( metodo=="DELETE" && url.match("^/discos/[0-9a-fA-F]{24}$") ){
+        borrar(request, response)  
+    } else if( metodo=="POST" && url=="/hasta_luego_lucas" ){
+        console.log("Adiós mundo cruel!")
+        process.exit(0)  
+    } else {
+        servidorWeb.devolverContenidoEstatico(request, response)
+    }
+    
+}
+*/
 
 //////////////////////////////////////////////////////////////////
 //FUNCIONES CON LA LÓGICA DE CONTROL//////////////////////////////
