@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <script src="./jquery.js" type="application/javascript"></script>
+    <script src="./libreria.js" type="application/javascript"></script>
+
 </head>
 
-<script type="application/javascript" src="libreria.js"></script>
 <script type="application/javascript">
-
-//Usamos la librería
-saludar()
 
 //Guardaremos los contactos en este array
 //Las variables declaradas fuera de las funciones son globales
@@ -21,118 +21,51 @@ let idPersonaSel = null
 let trSeleccionado = null
 
 function insertarPersona(){
-
-    //Creamos una persona con los datos del formulario
-    let persona = {
-        id        : Math.round(Math.random()*10000),
-        nombre    : document.getElementById("nombre").value,
-        direccion : document.getElementById("direccion").value,
-        telefono  : document.getElementById("telefono").value,
-        correoE   : document.getElementById("correoE").value,
-    }
+    
+    let persona = crearObjeto("formulario")
+    persona.id = Math.round(Math.random()*10000),
 
     //La añadimos al array
     personas.push(persona)
     //Vaciamos el formulario
-    vaciarFormulario()
+    vaciarFormularioPersona()
     //Actualizamos la tabla
     rellenarTabla()
 
     console.log(personas)
 }
 
-function vaciarFormulario(){
+function vaciarFormularioPersona(){
     //Vaciamos tambien la variable en la que guardamos el id de la persona seleccionada
     idPersonaSel = null;
-    document.getElementById("nombre").value    = ""
-    document.getElementById("direccion").value = ""
-    document.getElementById("telefono").value  = ""
-    document.getElementById("correoE").value   = ""
+
+    vaciarFormulario("formulario")
+
     if(trSeleccionado){
         trSeleccionado.style.background = "white"
     }
     modoInsercion()
 }
 
-function rellenarFormulario(persona){
+function rellenarFormularioPersona(persona){
     idPersonaSel = persona.id
-    document.getElementById("nombre").value    = persona.nombre
-    document.getElementById("direccion").value = persona.direccion
-    document.getElementById("telefono").value  = persona.telefono
-    document.getElementById("correoE").value   = persona.correoE
+
+    rellenarFormulario(persona)
     modoSeleccion()
 }
 
 function rellenarTabla(){
 
-    let tablaPersonas = document.getElementById("tablaPersonas")
-
-    tablaPersonas.innerHTML = ""
-
-    for(let persona of personas){
-        let tr   = document.createElement("tr")
-        let td1  = document.createElement("td")
-        let td2  = document.createElement("td")
-        let td3  = document.createElement("td")
-        let td4  = document.createElement("td")
-        let txt1 = document.createTextNode(persona.nombre)
-        let txt2 = document.createTextNode(persona.direccion)
-        let txt3 = document.createTextNode(persona.telefono)
-        let txt4 = document.createTextNode(persona.correoE)
-        td1.append(txt1)
-        td2.append(txt2)
-        td3.append(txt3)
-        td4.append(txt4)
-        tr.append(td1, td2, td3, td4)
-
-        //Esta funcion es una función anidada
-        //Ej JS las funciones anidadas son closures
-        //Cuando se declara una función anidada que utiliza una variable de la función nido
-        //la funcion anidada tendrá declarada de manera implícita dicha variable con el valor
-        //correspondiente es su contexto
-        tr.onclick = function(){
-            //La variable persona no está declarada aqui!
-            rellenarFormulario(persona)
-            tr.style.background = "#FABADA" 
-            if(trSeleccionado){
-                trSeleccionado.style.background = "white"
-            }
-            trSeleccionado = tr
+    $("#tablaPersonas").html("")    
+    tabla = generarTabla(
+        personas,
+        {
+            columnas    : [ "Nombre", "Dirección", "Teléfono", "Correo E"],
+            propiedades : [ "nombre", "direccion", "telefono", "correoE"],
+            onclick     : rellenarFormularioPersona
         }
-
-        tablaPersonas.append(tr)
-    }
-
-    //Para que se rellene la segunda tabla
-    rellenarTabla2()
-
-}
-
-function rellenarTabla2(){
-    
-    let tablaPersonas2 = document.getElementById("tablaPersonas2")
-    tablaPersonas2.innerHTML = ""
-
-    for(let persona of personas){
-        let trHtml = 
-        `<tr>
-            <td>${persona.nombre}</td>
-            <td>${persona.direccion}</td>
-            <td>${persona.telefono}</td>
-            <td>${persona.correoE}</td>
-        </tr>`
-
-        let tbody = document.createElement("tbody")
-        tbody.innerHTML = trHtml
-
-        //let tr = tbody.childNodes[0]
-        let tr = tbody.firstElementChild
-        tr.onclick = function(){
-            rellenarFormulario(persona)
-        }
-
-        tablaPersonas2.append(tr)
-    }
+    )
+    $("#tablaPersonas").append(tabla)
 
 }
 
@@ -146,54 +79,43 @@ function borrarPersona(){
     }
 
     rellenarTabla()
-    vaciarFormulario()
+    vaciarFormularioPersona()
 }
 
 function modificarPersona(){
 
-    for(let persona of personas){
-        if(persona.id == idPersonaSel){
-            persona.nombre    = document.getElementById("nombre").value
-            persona.direccion = document.getElementById("direccion").value
-            persona.telefono  = document.getElementById("telefono").value
-            persona.correoE   = document.getElementById("correoE").value
-            break
+    let personaAux = crearObjeto("formulario")
+    personaAux.id = idPersonaSel
+    for(let a=0; a<personas.length; a++){
+        if(personas[a].id == idPersonaSel){
+            personas[a] = personaAux
         }
     }
 
     rellenarTabla()
-    vaciarFormulario()
+    vaciarFormularioPersona()
 }
 
 //Para cuando no hay nada seleccionado en la tabla
 function modoInsercion(){
-    document.getElementById("btnInsertar").disabled  = false
-    document.getElementById("btnModificar").disabled = true
-    document.getElementById("btnBorrar").disabled    = true
+    //$("#btnInsertar").attr('disabled', false)
+    //$("#btnModificar").attr('disabled', true)
+    //$("#btnBorrar").attr('disabled', true)
+
+    //Tambien con 'prop'
+    $("#btnInsertar").prop('disabled', false)
+    $("#btnModificar").prop('disabled', true)
+    $("#btnBorrar").prop('disabled', true)
 }
 
 //Para cuando el usuario selecciona una persona
 function modoSeleccion(){
-    document.getElementById("btnInsertar").disabled  = true
-    document.getElementById("btnModificar").disabled = false
-    document.getElementById("btnBorrar").disabled    = false
+    $("#btnInsertar").attr('disabled', true)
+    $("#btnModificar").attr('disabled', false)
+    $("#btnBorrar").attr('disabled', false)
 }
 
 function guardarDatos(){
-    //En el session/local storage solo podemos guardar cadenas de texto
-    //sessionStorage.setItem("clave","valor")
-    //sessionStorage.getItem("clave")
-    //sessionStorage.removeItem("clave")
-    //sessionStorage.clear()
-
-    //localStorage.setItem("clave","valor")
-    //localStorage.getItem("clave")
-    //localStorage.removeItem("clave")
-    //localStorage.clear()
-
-    //No podemos guardar directamente el array
-    //localStorage.setItem("personas", personas)
-
     localStorage.setItem("personas", JSON.stringify(personas))
 }
 
@@ -204,34 +126,29 @@ function cargarDatos(){
     //if( personasJSON != null){
     if( personasJSON ) {  
         personas = JSON.parse(personasJSON)
-        rellenarTabla()
     }
+    rellenarTabla()
 
 }
 
+$(inicializar)
 function inicializar(){
-    //let nodo = document.getElementById("btnInsertar")
-    //nodo.onclick = insertarPersona
-    //Lo mismo en una línea
-    document.getElementById("btnInsertar").onclick  = insertarPersona
-    document.getElementById("btnVaciar").onclick    = vaciarFormulario
-    document.getElementById("btnGuardar").onclick   = guardarDatos
-    document.getElementById("btnBorrar").onclick    = borrarPersona
-    document.getElementById("btnModificar").onclick = modificarPersona
+    $("#btnInsertar").click(insertarPersona)
+    $("#btnVaciar").click(vaciarFormularioPersona)
+    $("#btnGuardar").click(guardarDatos)
+    $("#btnBorrar").click(borrarPersona)
+    $("#btnModificar").click(modificarPersona)
 
     cargarDatos()
     modoInsercion()
 }
-
-window.onload = inicializar
-
 </script>
 
 <body>
 
     <h1 align="center">
         <font color="lightGreen">
-            AgendaGest 3000     
+            AgendaGest 3000, Ahora con más Javascript     
         </font>
     </h1>
 
@@ -245,64 +162,48 @@ window.onload = inicializar
 
     <br/>
 
-    <form id="formulario">
+    <div id="formulario">
         <table align="center">
             <tr>
                 <td>Nombre</td>
                 <td>
-                    <input type="text" name="nombre" id="nombre"/>
+                    <input type="text" id="nombre"/>
                 </td>  
                 <td id="msj_nombre"></td>              
             </tr>
             <tr>
                 <td>Dirección</td>
                 <td>
-                    <input type="text" name="direccion" id="direccion"/>
+                    <!--<input type="text" name="direccion" id="direccion"/>-->
+                    <textarea id="direccion"></textarea>
                 </td>                
                 <td id="msj_direccion"></td>              
             </tr>
             <tr>
                 <td>Telefono</td>
                 <td>
-                    <input type="text" name="telefono" id="telefono"/>
+                    <input type="text" id="telefono"/>
                 </td> 
                 <td id="msj_telefono"></td>              
             </tr>
             <tr>
                 <td>Correo E</td>
                 <td>
-                    <input type="text" name="correoE" id="correoE"/>
+                    <input type="text" id="correoE"/>
                 </td>                
                 <td id="msj_correoE"></td>              
             </tr>
         </table>        
-    </form>
+    </div>
 
     <br/>
 
-    <table align="center" border="1">
-        <tr>
-            <th>Nombre</th>
-            <th>Dirección</th>
-            <th>Teléfono</th>
-            <th>Correo E</th>
-        </tr>
-        <tbody id="tablaPersonas"></tbody>
-    </table>
-    
-    <hr/>
-
-    <table align="center" border="1">
-        <tr>
-            <th>Nombre</th>
-            <th>Dirección</th>
-            <th>Teléfono</th>
-            <th>Correo E</th>
-        </tr>
-        <tbody id="tablaPersonas2"></tbody>
-    </table>
+    <div id="tablaPersonas"></div>
 
 </body>
 
 </html>
+
+
+
 

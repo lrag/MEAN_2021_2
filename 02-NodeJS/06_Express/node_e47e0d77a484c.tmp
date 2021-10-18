@@ -204,7 +204,7 @@ function home(request, response){
     //Debemos indicar la ruta ABSOLUTA
     //Dirname es una variable implícita (que solo tenemos en node) en la
     //que se guarda la ruta absoluta al raíz de la aplicacion
-    //console.log(__dirname) 
+    console.log(__dirname) 
     response.sendFile(__dirname+"/recursos/agenda.html")
 }
 
