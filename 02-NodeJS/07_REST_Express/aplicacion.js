@@ -43,14 +43,6 @@ function arrancarServidor(){
     app.patch("/discos/:id", modificar)
     app.delete("/discos/:id", borrar)
 
-
-    app.use(function(rq,rp,n){
-        console.log("======")
-        console.log("= JC =")
-        console.log("======")
-        n()
-    })
-
     app.use(express.static("./recursos"))
 
     //let servidor = http.createServer(app)
