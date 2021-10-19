@@ -33,11 +33,23 @@ function arrancarServidor(){
     
     let app = express()
 
+    app.use(express.json({
+        limit: '5mb' //Tamaño máximo del body que estamos dispuestos a leer. IMPRESCINDIBLE
+    }))    
+
     app.get("/discos", listar)
     app.get("/discos/:id", buscarPorId)
     app.post("/discos", insertar)
     app.patch("/discos/:id", modificar)
     app.delete("/discos/:id", borrar)
+
+
+    app.use(function(rq,rp,n){
+        console.log("======")
+        console.log("= JC =")
+        console.log("======")
+        n()
+    })
 
     app.use(express.static("./recursos"))
 
@@ -82,8 +94,7 @@ function listar(request, response){
 
     negocioDiscos.listar()
         .then(function(discos){
-            response.setHeader("Content-Type","application/json")
-            response.end(JSON.stringify(discos))
+            response.json(discos)
         })
         .catch(function(err){
             devolverError(500, "Hubo un error con la bb.dd.", response)
@@ -95,7 +106,7 @@ GET /discos/:id
 */
 function buscarPorId(request, response){    
     //Aqui hay que extraer un valor de la URL
-    let id = request.url.split("/")[2]
+    let id = request.params.id
 
     console.log("buscando un disco por el id:"+id)
 
@@ -105,13 +116,11 @@ function buscarPorId(request, response){
                 devolverError(404, `No existe un disco con el id ${id}`, response)
                 return             
             }
-            response.setHeader("Content-Type","application/json")
-            response.end(JSON.stringify(disco))
+            response.json(disco)
         })
         .catch(function(err){
             devolverError(500, "Hubo un error con la bb.dd.", response)
         })
-
 }
 
 /*
@@ -127,32 +136,24 @@ CT: app/json
 */
 function insertar(request, response){
     console.log("insertando...")
-    //Leemos el body con request.on()
-    //'on' es asíncrona y recibe dos parámetros:
-    //-el evento
-    //-el callback 
 
-    //Si no llamamos a on con "data" el body no se leerá
-    request.on("data", function(contenidoBody){     
-        let disco = JSON.parse(contenidoBody)
-        console.log("Body:",contenidoBody.toString())
-        console.log("Body:",disco)
+    let disco = request.body
 
-        //llamadita a la lógica de negocio
-        negocioDiscos.insertar(disco)
-            .then(function(result){
-                response.statusCode = 201
-                response.setHeader('Content-Type','/application/json')
-                let respuesta = {
-                    codigo : 201,
-                    _id : result.insertedId
-                }
-                response.end(JSON.stringify(respuesta))
-            })
-            .catch(function(err){
-                devolverError(500, "Hubo un error con la bb.dd.", response)
-            })
-    })
+    console.log("Disco:",disco)
+
+    //llamadita a la lógica de negocio
+    negocioDiscos.insertar(disco)
+        .then(function(result){
+            response.statusCode = 201
+            let respuesta = {
+                codigo : 201,
+                _id : result.insertedId
+            }
+            response.json(respuesta)
+        })
+        .catch(function(err){
+            devolverError(500, "Hubo un error con la bb.dd.", response)
+        })
 }
 
 /*
@@ -168,28 +169,22 @@ CT: app/json
 }
 */
 function modificar(request, response){
-
+    console.log("Modificando...")
     //Tenemos que leer el body y sacar el id de la url
-    let id = request.url.split("/")[2]
-    request.on("data", function(contenidoBody){     
-        let disco = JSON.parse(contenidoBody)
-        console.log("Body:",contenidoBody.toString())
-        console.log("Body:",disco)
-
-        disco._id = id
-        negocioDiscos.modificar(disco)
-            .then(function(resultado){
-                if(!resultado.value){
-                    devolverError(404, `No existe un disco con el id ${id}`, response)
-                    return             
-                }
-                response.setHeader("Content-type","application/json")
-                response.end(JSON.stringify(resultado.value))
-            })
-            .catch(function(err){
-                devolverError(500, "Hubo un error con la bb.dd.", response)
-            })
-    })
+    let id = request.params.id
+    let disco = request.body
+    disco._id = id
+    negocioDiscos.modificar(disco)
+        .then(function(resultado){
+            if(!resultado.value){
+                devolverError(404, `No existe un disco con el id ${id}`, response)
+                return             
+            }
+            response.json(resultado.value)
+        })
+        .catch(function(err){
+            devolverError(500, "Hubo un error con la bb.dd.", response)
+        })
 }
 
 /*
@@ -199,7 +194,7 @@ function borrar(request, response){
     console.log("borrando...")
 
     //Tenemos que el id de la url
-    let id = request.url.split("/")[2]
+    let id = request.params.id
 
     negocioDiscos.borrar(id)
         .then(function(result){
@@ -207,18 +202,16 @@ function borrar(request, response){
                 devolverError(404, `No existe un disco con el id ${id}`, response)
                 return                  
             }
-            response.setHeader('Content-Type','/application/json')
             let respuesta = {
                 codigo : 200,
                 mensaje : `El disco ${id} se ha borrado`
             }
-            response.end(JSON.stringify(respuesta))            
+            response.json(respuesta)            
 
         })
         .catch(function(err){
             devolverError(500, "Hubo un error con la bb.dd.", response)
         })
-
 }
 
 
@@ -229,7 +222,6 @@ function devolverError(codigo,mensaje,response){
         mensaje : mensaje
     }
     response.statusCode = codigo
-    response.setHeader("Content-Type","application/json")    
-    response.end(JSON.stringify(error))
+    response.json(error)
 }
 

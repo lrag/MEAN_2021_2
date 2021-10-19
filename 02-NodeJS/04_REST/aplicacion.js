@@ -245,9 +245,7 @@ function borrar(request, response){
         .catch(function(err){
             devolverError(500, "Hubo un error con la bb.dd.", response)
         })
-
 }
-
 
 //Esta función estaría mucho mejor en un fichero aparte
 function devolverError(codigo,mensaje,response){
