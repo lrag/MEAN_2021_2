@@ -2,6 +2,8 @@
 // CLASES //
 ////////////
 
+import { moveCursor } from "readline"
+
 //Las clases on los moldes que se utilizan para crear los objetos
 
 //Identidad/estado  : datos
@@ -143,7 +145,133 @@ p1.funcion2()
 //p1.funcion3()
 //p1.funcion4()
 
+//
+//Typescript tiene un atajo estupendisimo para definir clases y constructores
+//
 
+/*
+class Punto {
+    public x:number 
+    public y:number
+
+    constructor(x:number, y:number){
+        this.x = x
+        this.y = y
+    }
+}
+
+class Poligono {
+    public nombre:string
+    public vertices:Punto[]
+
+    constructor(nombre:string, vertices:Punto[]){
+        this.nombre   = nombre
+        this.vertices = vertices
+    }
+}
+
+class Linea {
+    public p1:Punto
+    public p2:Punto
+    public segmento:boolean
+
+    constructor(p1      :Punto  = null,
+                p2      :Punto  = null,
+                segmento:boolean=false){
+        this.p1 = p1
+        this.p2 = p2
+        this.segmento = segmento
+    }
+}
+
+*/
+
+//Si colocamos modificadores de acceso en los parámetros del constructor
+//dichos parámetros se convierten mágicamente en atributos de la clase
+//cuyo valor será en entregado al constructor
+
+class Punto {
+    //public x:number 
+    //public y:number
+
+    constructor(public x:number = null, 
+                public y:number = null){
+        //this.x = x
+        //this.y = y
+    }
+}
+
+class Poligono {
+    //public nombre:string
+    //public vertices:Punto[]
+
+    constructor(public nombre:string = null, 
+                public vertices:Punto[] = []){
+        //this.nombre   = nombre
+        //this.vertices = vertices
+    }
+}
+
+class Linea {
+    constructor(public p1      :Punto  = null,
+                public p2      :Punto  = null,
+                public segmento:boolean=false){
+    }
+}
+
+class Circulo {
+    //public centro:Punto
+    //public radio:number
+
+    constructor(public centro:Punto = null, 
+                public radio :number = null){
+        //this.centro = centro
+        //this.radio = radio
+    }
+}
+
+let punto1 = new Punto(10,20)
+console.log(punto1.x)
+console.log(punto1.y)
+
+let circulo:Circulo = new Circulo()
+
+
+
+/*
+
+class Producto {
+    _id         : string
+    nombre      : string
+    fabricante  : string
+    peso        : number
+    descripcion : string
+}
+
+class Cliente {
+    _id       : string
+    codigo    : string
+    nombre    : string
+    direccion : string
+    telefono  : string
+}
+
+class DetallePedido {
+    cantidad : number
+    precio   : number
+    producto : Producto
+}
+
+class Pedido {
+    _id      : string
+    codigo   : string
+    fecha    : string
+    cliente  : Cliente
+    detalles : DetallePedido[]
+    total    : number
+}
+
+*/
 
 
 

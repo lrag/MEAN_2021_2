@@ -1,0 +1,74 @@
+
+
+<marquee>
+  <h1>App Component</h1>
+</marquee>
+
+<!--Plantillas-->
+En una plantilla colocamos el contenido estático directamente con HTML
+<br/><br/>
+
+<!--Expresiones-->
+
+<b>Expresiones:</b><br/>
+Las usamos cuando queremos añadir el valor de una variable directamente en un nodo de texto<br>
+
+
+<h2>{{ 100+200 }}</h2>
+
+<h2>{{ "Movida"+" gordísima"}}</h2>
+
+<h2>{{ 500 > 250 }}</h2>
+
+
+<!--
+Una expresión que no incluya una variable es absurda
+
+Las variables utilizadas en las expresiones normalmente estarán declaradas en el componente
+(como un atributo de la clase)
+También se podrán declarar en la propia plantilla
+-->
+
+<h2>
+  <font color="lightGreen">
+    {{ mensaje }}
+  </font>
+</h2>
+<h2>
+  <font color="lightBlue">
+    {{ numero1 + numero2 }}
+  </font>
+</h2>
+
+<!--
+Eventos:
+
+(nombre_evento)="llamada_a_la_función()"
+-->
+
+<div>
+  <button (click)="insertarPelicula()" class="btn btn-primary mr-1">Insertar</button>
+  <button (click)="vaciarFormulario()" class="btn btn-primary mr-1">Vaciar</button>
+</div>
+
+<table>
+  <tr>
+    <td>Título</td>
+    <td>
+      <input class="form-control" [(ngModel)]="pelicula.titulo" type="text" />
+    </td>
+  </tr>
+  <tr>
+    <td>Director</td>
+    <td>
+      <input class="form-control" [(ngModel)]="pelicula.director" type="text" />
+    </td>
+  </tr>
+  <tr>
+    <td>Año</td>
+    <td>
+      <input class="form-control" [(ngModel)]="pelicula.year" type="text"/>
+    </td>
+  </tr>
+</table>
+
