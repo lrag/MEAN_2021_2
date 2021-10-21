@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Pelicula } from './entidades/pelicula';
+import { Disco } from './entidades/disco';
 
 @Component({
   selector: 'app-root',
@@ -19,14 +19,20 @@ export class AppComponent {
   //public director:string = ""
   //public year:number     = 0
   //Mucho mejor con un objeto del tipo película:
-  public pelicula:Pelicula = new Pelicula()
+  public disco:Disco = new Disco()
 
-  public insertarPelicula():void {
-    console.log("Insertando película...")
-    console.log("Titulo  :"+this.pelicula.titulo)
-    console.log("Director:"+this.pelicula.director)
-    console.log("Año     :"+this.pelicula.year)
+  public discos:Disco[] = []
 
+  public insertarDisco():void {
+    console.log("Insertando disco...")
+    console.log("Titulo  :"+this.disco.titulo)
+    console.log("Director:"+this.disco.grupo)
+    console.log("Año     :"+this.disco.year)
+
+    this.discos.push(this.disco) //Cuidado no vayamos a insertar siempre el mismo objeto!
+    this.disco = new Disco()     //Creamos un nuevo disco para la próxima
+
+    console.log(this.discos)
   }
   
   public vaciarFormulario():void{

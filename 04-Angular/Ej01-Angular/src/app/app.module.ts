@@ -11,10 +11,10 @@ import { AppComponent } from './app.component';
   declarations: [
     AppComponent
   ],
-  //En esta sección indicamos que 'librerías' Angular vamos a utilizar
+  //En esta sección indicamos que 'librerías (módulos)' Angular vamos a utilizar
   imports: [
-    BrowserModule,
-    FormsModule //Este módulo es para el bidirectional binding
+    BrowserModule, //Este módulo está siempre cuando la app angular se va a ver en un navegador
+    FormsModule    //Este módulo es para el bidirectional binding
   ],
   providers: [],
   bootstrap: [AppComponent]
