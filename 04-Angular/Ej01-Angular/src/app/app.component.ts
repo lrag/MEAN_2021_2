@@ -24,6 +24,7 @@ export class AppComponent {
   public discos:Disco[] = []
 
   public insertarDisco():void {
+
     console.log("Insertando disco...")
     console.log("Titulo  :"+this.disco.titulo)
     console.log("Director:"+this.disco.grupo)
