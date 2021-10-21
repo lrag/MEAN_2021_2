@@ -38,6 +38,17 @@ export class AppComponent {
   
   public vaciarFormulario():void{
     console.log("Vaciando el formulario...")
+
+    //Opción #1
+    //this.disco.titulo = null
+    //this.disco.grupo  = null
+    //this.disco.year   = null
+
+    //Opción #1 bis
+    //this.disco.vaciar()
+
+    //Opción #2
+    this.disco = new Disco()
   }
 
 }

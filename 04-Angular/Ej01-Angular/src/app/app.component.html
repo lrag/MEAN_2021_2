@@ -1,7 +1,5 @@
-
-
 <marquee>
-  <h1>App Component</h1>
+  <h1>Plantillas en Angular</h1>
 </marquee>
 
 <!--Plantillas-->
@@ -100,6 +98,12 @@ Eventos:
         <td>{{g.titulo}}</td>
         <td>{{g.grupo}}</td>
         <td>{{g.year}}</td>
+      </tr>
+
+      <tr *ngIf="discos.length==0">
+        <td colspan="3">
+          No hay discos en la tabla
+        </td>
       </tr>
 
     </table>
