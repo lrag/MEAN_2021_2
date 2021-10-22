@@ -60,7 +60,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let d of discos">
+        <tr *ngFor="let d of discos" class="cursor-pointer-lucia-style" (click)="seleccionar(d)">
             <td>{{ d.titulo }}</td>
             <td>{{ d.grupo }}</td>
             <td>{{ d.year }}</td>

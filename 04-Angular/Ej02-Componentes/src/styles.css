@@ -16,3 +16,7 @@ footer {
     height: 40px;
     color: black;
 }
+
+.cursor-pointer-lucia-style {
+    cursor: pointer;
+}
