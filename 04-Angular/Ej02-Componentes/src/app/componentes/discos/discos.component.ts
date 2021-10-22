@@ -7,16 +7,19 @@ import { Disco } from 'src/app/entidades/disco';
 })
 export class DiscosComponent implements OnInit {
 
-  public disco:Disco|null = new Disco()
-
+  public disco:Disco = new Disco()
+  public discos:Disco[] = []
 
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  
   public insertar():void{
     console.log("Insertando...")
+
+    this.discos.push(this.disco)
+    this.vaciar()
   }
 
   public modificar():void{
@@ -28,7 +31,8 @@ export class DiscosComponent implements OnInit {
   }
 
   public vaciar():void{
-    console.log("Vaciando...")
+    console.log("Vaciando...")    
+    this.disco = new Disco()
   }
 
 }

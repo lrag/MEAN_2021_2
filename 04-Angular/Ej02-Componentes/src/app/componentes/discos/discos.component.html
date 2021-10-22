@@ -60,6 +60,17 @@
         </tr>
     </thead>
     <tbody>
+        <tr *ngFor="let d of discos">
+            <td>{{ d.titulo }}</td>
+            <td>{{ d.grupo }}</td>
+            <td>{{ d.year }}</td>
+            <td>{{ d.genero }}</td>
+        </tr>
+        <tr *ngIf="discos.length==0">
+            <td colspan="4">
+                No se han encontrado discos
+            </td>
+        </tr>
     </tbody>
 </table> 
     
