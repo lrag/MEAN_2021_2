@@ -1,1 +1,75 @@
-<p>discos works!</p>
+
+<h3 class="text-center mt-3 mb-3">
+    Discos
+</h3>
+
+<div class="text-center"> 
+    <button class="btn btn-primary mr-1">Insertar</button>
+    <button class="btn btn-primary mr-1">Modificar</button>
+    <button class="btn btn-danger  mr-1">Borrar</button>
+    <button class="btn btn-warning mr-1">Vaciar</button>
+</div>
+
+<br/>
+
+<div *ngIf="error" class="alert alert-danger">
+    <strong>¡Error!</strong> {{error}}
+</div>
+<div *ngIf="mensaje"class="alert alert-success alert-dismissible fade show">
+    {{mensaje}}
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="titulo">Título</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <input id="titulo"class="form-control"/>
+    </div>
+    
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="grupo">Grupo</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <input id="grupo" class="form-control"/>
+    </div>                 
+    
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="year">Año</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <input id="year" class="form-control"/>
+    </div>
+    
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="genero">Género</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <input id="genero" class="form-control"/>
+    </div>
+
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="escort">Notas</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <textarea id="escort" class="form-control"></textarea>
+    </div>
+</div>    
+
+<br/>
+
+<table class="table table-hover table-striped">    
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Grupo</th>
+            <th>Año</th>
+            <th>Género</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>  
+
+
