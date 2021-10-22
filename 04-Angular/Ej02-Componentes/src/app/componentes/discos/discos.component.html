@@ -3,10 +3,10 @@
 </h3>
 
 <div class="text-center"> 
-    <button class="btn btn-primary mr-1">Insertar</button>
-    <button class="btn btn-primary mr-1">Modificar</button>
-    <button class="btn btn-danger  mr-1">Borrar</button>
-    <button class="btn btn-warning mr-1">Vaciar</button>
+    <button class="btn btn-primary mr-1" (click)="insertar()">Insertar</button>
+    <button class="btn btn-primary mr-1" (click)="modificar()">Modificar</button>
+    <button class="btn btn-danger  mr-1" (click)="borrar()">Borrar</button>
+    <button class="btn btn-warning mr-1" (click)="vaciar()">Vaciar</button>
 </div>
 
 <br/>
@@ -16,35 +16,35 @@
         <label for="titulo">Título</label>
     </div>
     <div class="col-sm-12 col-md-10 mt-1">
-        <input id="titulo"class="form-control"/>
+        <input id="titulo" [(ngModel)]="disco.titulo" class="form-control"/>
     </div>
     
     <div class="col-sm-12 col-md-2 mt-1">
         <label for="grupo">Grupo</label>
     </div>
     <div class="col-sm-12 col-md-10 mt-1">
-        <input id="grupo" class="form-control"/>
+        <input id="grupo" [(ngModel)]="disco.grupo" class="form-control"/>
     </div>                 
     
     <div class="col-sm-12 col-md-2 mt-1">
         <label for="year">Año</label>
     </div>
     <div class="col-sm-12 col-md-10 mt-1">
-        <input id="year" class="form-control"/>
+        <input id="year" [(ngModel)]="disco.year" class="form-control"/>
     </div>
     
     <div class="col-sm-12 col-md-2 mt-1">
         <label for="genero">Género</label>
     </div>
     <div class="col-sm-12 col-md-10 mt-1">
-        <input id="genero" class="form-control"/>
+        <input id="genero" [(ngModel)]="disco.genero" class="form-control"/>
     </div>
 
     <div class="col-sm-12 col-md-2 mt-1">
         <label for="escort">Notas</label>
     </div>
     <div class="col-sm-12 col-md-10 mt-1">
-        <textarea id="escort" class="form-control"></textarea>
+        <textarea id="notas" [(ngModel)]="disco.notas" class="form-control"></textarea>
     </div>
 </div>    
 

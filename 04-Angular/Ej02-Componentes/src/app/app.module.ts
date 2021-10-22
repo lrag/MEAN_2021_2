@@ -6,6 +6,7 @@ import { CabeceraComponent } from './componentes/cabecera/cabecera.component';
 import { MenuComponent } from './componentes/menu/menu.component';
 import { PieComponent } from './componentes/pie/pie.component';
 import { DiscosComponent } from './componentes/discos/discos.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,7 +16,8 @@ import { DiscosComponent } from './componentes/discos/discos.component';
     CabeceraComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule, //Módulo para el bidirectional binding
   ],
   providers: [],
   bootstrap: [AppComponent]
