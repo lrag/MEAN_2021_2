@@ -15,5 +15,13 @@ export class Disco {
         }
     }
 
+    public vacio():boolean {
+        return (this.titulo==null || this.titulo.trim().length==0) &&
+               (this.grupo==null  || this.grupo.trim().length==0)  &&
+               (this.year==null   || this.year==0)                 &&
+               (this.genero==null || this.genero.trim().length==0) &&
+               (this.notas==null  || this.notas.trim().length==0)   
+    } 
+
 }
 
