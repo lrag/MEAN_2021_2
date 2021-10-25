@@ -16,8 +16,8 @@ import { FormsModule } from '@angular/forms';
     CabeceraComponent
   ],
   imports: [
-    BrowserModule,
-    FormsModule, //Módulo para el bidirectional binding
+    BrowserModule, //Este tiene que estar si o si
+    FormsModule,   //Módulo para el bidirectional binding
   ],
   providers: [],
   bootstrap: [AppComponent]

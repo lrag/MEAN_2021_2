@@ -7,7 +7,7 @@ import { Disco } from 'src/app/entidades/disco';
 })
 export class DiscosComponent implements OnInit {
 
-  public disco:Disco = new Disco()
+  public disco:Disco = new Disco(0)
   public discos:Disco[] = []
 
   constructor() { 
@@ -29,6 +29,16 @@ export class DiscosComponent implements OnInit {
 
   public modificar():void{
     console.log("Modificando...")
+
+    for(let a=0; a<this.discos.length; a++){
+      let discoAux:Disco = this.discos[a]
+      if(discoAux._id == this.disco._id){
+        this.discos[a] = this.disco
+        break
+      }
+    }
+    this.vaciar()
+
   }
 
   public borrar():void{
@@ -45,37 +55,14 @@ export class DiscosComponent implements OnInit {
 
   public vaciar():void{
     console.log("Vaciando...")     
-    this.disco = new Disco()
+    this.disco = new Disco(0)
   }
   
   public seleccionar(disco:Disco):void{
     console.log("Seleccionando...")
-  
-    /*
-    for(let d of this.discos){
-      if(d._id == disco._id){
-        //this.disco.titulo = d.titulo
-        //this.disco.grupo = d.grupo
-        //this.disco.year = d.year
-        //this.disco.genero = d.genero
-        //this.disco.notas = d.notas
-        this.disco = d
-      }
-    }
-    */
 
     let copia:Disco = new Disco(disco._id, disco.titulo, disco.grupo, disco.year, disco.genero, disco.notas)
-
     this.disco = copia
-
   }
 
 }
-
-
-
-let disco = new Disco(1,"1","2",3,"4","5")
-let copia = disco
-
-copia.titulo = "TDSOTM"
-console.log(disco)
