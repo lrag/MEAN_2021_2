@@ -3,16 +3,17 @@ import { Disco } from 'src/app/entidades/disco';
 import { ServicioDiscos } from 'src/app/servicios/servicioDiscos';
 
 @Component({
-  selector: 'app-formulariodiscos',
-  templateUrl: './formulariodiscos.component.html',
-  //providers: [ ServicioDiscos ],
+  selector: 'app-discos',
+  templateUrl: './discos.component.html',
+  providers: [ ServicioDiscos ],
 })
-export class FormularioDiscosComponent implements OnInit {
+export class DiscosComponent implements OnInit {
 
   public disco:Disco = new Disco(0)
+  public discos:Disco[] 
 
   constructor(private servicioDiscos:ServicioDiscos) { 
-    console.log("instanciando FormularioDiscosComponent")
+    this.discos = servicioDiscos.listar()
   }
 
   ngOnInit(): void {
@@ -20,25 +21,38 @@ export class FormularioDiscosComponent implements OnInit {
   
   public insertar():void{
     console.log("Insertando...")
+
     this.servicioDiscos.insertar(this.disco)
-    //navegar
+    this.vaciar()
   }
 
   public modificar():void{
     console.log("Modificando...")
-
     this.vaciar()
   }
 
   public borrar():void{
     console.log("Borrando...")
-
     this.vaciar()
   }
 
   public vaciar():void{
     console.log("Vaciando...")     
     this.disco = new Disco(0)
+  }
+  
+  public seleccionar(disco:Disco):void{
+    console.log("Seleccionando...")
+
+    if(disco._id == null){
+      return
+    }
+      
+    let putaMierda:Disco|null = this.servicioDiscos.buscarPorId(disco._id)
+    if(putaMierda != null){
+      this.disco = putaMierda
+    }
+
   }
 
 }
