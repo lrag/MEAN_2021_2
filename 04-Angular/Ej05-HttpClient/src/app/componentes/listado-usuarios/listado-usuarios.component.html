@@ -1,0 +1,47 @@
+
+
+<br/>
+<br/>
+
+<div class="text-center">
+    <button class="btn btn-primary" (click)="listarUsuarios()">Listar</button>
+</div>
+
+<br/>
+<br/>
+
+<!--
+<div *ngIf="error">    
+    <div class="alert alert-danger">
+        <strong>¡Error!</strong> {{error}}
+    </div>    
+    <br/>
+    <br/>
+</div>
+-->
+
+<table class="table table-hover table-striped">    
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th class="text-center">Afoto</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let u of usuarios">
+            <td>{{u.first_name}}</td>
+            <td>{{u.last_name}}</td>
+            <td class="text-center">
+                <img [src]="u.avatar"/>
+            </td>
+        </tr>
+        <tr *ngIf="usuarios.length == 0">
+            <td colspan="3">
+                No hay usuarios en la tabla.
+            </td>
+        </tr>
+    </tbody>
+</table>  
+
+
