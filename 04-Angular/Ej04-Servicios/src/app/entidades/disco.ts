@@ -10,9 +10,6 @@ export class Disco {
         public genero:string|null = null,
         public notas :string|null = null
     ){
-        if(_id == null){
-            this._id = Date.now()
-        }
     }
 
     public vacio():boolean {

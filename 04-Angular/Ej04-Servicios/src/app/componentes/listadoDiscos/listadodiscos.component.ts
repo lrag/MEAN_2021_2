@@ -22,8 +22,4 @@ export class ListadoDiscosComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public seleccionar(disco:Disco):void{
-    console.log("Seleccionando...")
-  }
-
 }

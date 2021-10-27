@@ -25,6 +25,10 @@ let rutas:Routes = [
     path : "discos/formulario",
     component : FormularioDiscosComponent
   }, 
+  {
+    path : "discos/formulario/:idDisco",
+    component : FormularioDiscosComponent
+  }, 
 ]
 
 @NgModule({

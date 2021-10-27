@@ -5,11 +5,11 @@ import { ServicioDiscos } from 'src/app/servicios/servicioDiscos';
 @Component({
   selector: 'app-discos',
   templateUrl: './discos.component.html',
-  providers: [ ServicioDiscos ],
+  providers: [ ServicioDiscos ], //DiscosComponent exige su propio ServicioDiscos
 })
 export class DiscosComponent implements OnInit {
 
-  public disco:Disco = new Disco(0)
+  public disco:Disco = new Disco()
   public discos:Disco[] 
 
   constructor(private servicioDiscos:ServicioDiscos) { 
@@ -38,11 +38,11 @@ export class DiscosComponent implements OnInit {
 
   public vaciar():void{
     console.log("Vaciando...")     
-    this.disco = new Disco(0)
+    this.disco = new Disco()
   }
   
   public seleccionar(disco:Disco):void{
-    console.log("Seleccionando...")
+    console.log("Seleccionando...", disco)
 
     if(disco._id == null){
       return

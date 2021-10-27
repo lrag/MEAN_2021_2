@@ -8,7 +8,7 @@ import { Disco } from "../entidades/disco";
 //-a nivel del módulo
 //-a nivel de un componente
 //-aqui mismo, en el decorador (equivalente a registrarlo a nivel de modulo)
-@Injectable()
+@Injectable( { providedIn : "root" } )
 export class ServicioDiscos {
 
     private discos:Disco[] = []
@@ -16,7 +16,6 @@ export class ServicioDiscos {
     constructor(){
         console.log("Instanciando ServicioDiscos")
     }
-
 
     public listar():Disco[]{
         return this.discos
@@ -26,7 +25,8 @@ export class ServicioDiscos {
         let discoEncontrado:Disco|null = null        
         for(let disco of this.discos){
             if(disco._id == _id){
-                discoEncontrado = disco
+                //Devolvemos una copia para que nadia toque nuestros preciosos discos
+                discoEncontrado = new Disco(disco._id, disco.titulo, disco.grupo, disco.year, disco.genero, disco.notas)
                 break
             }
         }        
@@ -34,7 +34,10 @@ export class ServicioDiscos {
     }
 
     public insertar(disco:Disco):void{
+        //Servicio discos es el que decide que valor tiene el id cuando se inserta el disco
+        disco._id = Date.now()
         this.discos.push(disco)
+        console.log(this.discos)
     }
 
     public modificar(disco:Disco):void{

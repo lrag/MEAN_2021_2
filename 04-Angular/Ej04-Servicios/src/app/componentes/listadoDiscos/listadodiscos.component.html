@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let d of discos" class="cursor-pointer-lucia-style" (click)="seleccionar(d)">
+        <tr *ngFor="let d of discos" class="cursor-pointer-lucia-style" [routerLink]="['/discos/formulario', d._id]">
             <td>{{ d.titulo }}</td>
             <td>{{ d.grupo }}</td>
             <td>{{ d.year }}</td>
@@ -32,5 +32,10 @@
     </tbody>
 </table> 
     
+
+
+
+
+
 
 

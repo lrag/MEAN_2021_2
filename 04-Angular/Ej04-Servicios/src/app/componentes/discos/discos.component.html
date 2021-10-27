@@ -3,7 +3,7 @@
 </h3>
 
 <div class="text-center"> 
-    <button class="btn btn-primary mr-1" (click)="insertar()"  [disabled]="disco._id!=0">Insertar</button>
+    <button class="btn btn-primary mr-1" (click)="insertar()"  [disabled]="disco._id!=null">Insertar</button>
     <button class="btn btn-primary mr-1" (click)="modificar()" [disabled]="disco._id==0">Modificar</button>
     <button class="btn btn-danger  mr-1" (click)="borrar()"    [disabled]="disco._id==0">Borrar</button>
     <button class="btn btn-warning mr-1" (click)="vaciar()"    [disabled]="disco.vacio()">Vaciar</button>
