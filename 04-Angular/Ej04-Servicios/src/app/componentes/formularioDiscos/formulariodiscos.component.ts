@@ -17,6 +17,7 @@ export class FormularioDiscosComponent implements OnInit {
     console.log("instanciando FormularioDiscosComponent")
 
     let idDiscoSel:number = ruta.snapshot.params.idDisco    
+
     if(idDiscoSel){
       let resultado:Disco|null = servicioDiscos.buscarPorId(idDiscoSel)
       if(resultado){
@@ -44,12 +45,14 @@ export class FormularioDiscosComponent implements OnInit {
   public borrar():void{
     console.log("Borrando...")
 
+    this.servicioDiscos.borrar(this.disco)
+
     this.vaciar()
   }
 
   public vaciar():void{
     console.log("Vaciando...")     
-    this.disco = new Disco(0)
+    this.disco = new Disco()
   }
 
 }

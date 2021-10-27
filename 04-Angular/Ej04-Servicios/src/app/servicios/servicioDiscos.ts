@@ -45,7 +45,12 @@ export class ServicioDiscos {
     }
 
     public borrar(disco:Disco):void{
-
+        for(let a=0; a<this.discos.length; a++){
+            if(this.discos[a]._id == disco._id){
+                this.discos.splice(a,1)
+                break
+            }
+        }
     }
 
 }
