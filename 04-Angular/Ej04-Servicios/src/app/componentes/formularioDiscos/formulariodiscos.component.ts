@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Disco } from 'src/app/entidades/disco';
 import { ServicioDiscos } from 'src/app/servicios/servicioDiscos';
 
@@ -9,10 +10,20 @@ import { ServicioDiscos } from 'src/app/servicios/servicioDiscos';
 })
 export class FormularioDiscosComponent implements OnInit {
 
-  public disco:Disco = new Disco(0)
+  public disco:Disco = new Disco()
 
-  constructor(private servicioDiscos:ServicioDiscos) { 
+  constructor(private servicioDiscos:ServicioDiscos,
+              ruta:ActivatedRoute) { 
     console.log("instanciando FormularioDiscosComponent")
+
+    let idDiscoSel:number = ruta.snapshot.params.idDisco    
+    if(idDiscoSel){
+      let resultado:Disco|null = servicioDiscos.buscarPorId(idDiscoSel)
+      if(resultado){
+        this.disco = resultado
+      }
+    }
+
   }
 
   ngOnInit(): void {
