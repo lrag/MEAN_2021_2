@@ -7,7 +7,6 @@ console.log("Inicializando...")
 
 mongoDBUtil.conectarBBDD()
 
-
 //console.log(conf.app_puerto)
 
 
