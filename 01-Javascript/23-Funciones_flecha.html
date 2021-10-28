@@ -23,7 +23,7 @@ saludar_2()
 //
 //Funciones flecha ( => )
 //-Es una manera económica de declarar funciones para guardarlas en variables
-//
+//-Siempre estará guardada en una variable
 
 //Función que no recibe parámetros, que no devuelve nada y que tiene una única línea de código
 console.log("=========================================")
@@ -135,6 +135,36 @@ let objeto = {
 }
 
 console.log(objeto.toString())
+
+
+//
+console.log("=========================================")
+
+function ejecutadorDeFunciones(funcioncilla){
+    funcioncilla()
+}
+
+ejecutadorDeFunciones(saludar_1)
+ejecutadorDeFunciones(saludar_2)
+ejecutadorDeFunciones(saludar_flecha)
+
+ejecutadorDeFunciones( () => console.log("TOCOTÓ") )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
