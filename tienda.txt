@@ -1,0 +1,78 @@
+/////////////////////////
+//Api REST de la Tienda//
+/////////////////////////
+
+Recursos:
+
+-usuarios
+    -_id
+    -password
+    -nombre
+    -correoE
+    -direccion
+    -telefono
+
+-productos
+    -_id
+    -nombre
+    -fabricante
+    -descripcion
+    -imagen
+    Simplificacion:
+    -precio
+    -existencias
+
+-detallePedido
+    -producto
+    -cantidad
+    -precio
+
+-pedidos
+    -_id
+    -codigo
+    -fecha
+    -direccion_entrega
+    -forma_pago
+    -usuario
+    -detalles [ detallePedido ]
+
+-facturas
+
+
+
+Funcionalidades para cada Recurso
+
+-usuarios
+    -alta
+    -modificacion
+    -baja
+    -login (buscar usuario por login y pw)
+
+API de usuarios:
+
+Metodo  URL             Query_p     Body    Respuesta   Funcionalidad
+POST    /usuarios       -           {json}  {json}      Alta de usuario
+PATCH   /usuarios/:id   -           {json}  {json}      Modificar
+DELETE  /usuairos/:id   -           -       {json}      Borrado (lógico)
+
+-productos
+    -listar por criterio
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
