@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+function saludar_1(){
+    console.log("hola")
+}
+
+let saludar_2 = function(){
+    console.log("HOLO, que es más gordo")
+}
+
+saludar_1()
+saludar_2()
+
+//
+//Funciones flecha ( => )
+//-Es una manera económica de declarar funciones para guardarlas en variables
+//
+
+//Función que no recibe parámetros, que no devuelve nada y que tiene una única línea de código
+console.log("=========================================")
+let saludar = function(){ 
+    console.log("hola") 
+} 
+
+//Si la función flecha no recibe parámetros debemos poner los paréntesis
+//Si la función flecha tiene solo una línea podemos ahorrarnos las llaves
+let saludar_flecha = () => console.log("hola")
+
+saludar()
+saludar_flecha()
+
+//Función que recibe un parámetro, que no devuelve nada y que tiene una única línea de código
+console.log("=========================================")
+let cuadrado = function(numero){ 
+    console.log(numero*numero) 
+} 
+
+//Si la función solo recibe un parámetro podemos ahorrarnos los paréntesis
+let cuadrado_flecha = numero => console.log(numero*numero) 
+
+cuadrado(25)
+cuadrado_flecha(25)
+
+//Función que recibe más de un parámetro, que no devuelve nada y que tiene una única línea de código
+console.log("=========================================")
+let sumar = function(s1, s2){ 
+    console.log(s1+s2) 
+} 
+
+//Si la función recibe más de un parámetro debemos poner los paréntesis
+let sumar_flecha = (s1, s2) => { 
+    console.log(s1+s2) 
+} 
+
+sumar(50,75)
+sumar_flecha(50,75)
+
+//Funciones con más de una línea de código
+console.log("=========================================")
+let mayusculas = function(texto){ 
+    console.log("Texto recibido  :"+texto) 
+    console.log("Texto mayusculas:"+texto.toUpperCase()) 
+} 
+
+//Si la función tiene más de una línea es obligatorio colocar las llaves
+let mayusculas_flecha = texto => { 
+    console.log("Texto recibido  :"+texto) 
+    console.log("Texto mayusculas:"+texto.toUpperCase()) 
+} 
+
+mayusculas("siete caballos vienen de bonanza")
+mayusculas_flecha("siete caballos vienen de bonanza")
+
+//Funciones flecha que devuelven algo y solo tienen una línea
+console.log("=========================================")
+let multiplicar = function(f1, f2){ 
+    return f1*f2 
+} 
+
+//Las funciones flecha sin cuerpo (llaves) tienen un return implícito
+let multiplicar_flecha = (f1, f2) => f1*f2 
+
+console.log(multiplicar(25,10))
+console.log(multiplicar_flecha(25,10))
+
+//Funciones flecha que devuelven algo y tienen más de una línea
+console.log("=========================================")
+let concatenar = function(txt1, txt2){ 
+    let resultado = txt1
+    resultado += "-"
+    resultado += txt2
+    return resultado
+} 
+
+//Las funciones flecha con cuerpo (llaves) no tienen return implícito
+let concatenar_flecha = (txt1, txt2) => { 
+    let resultado = txt1
+    resultado += "-"
+    resultado += txt2
+    return resultado
+} 
+
+console.log(concatenar("movida","gordísima"))
+console.log(concatenar_flecha("movida","gordísima"))
+
+//
+//Las funciones flecha y el this
+//
+console.log("=========================================")
+let objeto = {
+    
+    dato1 : "ABCDEFG",
+    dato2 : 123456,
+
+    toString : function(){
+        let concatenar = function(){
+            return this.dato1+","+this.dato2
+        }
+
+        //Si la función flecha está anidada entonces dentro de ella 'this' referenciará lo mismo que en el nido
+        let concatenar_flecha = () => this.dato1+","+this.dato2
+
+        return concatenar_flecha()
+    }
+
+}
+
+console.log(objeto.toString())
+
+
+
+
+
+
+</script>
+
+
+<body>
+    <h1>23_Funciones flecha</h1>    
+</body>
+</html>

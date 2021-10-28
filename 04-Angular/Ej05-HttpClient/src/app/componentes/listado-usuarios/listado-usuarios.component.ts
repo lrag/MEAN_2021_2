@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@Angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-listado-usuarios',
@@ -22,10 +23,12 @@ export class ListadoUsuariosComponent implements OnInit {
 
     console.log(this.usuarios)
 
+    // :)
     let that = this
 
-    this.httpClient.get("https://reqres.in/api/users")
-    .subscribe(
+    let observable:Observable<any> = this.httpClient.get("https://reqres.in/api/users")
+    observable.subscribe(
+      //Esta función es...anónima, anidada, closure 
       function(respuesta:any){
         console.log(respuesta.data)
         that.usuarios = respuesta.data
