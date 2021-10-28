@@ -13,10 +13,10 @@
         <label for="usuario">Usuario</label>
     </div>
     <div class="col-sm-12 col-md-10 mt-1">
-        <select id="titulo" class="form-control">
+        <select id="titulo" [(ngModel)]="correoElectronico.direccion" class="form-control">
           <option>Seleccione...</option>
-          <option *ngFor="let u of usuarios">
-            {{u.first_name}}            
+          <option *ngFor="let u of usuarios" value="{{u.email}}">
+            {{u.first_name+" "+u.last_name}}            
           </option>
         </select>
     </div>

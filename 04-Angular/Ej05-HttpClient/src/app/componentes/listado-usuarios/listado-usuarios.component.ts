@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@Angular/common/http';
-import { Observable } from 'rxjs';
+//import { HttpClient } from '@Angular/common/http';
+//import { Observable } from 'rxjs';
+import { ServicioUsuarios } from 'src/app/servicios/servicio-usuarios';
 
 @Component({
   selector: 'app-listado-usuarios',
@@ -12,16 +13,14 @@ export class ListadoUsuariosComponent implements OnInit {
 
   //Jamás de los jamases utilizaremos el objeto HttpClient desde un componente
   //Debe hacerse desde un servicio
-  constructor(private httpClient:HttpClient) {
-
+  constructor(/*private httpClient:HttpClient*/
+              private servicioUsuarios:ServicioUsuarios) {
   }
 
   ngOnInit(): void {
   }
 
   public listarUsuarios():void{
-
-    console.log(this.usuarios)
 
     //Sin funcion flecha:
     /*
@@ -42,6 +41,7 @@ export class ListadoUsuariosComponent implements OnInit {
     */
 
     //Con funciones flecha:
+    /*
     let observable:Observable<any> = this.httpClient.get("https://reqres.in/api/users")
     observable.subscribe(
       //Esta función es...anónima, anidada, closure 
@@ -52,7 +52,15 @@ export class ListadoUsuariosComponent implements OnInit {
         this.usuarios = respuesta.data
       },
       err => console.log(err)
-    )    
+    )
+    */
+   
+    //Llamando al servicio
+    this.servicioUsuarios.listarUsuarios()
+      .subscribe(
+        respuesta => this.usuarios=respuesta.data,
+        error => console.log(error)
+      )
 
   }
 

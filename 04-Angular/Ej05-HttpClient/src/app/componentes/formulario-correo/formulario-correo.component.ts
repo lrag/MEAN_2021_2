@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CorreoElectronico } from 'src/app/entidades/correo-electronico';
-import { HttpClient } from '@Angular/common/http';
-import { Observable } from 'rxjs';
+import { ServicioUsuarios } from 'src/app/servicios/servicio-usuarios';
 
 @Component({
   selector: 'app-formulario-correo',
@@ -12,13 +11,13 @@ export class FormularioCorreoComponent {
   public usuarios:any[] = []
   public correoElectronico:CorreoElectronico = new CorreoElectronico()
 
-  public constructor(private httpClient:HttpClient){
+  public constructor(private servicioUsuarios:ServicioUsuarios){
     this.listarUsuarios()
   }
 
   public listarUsuarios():void{
-    let observable:Observable<any> = this.httpClient.get("https://reqres.in/api/users")
-    observable.subscribe(
+    this.servicioUsuarios.listarUsuarios()
+    .subscribe(
       respuesta => this.usuarios = respuesta.data,
       error => console.log(error)
     )
@@ -28,6 +27,5 @@ export class FormularioCorreoComponent {
     console.log("Enviando el correo...")
     console.log(this.correoElectronico)
   }
-
 
 }

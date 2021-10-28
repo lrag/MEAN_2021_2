@@ -25,6 +25,7 @@
         <tr>
             <th>Nombre</th>
             <th>Apellidos</th>
+            <th>Correo E</th>
             <th class="text-center">Afoto</th>
         </tr>
     </thead>
@@ -32,12 +33,13 @@
         <tr *ngFor="let u of usuarios">
             <td>{{u.first_name}}</td>
             <td>{{u.last_name}}</td>
+            <td>{{u.email}}</td>
             <td class="text-center">
                 <img [src]="u.avatar"/>
             </td>
         </tr>
         <tr *ngIf="usuarios.length == 0">
-            <td colspan="3">
+            <td colspan="4">
                 No hay usuarios en la tabla.
             </td>
         </tr>
