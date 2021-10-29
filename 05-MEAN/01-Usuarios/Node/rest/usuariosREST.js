@@ -5,6 +5,7 @@ let router = express.Router()
 router.post("/usuarios", altaUsuario)
 router.patch("/usuarios/:id", modificarUsuario)
 router.delete("/usuarios/:id", bajaUsuario)
+router.get("/clientes", listarClientes)
 
 exports.router = router
 
