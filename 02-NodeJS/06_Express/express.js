@@ -72,7 +72,6 @@ function listarPeliculas(request, response){
     response.end("Listado de películas del actor "+request.query["actor"])
 }
 
-
 //
 //Accediendo a los valores contenidos en la ruta
 //

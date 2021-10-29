@@ -40,7 +40,7 @@ Recursos:
 
 
 
-Funcionalidades para cada Recurso
+Funcionalidades para cada Recurso:
 
 -usuarios
     -alta
@@ -50,13 +50,21 @@ Funcionalidades para cada Recurso
 
 API de usuarios:
 
-Metodo  URL             Query_p     Body    Respuesta   Funcionalidad
+Metodo  URL             Query_P     Body    Respuesta   Funcionalidad
 POST    /usuarios       -           {json}  {json}      Alta de usuario
 PATCH   /usuarios/:id   -           {json}  {json}      Modificar
-DELETE  /usuairos/:id   -           -       {json}      Borrado (lógico)
+DELETE  /usuarios/:id   -           -       {json}      Borrado (lógico)
+
+//Esta no es REST :)
+POST    /login          -           {json}  {usr}, token JWT
 
 -productos
     -listar por criterio
+
+Metodo  URL             Query_P     Body    Respuesta   Funcionalidad
+GET     /productos      criterio    -       
+
+
 
 
 
