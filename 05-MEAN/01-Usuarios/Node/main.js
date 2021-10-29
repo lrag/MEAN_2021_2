@@ -9,7 +9,8 @@ const mongoDBUtil = require("./bbdd/mongoDBUtil")
 //Primer paso: leer el fichero de configuración
 require("./util/configUtil")
 
-//mongoDBUtil.conectarBBDD()
+//Segundo paso: conectar con la base de datos
+mongoDBUtil.conectarBBDD()
 
 
 

@@ -13,7 +13,7 @@
 //////////////////////////////////
 // TRATAMIENTO DE ERRORES EN JS //
 //////////////////////////////////
-
+console.log("=====================================")
 function convertir(){
 
     let json = '{ "dato : 100 }'
@@ -23,10 +23,13 @@ function convertir(){
     //No evita que se lancen, permite capturar y procesar los errores
     let obj = null
     try {
+        console.log("antes")
         obj = JSON.parse(json)
+        console.log("despues")
     }
     //En el bloque catch colocamos el código que procesará el error capturado 
     catch(error){
+        console.log(error.message)
         console.log("No era un JSON!")
     }
     //EL bloque opcional finally se ejecuta si o si, tanto si ha habido error como si no
@@ -42,16 +45,17 @@ convertir()
 /////////////////////////////////////////////////////
 // Tambien podemos lanzar nuestros propios errores //
 /////////////////////////////////////////////////////
-
+console.log("=====================================")
 function sumar(s1, s2){
     if(typeof s1 != "number" || typeof s2 != "number"){
         console.log("Tienen que ser dos numeros")
-        throw new Error("Tienen que ser dos numeros")
+        throw new Error("Tienen que ser dos numeros") //Lanzar un error es como un return
     }
     return s1+s2
 }
 
 console.log(sumar(10,20))   //30
+
 
 try {
     console.log(sumar(10,true)) //11
@@ -60,7 +64,6 @@ try {
 } catch(error){
     console.log(error.message)
 }
-
 
 
 </script>
