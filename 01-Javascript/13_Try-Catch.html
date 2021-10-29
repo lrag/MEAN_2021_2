@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+
+//////////////////////////////////
+// TRATAMIENTO DE ERRORES EN JS //
+//////////////////////////////////
+
+function convertir(){
+
+    let json = '{ "dato : 100 }'
+
+    //En el bloque try colocamos el código que queremos ejecutar y que sospechamos que pueda lanzar
+    //una excepcion
+    //No evita que se lancen, permite capturar y procesar los errores
+    let obj = null
+    try {
+        obj = JSON.parse(json)
+    }
+    //En el bloque catch colocamos el código que procesará el error capturado 
+    catch(error){
+        console.log("No era un JSON!")
+    }
+    //EL bloque opcional finally se ejecuta si o si, tanto si ha habido error como si no
+    finally {
+        console.log("FIN")
+    }
+
+    console.log("Oveja muy grande:",obj)
+}
+
+convertir()
+
+/////////////////////////////////////////////////////
+// Tambien podemos lanzar nuestros propios errores //
+/////////////////////////////////////////////////////
+
+function sumar(s1, s2){
+    if(typeof s1 != "number" || typeof s2 != "number"){
+        console.log("Tienen que ser dos numeros")
+        throw new Error("Tienen que ser dos numeros")
+    }
+    return s1+s2
+}
+
+console.log(sumar(10,20))   //30
+
+try {
+    console.log(sumar(10,true)) //11
+    //Esta línea ya no se ejecuta
+    console.log(sumar(10,[]))   //10
+} catch(error){
+    console.log(error.message)
+}
+
+
+
+</script>
+
+<body>
+    
+    <h1>13 Try-Catch</h1>
+
+
+
+</body>
+</html>

@@ -1,13 +1,18 @@
-const conf = require("./util/configUtil").conf
-const mongoDBUtil = require("./bbdd/mongoDBUtil")
-const http = require('http')
-const express = require("express")
-
 console.log("Inicializando...")
 
-mongoDBUtil.conectarBBDD()
+//Librerías
+const http = require('http')
+const express = require("express")
+//Librerías 'nuestras'
+const mongoDBUtil = require("./bbdd/mongoDBUtil")
 
-//console.log(conf.app_puerto)
+//Primer paso: leer el fichero de configuración
+require("./util/configUtil")
+
+//mongoDBUtil.conectarBBDD()
+
+
+
 
 
 
