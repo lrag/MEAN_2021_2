@@ -36,6 +36,7 @@ fs.readFile("./recursos/fichero2.txt")
 //Si usamos mal las promesas tenemos un nivel especial de callback hell
 //que implica la muerte del celebro
 //
+
 /*
 fs.readFile("./recursos/fichero1.txt")
     .then(function(contenido){
@@ -74,10 +75,9 @@ fs.readFile("./recursos/fichero1.txt")
 //
 //Para concatenar tareas asíncoras utilzando promesas hacemos lo siguiente:
 //
-
 let contenido1 = null
 let contenido2 = null
-let contenido3 = null
+
 fs.readFile("./recursos/fichero1.txt")
     .then(function(contenido){
         contenido1 = contenido.toString()
@@ -90,7 +90,7 @@ fs.readFile("./recursos/fichero1.txt")
         return fs.readFile("./recursos/fichero3.txt")
     })
     .then(function(contenido){
-        contenido3 = contenido.toString()
+        let contenido3 = contenido.toString()
         console.log(contenido3)
         let contenido4 = contenido1+contenido2+contenido3
         return fs.writeFile("./recursos/fichero4.txt",contenido4)
@@ -100,6 +100,6 @@ fs.readFile("./recursos/fichero1.txt")
     })
     .catch(function(err){
         console.log(err)
-     })
+    })
  
 console.log("FIN en falso")

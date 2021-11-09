@@ -17,8 +17,12 @@ exports.conectarBBDD = function(){
             .connect()
             .then(function(dbs){
                 console.log("Conexión establecida")
+                
                 let esquema = dbs.db("tienda")
-                process.env.esquema = esquema
+                //Cuidado que en process.env solo podemos guardar cadenas de texto y aqui estariamos intentando guardar un objeto!!!
+                //process.env.esquema = esquema
+                process.esquema = esquema
+
                 resolve()
             })
             .catch(function(err){

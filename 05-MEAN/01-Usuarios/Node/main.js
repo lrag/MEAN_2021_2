@@ -1,28 +1,29 @@
-console.log("Inicializando...")
-
-//Librerías/////////////////////////////////////////////////
+//Librerias
 const http = require('http')
-const express = require("express")
+const express = require('express')
 //Librerías 'nuestras'//////////////////////////////////////
-const mongoDBUtil = require("./bbdd/mongoDBUtil")
-//Routers para express//////////////////////////////////////
+const mongoUtil = require("./bbdd/mongoDBUtil")
+//Routers para express
 const usuariosRouter = require("./rest/usuariosREST").router
 
-//Primer paso: leer el fichero de configuración/////////////
+//Primer paso: leer el fichero de configuracion
 require("./util/configUtil")
 
-//Segundo paso: conectar con la base de datos///////////////
-mongoDBUtil
-    .conectarBBDD()
+//Segundo paso: conectar a la bbdd
+//aqui cogo la promesa que se ha programado en mongoUtil
+mongoUtil.conectarBBDD()
+//aqui me traigo el then y el catch del archivo, lo paso aqui
     .then(function(){
-        //Tercer paso: arrancar el servidor/////////////////
+        //esto es el resolve que mando desde desde mongoUtil
+        //Tercer paso: arrancar el servidor
         arrancarServidor()
+        //lo que sale de aqui es lo q entra en la funcion de la promesa del resolve del archivo MongoDBUtil
     })
     .catch(function(){
-        console.log("Parando la aplicacion...")
         process.exit(2)
+        //lo que sale de aqui es lo que entra en reject del archivo MongoDBUtil
     })
-
+    
 function arrancarServidor(){
     console.log("Arrancando el servidor...")
 
@@ -41,13 +42,3 @@ function arrancarServidor(){
     })
 
 }
-
-
-
-
-
-
-
-
-
-

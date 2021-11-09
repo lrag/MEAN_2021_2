@@ -1,4 +1,5 @@
 const express = require("express")
+const negocioUsuarios = require("../negocio/negocioUsuarios")
 
 let router = express.Router()
 
@@ -33,13 +34,43 @@ exports.router = router
 function altaUsuario(request, response){
     
     let usuario = request.body
-    console.log(usuario)
+    console.log("Alta Usuario (LC): ", usuario)
 
-
+    negocioUsuarios
+        .altaUsuario(usuario)
+        .then(function(){
+            //Si estamos aqui es que se ha registrado el usuario
+            response.end("USUARIO INSERTADO")
+        })
+        .catch(function(error){
+            //Si estamos aqui es que no se ha registrado el usuario
+            //-por que los datos eran inválidos
+            //-por que el login estaba repetido
+            //-por que hayan fallado las consultas
+            response.statusCode = error.codigo
+            response.json(error)
+        })
     
     
-    response.end("Usuario insertado")
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //PATCH /usuarios/:id
 //CT: app/json
@@ -53,7 +84,3 @@ function modificarUsuario(request, response){
 function bajaUsuario(request, response){
     response.end("Usuario borrado")
 }
-
-
-
-
