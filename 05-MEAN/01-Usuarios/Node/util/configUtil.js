@@ -1,5 +1,11 @@
 const fs = require("fs")
 
+
+
+process.env.valorGlobal = "HOLA"
+
+
+
 console.log("Leyendo la configuracion...")
 
 try {

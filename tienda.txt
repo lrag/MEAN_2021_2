@@ -6,7 +6,7 @@ Recursos:
 
 -usuarios
     -_id
-    -password
+    -password 
     -nombre
     -correoE
     -direccion
@@ -64,6 +64,11 @@ POST    /login          -           {json}  {usr}, token JWT
 Metodo  URL             Query_P     Body    Respuesta   Funcionalidad
 GET     /productos      criterio    -       
 
+-pedidos
+    ...
+    
+-facturas
+    ...
 
 
 

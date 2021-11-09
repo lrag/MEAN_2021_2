@@ -29,6 +29,9 @@ function arrancarServidor(){
     let app = express()
 
     //middleware
+    app.use(express.json({
+        limit: '5mb' //Tamaño máximo del body que estamos dispuestos a leer. IMPRESCINDIBLE
+    }))       
 
     //Routers
     app.use(usuariosRouter)

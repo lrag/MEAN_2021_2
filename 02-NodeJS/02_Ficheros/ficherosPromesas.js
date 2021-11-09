@@ -71,10 +71,10 @@ fs.readFile("./recursos/fichero1.txt")
     })
 */
 
-/*
 //
 //Para concatenar tareas asíncoras utilzando promesas hacemos lo siguiente:
 //
+
 let contenido1 = null
 let contenido2 = null
 let contenido3 = null
@@ -101,6 +101,5 @@ fs.readFile("./recursos/fichero1.txt")
     .catch(function(err){
         console.log(err)
      })
-
-   */ 
+ 
 console.log("FIN en falso")
