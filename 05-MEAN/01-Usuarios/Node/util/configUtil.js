@@ -1,11 +1,5 @@
 const fs = require("fs")
 
-
-
-process.env.valorGlobal = "HOLA"
-
-
-
 console.log("Leyendo la configuracion...")
 
 try {
@@ -15,7 +9,7 @@ try {
     let conf = JSON.parse(json)
     //Colocamos en process.env las propiedades que tiene el objeto 'conf'
     for(let propiedad in conf){
-        process.env[propiedad] = conf[propiedad]
+        process.env[propiedad] = conf[propiedad] //En process.env solo podemos guardar cadenas de texto 
     }
 } catch(error){
     console.log("Error leyendo el fichero de configuración:", error.message)

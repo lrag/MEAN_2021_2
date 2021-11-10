@@ -1,6 +1,8 @@
 const { Console } = require("console")
 const mongodb = require("mongodb") //npm install mongodb
 
+//Esta función no conecta con la bb.dd
+//Lo uqe hace en realidad es crear una promesa en cuya función se conecta con la base de datos y la devuelve
 exports.conectarBBDD = function(){
     
     //Resolve es la función que recibirá la promesa con 'then'

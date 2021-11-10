@@ -39,38 +39,17 @@ function altaUsuario(request, response){
     negocioUsuarios
         .altaUsuario(usuario)
         .then(function(id){
-            //Si estamos aqui es que se ha registrado el usuario
             response.end("USUARIO INSERTADO:"+id)
         })
         .catch(function(error){
-            //Si estamos aqui es que no se ha registrado el usuario
-            //-por que los datos eran inválidos
-            //-por que el login estaba repetido
-            //-por que hayan fallado las consultas
+            //Este catch se ejecuta si:
+            //-los datos son invalidos
+            //-ya existe un usuario con ese login
+            //-fallo catastrófico
             response.statusCode = error.codigo
             response.json(error)
         })
-    
-    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //PATCH /usuarios/:id
 //CT: app/json
@@ -82,5 +61,15 @@ function modificarUsuario(request, response){
 
 //DELETE /usuarios/:id
 function bajaUsuario(request, response){
-    response.end("Usuario borrado")
+
+    let id = request.params.id
+    negocioUsuarios
+        .bajaUsuario(id)
+        .then(() => {
+            
+        })
+        .catch(error => {
+
+        })
+
 }
