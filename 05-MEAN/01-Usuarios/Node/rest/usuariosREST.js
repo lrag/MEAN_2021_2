@@ -38,9 +38,9 @@ function altaUsuario(request, response){
 
     negocioUsuarios
         .altaUsuario(usuario)
-        .then(function(){
+        .then(function(id){
             //Si estamos aqui es que se ha registrado el usuario
-            response.end("USUARIO INSERTADO")
+            response.end("USUARIO INSERTADO:"+id)
         })
         .catch(function(error){
             //Si estamos aqui es que no se ha registrado el usuario

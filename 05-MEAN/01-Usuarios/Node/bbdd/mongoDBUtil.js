@@ -20,7 +20,7 @@ exports.conectarBBDD = function(){
                 
                 let esquema = dbs.db("tienda")
                 //Cuidado que en process.env solo podemos guardar cadenas de texto y aqui estariamos intentando guardar un objeto!!!
-                //process.env.esquema = esquema
+                //process.env.esquema = esquema //MCEMPV
                 process.esquema = esquema
 
                 resolve()

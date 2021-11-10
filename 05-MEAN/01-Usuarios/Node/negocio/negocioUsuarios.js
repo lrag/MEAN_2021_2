@@ -23,7 +23,7 @@ exports.altaUsuario = function(usuario){
             .then(function(resultado){
                 console.log("Usuario insertado")
                 console.log(resultado)
-                resolve() //Todo fue bien :)
+                resolve(resultado.insertedId) //Todo fue bien :)
             })
             .catch(function(err){
                 console.log(err)
