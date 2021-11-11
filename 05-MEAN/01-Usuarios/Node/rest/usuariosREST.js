@@ -39,7 +39,8 @@ function altaUsuario(request, response){
     negocioUsuarios
         .altaUsuario(usuario)
         .then(function(id){
-            response.end("USUARIO INSERTADO:"+id)
+            response.statusCode = 201
+            response.json({ codigo:201, mensaje:"Usuario insertado", id:id })
         })
         .catch(function(error){
             //Este catch se ejecuta si:
@@ -66,10 +67,11 @@ function bajaUsuario(request, response){
     negocioUsuarios
         .bajaUsuario(id)
         .then(() => {
-            
+            response.json({ mensaje:"El usuaario se ha dado de baja" })
         })
         .catch(error => {
-
+            response.statusCode = error.codigo
+            response.json(error)
         })
 
 }

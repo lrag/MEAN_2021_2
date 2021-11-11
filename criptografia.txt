@@ -1,0 +1,91 @@
+
+CODIFICACION
+
+recibe una entrada, la transforma y da una salida
+son públicos
+son reversibles
+son sin clave
+
+Base64
+
+HASH / DIGEST
+
+recibe una entrada y da una salida de longitud constante
+no son reversibles
+la misma entrada siempre dará la misma Respuesta
+si la entrada cambia minimamente, la respuesta será diferente
+se admiten colisiones (dos entradas diferentes que dan la misma salida)
+
+MD5
+SHA128
+SHA256
+BCrypt
+
+
+ENCRIPTACION
+
+recibe una entrada y genera una salida utilizando para ello una clave secreta
+sin la clave secreta no se puede recuperar el original
+
+Simetricos
+
+Asimetricos
+
+
+
+
+
+
+Token
+---------------------------------------------
+-timestamp 
+-login del usuario
+-permisos del usuario
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

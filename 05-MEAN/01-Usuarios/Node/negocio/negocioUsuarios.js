@@ -81,7 +81,7 @@ exports.bajaUsuario = function(idUsuario){
                 resolve()
             })
             .catch(error => {
-                console.log(err)
+                console.log(error)
                 reject({ codigo:500, mensaje:"Error con la base de datos!!!" })
             })
 
