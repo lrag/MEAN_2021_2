@@ -14,12 +14,13 @@ exports.buscarPorLoginYPw = function(login, password){
     return new Promise(function(resolve, reject){
         let coleccionUsuarios = process.esquema.collection("usuarios")
         coleccionUsuarios
-            .findOne({ login:login, password:password })
+            .findOne({ login:login, password:password }, { password : 0 } )
             .then(usuarioEncontrado => {
                 if(!usuarioEncontrado){
                     reject({ codigo:404, mensaje:"No existe un usuario con este login y password" })
                     return
                 }
+                //delete usuarioEncontrado.password
                 resolve(usuarioEncontrado)
             })
             .catch(err => {

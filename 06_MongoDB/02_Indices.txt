@@ -1,0 +1,141 @@
+
+
+mongorestore -d bbdd -c tweets tweets.bson
+
+//         //
+// INDICES //
+//         //
+
+
+Máximo 64 índices por colección
+Afectan a la inserción. 20-30 índices lo hacen realmente lento
+Los índices utilizan RAM 
+
+Todas las consultas deben usar un índice
+
+
+//
+//Índices de un solo campo
+//
+
+db.tweets.find( { "user.followers_count" : { $gt : 10000000 } }).explain("executionStats")
+
+db.tweets.createIndex( { "user.followers_count" : 1 }) 
+//En segundo plano...
+db.tweets.createIndex( { "user.followers_count": 1 }, { background: true } )
+
+db.tweets.find( { "user.followers_count" : { $gt : 10000000 } }) .explain("executionStats")
+
+//Listando los índices de una coleccióm
+
+db.tweets.getIndexes()
+db.tweets.getIndexKeys()
+
+//
+//Indices compuestos
+//
+
+db.messages.drop()
+
+a = [{"timestamp" : 1, "username" : "anonymous", "rating" : 3 }, 
+{ "timestamp" : 2, "username" : "anonymous", "rating" : 5 }, 
+{ "timestamp" : 3, "username" : "sam", "rating" : 1 }, 
+{ "timestamp" : 4, "username" : "anonymous", "rating" : 2 }, 
+{ "timestamp" : 5, "username" : "martha", "rating" : 5 }] 
+db.messages.insertMany(a)
+
+//Examina 0 claves y los 5 documentos para devolver 3
+db.messages.find( { timestamp : { $gte: 2, $lte: 4 } } ).explain("executionStats")
+
+db.messages.createIndex( { timestamp : 1 }, { name : "myindex" })
+
+//Ahora examina solo 3 claves y 3 documentos
+db.messages.find( { timestamp : { $gte: 2, $lte: 4 } } ).explain("executionStats")
+
+//Examina 3 claves y 3 documentos para devolver 2
+db.messages.find( { timestamp : { $gte: 2, $lte: 4 }, username : "anonymous" } ).explain("executionStats")
+
+//Añadimos el nombre al índice
+db.messages.dropIndex( "myindex" ); 
+db.messages.createIndex( { timestamp : 1, username: 1 }, { name: "myindex" }) 
+//Examina 4 claves para devolver dos documentos
+db.messages.find( { timestamp : { $gte: 2, $lte: 4 }, username : "anonymous" } ).explain("executionStats")
+
+timestamp username 
+1         “anonymous” 
+2         “anonymous” 
+3         “sam” 
+4         “anonymous” 
+5         “martha”
+
+//El orden de los campos en el índice importa:
+db.messages.dropIndex( "myindex" ); 
+db.messages.createIndex( { username : 1 , timestamp: 1 }, { name: "myindex" })
+//Ahora examina 2 claves y 2 documentos
+db.messages.find( { timestamp : { $gte: 2, $lte: 4 }, username : "anonymous" } ).explain("executionStats")
+
+username    timestamp 
+“anonymous” 1 
+“anonymous” 2 
+“anonymous” 4 
+“sam”       2 
+“martha”    5
+
+//Añadimos ordenacion a la consulta
+//Realiza la ordenación en memoria
+//Afecta al rendimiento, muy notablemente si ocupa más de 32Mb
+db.messages.find( {timestamp : { $gte: 2, $lte: 4 }, username : "anonymous" } ).sort( { rating:1 } ).explain("executionStats");
+
+//Añadimos 'rating' al índice
+db.messages.dropIndex( "myindex" )
+db.messages.createIndex( { username : 1 , timestamp: 1, rating: 1 }, { name: "myindex" } )
+
+//Sigue igual
+//El indice no está ordenado por rating
+//La ordenación ocurre después del criterio de búsqueda
+
+username    timestamp   rating
+“anonymous” 1           3
+“anonymous” 2           5
+“anonymous” 4           2
+“sam”       2           1
+“martha”    5           5
+
+db.messages.dropIndex( "myindex" ); 
+db.messages.createIndex( { username : 1, rating: 1, timestamp: 1 }, { name: "myindex" } ); 
+db.messages.find( { timestamp : { $gte: 2, $lte: 4 }, username : "anonymous" } ).sort( { rating:1 } ).explain("executionStats")
+
+//Ahora no hay fase de ordenación
+//Los documentos están ordenados por nombre y rating en el árbol
+//Pese a todo se examinan más claves que documentos 
+
+username    rating  timestamp 
+“anonymous” 2       4 
+“anonymous” 3       1 
+“anonymous” 5       2 
+“sam”       1       2 
+“martha”    5       5
+
+//
+//Covered queries
+//
+
+db.testcol.drop() 
+for (i=1;i<=20;i++){ 
+    db.testcol.insertOne({ "_id" : i, "title" : i, "name" : i, "rating" : i, "budget" : i }) 
+}; 
+db.testcol.createIndex( { "title" : 1, "name" : 1, "rating" : 1 })
+
+// Not covered because _id is present. 
+db.testcol.find( { "title" : 3 }, { "title" : 1, "name" : 1, "rating" : 1 } ).explain("executionStats")
+
+// Not covered because other fields may exist in matching docs. 
+db.testcol.find( { "title" : 3 }, { "_id" : 0, "budget" : 0 } ).explain("executionStats")
+
+// Covered query! 
+db.testcol.find( { "title" : 3 }, { "_id" : 0, "title" : 1, "name" : 1, "rating" : 1 } ).explain("executionStats")
+
+
+
+
+

@@ -38,9 +38,21 @@ function autenticarUsuario(request, response){
                 }
             ) 
             //Lo adjuntamos a la respuesta
-            console.log(token)
 
-            response.end("USUARIO ENCONTRADO")
+            //Colocando el jwt en la cabecera de la respuesta (hay aplicaciones que lo hacen)
+            //response.setHeader('Authorization','Bearer '+token)
+            //response.setHeader('Access-Control-Expose-Headers', 'Authorization')             
+
+            //Lo más normal es entregar el token en el body de la respuesta
+            //Nosotros, además, entregaremos los datos del usuario
+            //Le retiramos el pw al usuario
+            //delete usuario.password 
+            let respuesta = {
+                jwt : token,
+                usuario : usuario
+            }
+            //cosita extra para no acabar en los juzgados            
+            response.json(respuesta)
         })
         .catch(err => {
             //-No existe el usuario

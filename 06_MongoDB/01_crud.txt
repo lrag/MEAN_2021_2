@@ -1,0 +1,469 @@
+
+
+use bbdd
+
+//           //
+// INSERCIÓN //
+//           //
+
+//En la consola la variable db representa a la base de datos que se está utilizando
+db.peliculas.insertOne( { "titulo" : "Alien" })
+db.peliculas.find()
+
+//Asignando el valor de _id
+db.peliculas.insertOne( { "_id" : 1, "titulo" : "Die Hard" }) 
+db.peliculas.find()
+
+//Condiciones para insertar
+//
+//El _id no puede ser un array (cualquier otra propiedad si)
+db.peliculas.insertOne( { "_id" : [ "Regreso al futuro", "Regreso al futuro II", "Regreso al futuro III" ]})
+//
+//El _id no puede repetirse
+db.peliculas.insertOne( { "_id" : 1, "titulo" : "ABCDEFGH" })
+//
+//El documento debe estar bien construido
+db.peliculas.insertOne( { "HGFEDCBA" } )
+
+//
+//insertMany
+//
+//Recibe un array con los documentos
+//Los documentos se insertan secuencialmente
+//Si algún insert falla no sigue
+db.peliculas.insertMany( [ { "_id" : "Batman", "year" : 1989 }, 
+                           { "_id" : "Depredador", "year" : 1987 }, 
+                           { "_id" : "Cazafantasmas", "year" : 1984 }, 
+                           { "_id" : "Cazafantasmas", "year" : 1984 },
+                           { "_id" : "Esta ya no se inserta", "year" : 1984 } ] ) 
+db.peliculas.find()
+
+//
+//insertMany unordered
+//
+//Ejecuta las inserciones en paralelo
+//No garantiza el orden en el que se insertan los documentos
+//Las que esten bien se insertarán
+db.peliculas.insertMany( [ { "_id" : "Tiburon", "year" : 1975 }, 
+                           { "_id" : "Encuentros en la tercera fase", "year" : 1997 }, 
+                           { "_id" : "Buscando a Nemo", "year" : 2003 }, 
+                           { "_id" : "Buscando a Nemo", "year" : 2003 }, 
+                           { "_id" : "Arma Letal", "year" : 1987 } ], 
+                           { ordered: false }) 
+db.peliculas.find()
+
+//         //
+// BORRADO //
+//         //
+
+for (i=1;i<=20;i++) { db.prueba.insertOne( { _id: i, a : i }) }
+
+db.prueba.deleteOne( { a : 1 } ) 
+db.prueba.deleteMany( { a : 2 } ) 
+
+db.prueba.deleteMany( { a : { $lt: 5 } }) 
+
+db.prueba.deleteOne( { a : { $lt: 10 }}) 
+//db.prueba.deleteMany() 
+db.prueba.deleteMany( { } ) 
+
+//                          //
+// BORRADO DE UNA COLECCION //
+//                          //
+
+db.prueba.drop()
+
+
+//           //
+// BÚSQUEDAS //
+//           //
+
+db.peliculas.drop() 
+db.peliculas.insertMany( [ { "title" : "Tiburón", "year" : 1975, "imdb_rating" : 8.1 }, 
+                           { "title" : "Batman", "year" : 1989, "imdb_rating" : 7.6 } ]) 
+db.peliculas.find()
+db.peliculas.find( { "year" : 1975 } )
+//Cuando en el objeto que se utiliza como criterio hay más de una propiedad
+//se trata como un AND
+db.peliculas.find( { "year" : 1989, "title" : "Batman" } )
+
+//
+//Buscando en arrays
+//
+
+db.peliculas.drop() 
+db.peliculas.insertMany( [{ "title"    : "Batman", 
+                            "category" : [ "accion", "adventure" ] }, 
+                          { "title"    : "Solaris", 
+                            "category" : [ "ci-fi" ] }, 
+                          { "title"    : "Los Goonies", 
+                            "category" : [ "familiar", "aventuras", "comedia" ]} ])
+
+db.peliculas.find( { "category" : "accion" })
+db.peliculas.find( { "category" : [ "accion", "ci-fi" ]}) //Sin resultados
+db.peliculas.find( { "category" : [ "familiar", "aventuras", "comedia" ]})
+//Y si cambiamos el orden de los valores en el array...:
+db.peliculas.find( { "category" : [ "aventuras", "familiar", "comedia" ]})
+
+//
+//Buscando con la notación del punto
+//
+db.peliculas.drop()
+db.peliculas.insertMany( [{ "title" : "Avatar", 
+                            "box_office" : { "gross" : 2787, 
+                                             "budget" : 237, 
+                                             "opening_weekend" : 77 } 
+                          }, 
+                          { "title" : "E.T.", 
+                            "box_office" : { "gross" : 349, 
+                                             "budget" : 10.5, 
+                                             "opening_weekend" : 14 } 
+                          } ])
+
+db.peliculas.find( { "box_office" : { "gross" : 2787 }}) //Nada de nada
+db.peliculas.find( { "box_office.gross" : 2787 }) //Ok
+
+//
+//Usando el punto con arrays
+//
+db.peliculas.drop()
+db.peliculas.insertMany( [ { "title" : "E.T.", 
+                             "filming_locations" : [{"city" : "Culver City", "state" : "CA", "country" : "USA" }, 
+                                                    {"city" : "Los Angeles", "state" : "CA", "country" : "USA" }, 
+                                                    {"city" : "Cresecent City", "state" : "CA", "country" : "USA" } ] 
+                           }, 
+                           { "title": "Star Wars", 
+                             "filming_locations" : [{"city" : "Ajim", "state" : "Jerba", "country" : "Tunisia" }, 
+                                                    {"city" : "Yuma", "state" : "AZ", "country" : "USA" }]
+                           }
+                         ])
+
+db.peliculas.find( { "filming_locations.country" : "USA" })//Dos documentos
+
+//
+//Projections
+//
+
+db.movies.insertOne( { "title" : "Forrest Gump", 
+                       "category" : [ "drama", "romance" ], 
+                       "imdb_rating" : 8.8, 
+                       "filming_locations" : [ { "city" : "Savannah", "state" : "GA", "country" : "USA" }, 
+                                               { "city" : "Monument Valley", "state" : "UT", "country" : "USA" }, 
+                                               { "city" : "Los Angeles", "state" : "CA", "country" : "USA" } ], 
+                       "box_office" : { "gross" : 557, "opening_weekend" : 24, "budget" : 55 } })
+
+//Indicamos qué propiedades queremos recuperar 
+//(_id se incluye por defecto)
+db.movies.findOne( { "title" : "Forrest Gump" }, 
+                   { "title" : 1, "imdb_rating" : 1 }) 
+
+//Solo el _id:
+db.movies.findOne( { "title" : "Forrest Gump" }, 
+                   {  "_id" : 1}) 
+
+//Para eliminar propiedades 0 o false 
+db.movies.findOne( { "title" : "Forrest Gump" }, 
+                   { "_id" : 0, "title" : 1, "imdb_rating" : 1 }) 
+                                     
+db.movies.findOne( { "title" : "Forrest Gump" }, 
+                   { "_id" : 0, "title" : 0, "imdb_rating" : 0 }) 
+
+//
+//Cursores
+//
+
+db.prueba.drop() 
+for (i=1;i<=10000;i++){ 
+    db.prueba.insertOne( { a : Math.floor( Math.random() * 100 + 1 ), 
+                           b : Math.floor( Math.random() * 100 + 1 )}) 
+} 
+db.prueba.find()
+
+//Find devuelve un cursor 
+var cursor = db.prueba.find()
+//Muestra el siguiente documento 
+cursor.next()
+//True porque hay más documentos. 
+cursor.hasNext()
+//Cuardamos el siguiente documento en una variable. 
+documento = cursor.next()
+//Accedemos a una propiedad del documento. 
+documento.a
+//Al imprimir el cursor muestra 20 documentos. 
+cursor
+
+//
+//Funciones de los Cursores
+//
+db.prueba.drop() 
+for (i=1;i<=100;i++) { 
+    db.prueba.insertOne( { a: i})
+}
+
+//Count
+db.prueba.count()
+db.prueba.count( { a : { $lt: 42 }}) //41
+//Igual que el anterior
+db.prueba.find( { a : { $lt: 42 } } ).count()
+
+//
+//Sort
+//
+
+db.prueba.drop() 
+for (i=1;i<=20;i++){ 
+    db.prueba.insertOne( { a : Math.floor( Math.random() * 10 + 1 ), b : Math.floor( Math.random() * 10 + 1 )}) 
+}
+db.prueba.find()
+
+//sort descending; use 1 for ascending 
+db.prueba.find().sort( { a :1 })
+//sort by b, then a 
+db.prueba.find().sort( { b : 1,a: 1 })
+//$natural order is just the order on disk. 
+db.prueba.find().sort( { $natural : 1 })
+
+//
+//Distinct
+//
+
+db.movie_reviews.drop() 
+db.movie_reviews.insertMany( [ { "title" : "Encuentros en la tercera fase", "rating" : 8 }, 
+                               { "title" : "La llegada", "rating" : 1 }, 
+                               { "title" : "Encuentros en la tercera fase", "rating" : 9 }, 
+                               { "title" : "Encuentros en la tercera fase", "rating" : 8 }, 
+                               { "title" : "Encuentros en la tercera fase", "rating" : 8 }]) 
+db.movie_reviews.distinct( "title" )
+
+//            //
+// OPERADORES //
+//            //
+
+//
+//Comparación
+//
+// • $lt: Exists and is less than
+// • $lte: Exists and is less than or equal to
+// • $gt: Exists and is greater than
+// • $gte: Exists and is greater than or equal to
+// • $ne: Does not exist or does but is not equal to
+// • $in: Exists and is in a set
+// • $nin: Does not exist or is not in a set
+
+db.peliculas.drop()
+db.peliculas.insertMany( [ { "title" : "Batman", 
+                             "category" : [ "action", "adventure" ], 
+                             "imdb_rating" : 7.6, 
+                             "budget" : 35, 
+                             "roten_tomatoes": 7.1 }, 
+                           { "title" : "Godzilla", 
+                             "category" : [ "action", "adventure", "sci-fi" ], 
+                             "imdb_rating" : 6.6, 
+                             "roten_tomatoes": 8.0}, 
+                           { "title" : "Home Alone", 
+                              "category" : [ "family", "comedy" ],
+                              "imdb_rating" : 7.4, 
+                              "roten_tomatoes": 6.3 }])
+
+db.peliculas.find()
+db.peliculas.find( { "imdb_rating" : { $gte: 7 }})
+db.peliculas.find( { "category" : { $ne: "family" }})
+//$in puede leerse como un or
+db.peliculas.find( { "title" : { $in: [ "Batman", "Godzilla" ]}}) 
+db.peliculas.find( { "title" : { $nin: [ "Batman", "Godzilla" ]}})
+
+//
+//Operadores lógicos
+//
+// • $or: Match either of two or more values
+// • $not: Used with other operators
+// • $nor: Match neither of two or more values
+// • $and: Match both of two or more values
+// – This is the default behavior for queries specifying more than one condition.
+// – Use $and if you need to include the same operator more than once in a query.
+
+db.peliculas.find( { 
+                    $or : [ 
+                            { "category" : "sci-fi" }, 
+                            { "imdb_rating" : { $gte: 7 } } ,
+                          ]                
+                   } )
+
+// more complex $or, really good sci-fi movie or mediocre family movie 
+db.peliculas.find( { 
+                     $or : [ 
+                             { "category" : "sci-fi", "imdb_rating" : { $gte: 8 } }, 
+                             { "category" : "family", "imdb_rating" : { $gte: 7 } } 
+                           ]
+                   } )
+
+
+// find bad movies 
+db.peliculas.find( { "imdb_rating" : { $not: { $gt: 7 }}})
+//ídem, sin hacer el tonto
+db.peliculas.find( { "imdb_rating" : { $lt: 7 }})
+
+//
+//Element Query Operators
+//
+//• $exists: Busca documentos en los que esté presente una propiedad.
+//• $type: Busca documentos en los que el valor de una propiedad sea de un tipo concreto.
+//  – Tambien busca en arrays
+
+Example: Element Operators
+
+db.peliculas.find( { "budget" : { $exists: true }})
+// type 1 or alias "double" 
+db.peliculas.find( { "budget" : { $type: 1 }}) 
+db.peliculas.find( { "budget": { $type : "double"}})
+// type 3 or alias "object" (embedded document) 
+db.peliculas.find( { "budget" : { $type: 3 }}) 
+db.peliculas.find( { "budget": { $type : "object"}})
+// type ’string’ matching array elements 
+db.peliculas.find({ "category": { $type : "string"}})
+
+
+//$expr Operator
+//$expr allows the use of aggregation expression within the MongoDB query language. • Enables the comparison of ﬁelds within the same document using aggregation path expresions6
+//{ $expr : { <expression> }}
+
+// find all movies where roten_tomatoes is higher than imdb_rating 
+db.peliculas.find( { $expr: { $gt : [ "$roten_tomatoes" , "$imdb_rating" ]} })
+
+//Array Query Operators
+//• $all: Array ﬁeld must contain all values listed.
+//• $size: Array must have a particular size. E.g.,$size : 2 means 2 elements in the array
+//• $elemMatch: All conditions must be matched by at least one element in thearray
+
+
+db.peliculas.find( { "category" : { $all: [ "sci-fi", "action" ]}})
+db.peliculas.find( { "category" : { $size: 3 }})
+
+//Example: $elemMatch
+db.peliculas.insertOne( { "title" : "Raiders of the Lost Ark", 
+                          "filming_locations" : [ { "city" : "Los Angeles", "state" : "CA", "country" : "USA" }, 
+                                                  { "city" : "Rome", "state" : "Lazio", "country" : "Italy" }, 
+                                                  { "city" : "Florence", "state" : "SC", "country" : "USA" } ]})
+
+//Parece un and pero en realidad funciona cono un or
+db.peliculas.find( { "filming_locations.city"    : "Florence", 
+                     "filming_locations.country" : "Italy" } )
+   
+// $elemMatch is needed, now there are no results, this is expected 
+db.peliculas.find( { "filming_locations" : { $elemMatch : {
+                                              "city" : "Florence", 
+                                              "country" : "Italy" 
+                                           }}})
+
+//                //
+// MODIFICACIONES //
+//                //
+
+//
+// reemplazar un documento
+//
+
+db.peliculas.find() 
+db.peliculas.replaceOne( { title : "Batman" }, { imdb_rating : 7.7 }) 
+db.peliculas.find() 
+db.peliculas.replaceOne( { imdb_rating: 7.7 }, { title : "Batman", imdb_rating : 7.7 }) 
+db.peliculas.find() 
+db.peliculas.replaceOne( { }, { title: "Batman" }) 
+db.peliculas.find() // back in original state 
+db.peliculas.replaceOne( { }, { _id : ObjectId() } ) //No puede cambiarse el _id
+
+//
+// modificar documentos
+//
+
+db.peliculas.drop()
+db.peliculas.insertMany( [ 
+  { "title" : "Cazafantasmas", "category" : [ "action", "comedia" ], "imdb_rating" : 0, "budget" : 35 }, 
+  { "title" : "Depredador", "category" : [ "action", "adventure", "sci-fi" ], "imdb_rating" : 7.8 }, 
+  { "title" : "Esta casa es una ruina", "category" : [ "family", "comedy" ], "imdb_rating" : 0 } 
+] )
+
+//Operadores:
+• $set: modificar propiedad
+• $unset eliminar propiedad (se pasa el valor 1)
+
+db.peliculas.updateOne( { "title" : "Cazafantasmas" }, 
+                        { $set: { "imdb_rating" : 7.8 }}) 
+
+
+//si la propiedad no existe la añade
+db.peliculas.updateOne( { "title" : "Depredador" }, 
+                        { $set: { "budget" : 1 }}) 
+
+db.peliculas.updateOne( { "title" : "Esta casa es una ruina" }, 
+                        { $set: { "budget" : 15, 
+                                  "imdb_rating" : 6.3 }}) 
+//Para eliminar propiedades de los documentos:
+db.peliculas.updateOne( { "title" : "Esta casa es una ruina" }, 
+                        { $unset: { "budget" : 1 }}) 
+db.peliculas.find()
+
+//Operadores (y II)
+• $inc: Increment a ﬁeld’s value by the speciﬁed amount.
+• $mul: Multiply a ﬁeld’s value by the speciﬁed amount.
+• $rename: Rename a ﬁeld.
+• $min: Updates the ﬁeld value to a speciﬁed value if the speciﬁed value is less than the current value of the ﬁeld
+• $max: Updates the ﬁeld value to a speciﬁed value if the speciﬁed value is greater than the current value of the ﬁeld
+• $currentDate: Set the value of a ﬁeld to the current date or timestamp
+
+db.peliculas.updateOne( { title: "Cazafantasmas" }, { $inc: { "imdb_rating" : 2 }}) 
+db.peliculas.updateOne( { title: "Depredador" }, { $inc: { "budget" : 5 }}) 
+db.peliculas.updateOne( { title: "Cazafantasmas" }, { $mul: { "imdb_rating" : 4 }}) 
+db.peliculas.updateOne( { title: "Cazafantasmas" }, { $rename : { budget : "estimated_budget" }}) 
+db.peliculas.updateOne( { title: "Depredador" }, { $min: { budget : 5 }}) 
+db.peliculas.updateOne( { title: "Depredador" }, { $currentDate: { last_updated : { $type : "timestamp" }}}) 
+
+//
+//update many
+//
+
+db.peliculas.updateOne( { }, { $set : { "sequels" : 0 }}) 
+db.peliculas.find() 
+
+db.peliculas.updateMany( { }, { $set : { "sequels" : 0 }}) 
+db.peliculas.find()
+
+//
+//Updates en arrays
+//
+
+//Operadores
+• $push: Appends an element to the end of the array.
+• $pop: Removes one element from the end of the array.
+• $pull: Removes all elements in the array that match a speciﬁed value.
+• $pullAll: Removes all elements in the array that match any of the speciﬁed values.
+• $addToSet: Appends an element to the array if not already present
+
+db.peliculas.insertOne( { title: "Batman", category : [ "action" ] }) 
+db.peliculas.updateOne( { "title" : "Batman" }, { $push: { "category" : "superhero" }}) 
+db.peliculas.updateOne( { "title" : "Batman" }, { $pop: { "category" : 1 }}) 
+db.peliculas.updateOne( { "title" : "Batman" }, { $pull: { "category" : "action" }}) 
+db.peliculas.updateOne( { "title" : "Batman" }, { $pullAll: { "category" : [ "villain", "comic-based" ]}}) 
+db.peliculas.updateOne( { "title" : "Batman" }, { $addToSet: { "category" : "action" }}) 
+db.peliculas.updateOne( { "title" : "Batman" }, { $addToSet: { "category" : "action" }})
+
+//
+//Operador posicional
+//
+
+db.peliculas.updateMany( { "category": "action" }, { $set : { "category.$" : "acción!" }})
+db.peliculas.find()
+
+//
+//Upsert
+//
+
+db.peliculas.updateOne( { "title" : "Tiburón" }, { $inc : { "budget" : 5 } }, { upsert : true })
+db.peliculas.updateMany( { "title" : "Condemor" }, { $inc : { "budget" : 5 } }, { upsert : true })
+db.peliculas.replaceOne( { "title" : "Rio Bravo", "category" : [ "western" ] }, { "title" : "Rio Bravo", "category" : [ "tiros" ], "budget" : 5 }, { upsert : true })
+
+//
+//Eliminar documentos
+//
+
+;)
