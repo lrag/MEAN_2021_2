@@ -64,8 +64,9 @@ function modificarUsuario(request, response){
 function bajaUsuario(request, response){
 
     let id = request.params.id
+    let autoridad = request.autoridad
     negocioUsuarios
-        .bajaUsuario(id)
+        .bajaUsuario(id, autoridad)
         .then(() => {
             response.json({ mensaje:"El usuaario se ha dado de baja" })
         })

@@ -14,7 +14,7 @@ exports.buscarPorLoginYPw = function(login, password){
     return new Promise(function(resolve, reject){
         let coleccionUsuarios = process.esquema.collection("usuarios")
         coleccionUsuarios
-            .findOne({ login:login, password:password }, { password : 0 } )
+            .findOne({ login:login, password:password }, { projection : { password : 0 }} )
             .then(usuarioEncontrado => {
                 if(!usuarioEncontrado){
                     reject({ codigo:404, mensaje:"No existe un usuario con este login y password" })
@@ -31,7 +31,8 @@ exports.buscarPorLoginYPw = function(login, password){
 
 }
 
-//No hace falta estar autenticado para llamar aqui
+//Autenticación : ninguna
+//Autorización  : ninguna
 exports.altaUsuario = function(usuario){
 
     return new Promise(function(resolve, reject){
@@ -48,6 +49,9 @@ exports.altaUsuario = function(usuario){
 
         let coleccionUsuarios = process.esquema.collection("usuarios")
         
+        //Le asigmanos el rol 'CLIENTE'
+        usuario.rol = "CLIENTE"
+
         coleccionUsuarios
             .findOne({ login : usuario.login})
             .then(function(usuarioEncontrado){
@@ -70,15 +74,28 @@ exports.altaUsuario = function(usuario){
 
 }
 
-//
+//Autenticación: si
+//Autorización :
+//-empleados: si
+//-clientes : solo pueden modificarse a si mismos
 exports.modificarUsuario = function(){
     
 }
 
-//
-exports.bajaUsuario = function(idUsuario){
-    
+//Autenticación: si
+//Autorización :
+//-empleados: si
+//-clientes : solo pueden borrarse a si mismos
+exports.bajaUsuario = function(idUsuario, autoridad){
+
     return new Promise(function(resolve,reject){
+
+        console.log("Autoridad:", autoridad, "idUsuario:", idUsuario)
+
+        if(autoridad.rol=="CLIENTE" && autoridad._id != idUsuario){
+            reject({ codigo:403, mensaje:"Un cliente solo puede darse de baja a si mismo"})
+            return
+        }
 
         let coleccionUsuarios = process.esquema.collection("usuarios")
         let coleccionUsuariosHistorico = process.esquema.collection("usuarios_historico")
@@ -93,7 +110,7 @@ exports.bajaUsuario = function(idUsuario){
                     reject({ codigo:404, mensaje:"El usuario no existe" })
                     return
                 }
-                return coleccionUsuarios.findOneAndDelete({ _id : new ObjectId(idUsuario) })
+                //return coleccionUsuarios.findOneAndDelete({ _id : new ObjectId(idUsuario) })
             })
             .then(resultadoDelete => {
                 console.log("DELETE:", resultadoDelete)

@@ -3,6 +3,9 @@ const http = require('http')
 const express = require('express')
 //Librerías 'nuestras'//////////////////////////////////////
 const mongoUtil = require("./bbdd/mongoDBUtil")
+
+const interceptorJWT = require("./autenticacion/interceptorJWT").interceptorJWT
+
 //Routers para express
 const usuariosRouter = require("./rest/usuariosREST").router
 const autenticacionRouter = require("./autenticacion/autenticacionRouter").router
@@ -35,6 +38,11 @@ function arrancarServidor(){
         limit: '5mb' //Tamaño máximo del body que estamos dispuestos a leer. IMPRESCINDIBLE
     }))       
 
+    //Interceptores (en express los llaman middleware)
+    app.use(interceptorLog)
+    //app.use(interceptorCORS)
+    app.use(interceptorJWT)
+
     //Routers
     app.use(autenticacionRouter)
     app.use(usuariosRouter)
@@ -43,4 +51,10 @@ function arrancarServidor(){
         console.log("Esperando peticiones en el puerto "+process.env.app_puerto)
     })
 
+}
+
+function interceptorLog(request, response, next){
+    console.log("==============================================")
+    console.log("Peticion recibida: "+request.method+" "+request.url)
+    next()
 }
