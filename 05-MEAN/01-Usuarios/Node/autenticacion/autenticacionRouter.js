@@ -1,3 +1,8 @@
+//npm install jsonwebtoken
+//Estamos utilizando esta librería como pudieramos estar usando cualquier otra
+const jwt = require("jsonwebtoken")
+const JWTUtil = require("../util/JWTUtil")
+
 const express = require("express")
 const negocioUsuarios = require("../negocio/negocioUsuarios")
 
@@ -19,7 +24,21 @@ function autenticarUsuario(request, response){
     negocioUsuarios
         .buscarPorLoginYPw(credenciales.login, credenciales.password)
         .then(usuario => {
-            //Crear el token y devolverlo
+            //Creamos el token
+            let token = jwt.sign(
+                { 
+                    _id    : usuario._id, 
+                    login  : usuario.login, 
+                    rol    : usuario.rol,
+                    movida : "ABCDEF"
+                }, 
+                JWTUtil.getClave(), 
+                { 
+                    algorithm: 'HS512' //SHA512 con firma de clave simétrica
+                }
+            ) 
+            //Lo adjuntamos a la respuesta
+            console.log(token)
 
             response.end("USUARIO ENCONTRADO")
         })
