@@ -24,7 +24,7 @@ import { PieComponent } from './componentes/pie/pie.component';
 export class AppModule { 
 
   static rutas:Routes = [
-    
+
   ]
 
 }
