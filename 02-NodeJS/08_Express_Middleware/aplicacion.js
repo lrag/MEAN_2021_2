@@ -1,40 +1,12 @@
 const http = require("http")
 const express = require("express")
 
-const mongoDBUtil = require("./mongoDBUtil")
-const negocioDiscos = require("./negocioDiscos.js") //La extensión 'js' es opcional
-
-//////////////////////////////////////////////////////////////////
-//CONECTAMOS CON LA BASE DE DATOS/////////////////////////////////
-//////////////////////////////////////////////////////////////////
-
-mongoDBUtil.conectarBBDD(arrancarServidor)
-
-//////////////////////////////////////////////////////////////////
-//CREAMOS, CONFIGURAMOS Y ARRANCAMOS EL SERVIDOR//////////////////
-//////////////////////////////////////////////////////////////////
-
-/*
-API
-
-Método  Url          Body    Respuesta  Funcionalidad
----------------------------------------------------------------
-GET     /discos      -       [{json}]   listar todos los discos
-GET     /discos/:id  -       {json}     buscar disco por id
-POST    /discos      {json}  {json}     insertar un disco
-PATCH   /discos/:id  {json}  {json}     modificar un disco
-DELETE  /discos/:id  -       -          borrar un disco
-*/
 
 function arrancarServidor(){
    
     console.log("Arrancando el servidor HTTP")
     
     let app = express()
-
-    app.use(express.json({
-        limit: '5mb' //Tamaño máximo del body que estamos dispuestos a leer. IMPRESCINDIBLE
-    }))    
 
     app.get("/discos", listar)
     app.get("/discos/:id", buscarPorId)

@@ -11,6 +11,8 @@ import { MaquetacionLoginComponent } from './componentes/maquetacion/maquetacion
 import { LoginComponent } from './componentes/usuarios/login/login.component';
 import { RegistroComponent } from './componentes/usuarios/registro/registro.component';
 import { AceptacionTerminosComponent } from './componentes/usuarios/aceptacion-terminos/aceptacion-terminos.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@Angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { AceptacionTerminosComponent } from './componentes/usuarios/aceptacion-t
   ],
   imports: [
     BrowserModule,
+    FormsModule, 
+    HttpClientModule,
     RouterModule.forRoot(AppModule.rutas)
   ],
   providers: [],
