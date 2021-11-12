@@ -33,8 +33,31 @@ import { AceptacionTerminosComponent } from './componentes/usuarios/aceptacion-t
 })
 export class AppModule { 
 
+  //Aqui están las rutas para el router-outlet que está en lo alto de la jerarquía
   static rutas:Routes = [
-
+    {
+      path      : "",
+      component : MaquetacionLoginComponent,
+      children : [
+        {
+          path      : "",
+          component : LoginComponent
+        },
+        {
+          path      : "registro",
+          component : RegistroComponent
+        },
+        {
+          path      : "aceptacion",
+          component : AceptacionTerminosComponent
+        }
+      ]
+      
+    },
+    {
+      path      : "tienda",
+      component : MaquetacionTiendaComponent
+    }
   ]
 
 }
