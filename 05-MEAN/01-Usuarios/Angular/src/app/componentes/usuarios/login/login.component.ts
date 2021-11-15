@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AutenticacionService } from 'src/app/servicios/autenticacion-service';
 
 @Component({
@@ -9,10 +10,10 @@ export class LoginComponent implements OnInit {
 
   public login   :string = ""
   public password:string = ""
-
   public mensaje :string = ""
 
-  constructor(private autenticacionService:AutenticacionService) { 
+  constructor(private autenticacionService:AutenticacionService,
+              private router:Router) { 
   }
 
   ngOnInit(): void {
@@ -24,7 +25,12 @@ export class LoginComponent implements OnInit {
       .subscribe(
         respuesta => {
           console.log("OK",respuesta)
+          //DElegaremos esto en el servicio, para que esté en él centralizado todo lo relacionado con la autenticación
+          //sessionStorage.setItem("JWT",respuesta.jwt)
+          //sessionStorage.setItem("usuario",JSON.stringify(respuesta.usuario))
+          
           //Navegar
+          this.router.navigateByUrl("/tienda")
         },
         error => {
           console.log("MAL",error)

@@ -10,13 +10,30 @@ export class AutenticacionService {
     public constructor(private httpClient:HttpClient ){
     }
 
-    public login(login:string, password:string):Observable<any>{
+    public getUsuario(){
+
+    }
+
+    public getJWT(){
+
+    }
+
+    public login(login:string, password:string)/*:Observable<any>*/{
 
         //POST /login
         //CT:app/json
         //---------------------------
         //{ login:AAA, password:BBB }
-        return this.httpClient.post(ConfiguracionUtil.urlServidor+"/login", { login:login, password:password })
+        this.httpClient.post(ConfiguracionUtil.urlServidor+"/login", { login:login, password:password })
+            .subscribe(
+                (respuesta:any) => {
+                    sessionStorage.setItem("JWT",respuesta.jwt)
+                    sessionStorage.setItem("usuario",JSON.stringify(respuesta.usuario))                    
+                },
+                error => {
+                    console.log(error)
+                }
+            )
 
     }
 
