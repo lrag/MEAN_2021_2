@@ -1,1 +1,96 @@
-<p>registro works!</p>
+<p></p>
+
+<div class="text-center">
+    <h2>Alta de usuario</h2>
+</div>
+
+<div class="form-horizontal" id="formulario">
+  <div class="form-group">
+    <label class="control-label col-xs-2" for="nombre">Nombre</label>
+    <div class="col-xs-8">
+      <input type="text" 
+             class="form-control"
+             required="required"
+             [(ngModel)]="usuario.nombre"/>
+    </div> 
+  </div>
+  <div class="form-group">
+    <label class="control-label col-xs-2" for="login">Login</label>
+    <div class="col-xs-8">
+      <input type="text" 
+             class="form-control"
+             required="required"
+             [(ngModel)]="usuario.login"
+             (keyup)="programarTemporizador()"/>
+    </div>
+    <div *ngIf="errorLoginRepetido">
+      <span class="text-danger">{{errorLoginRepetido}}</span>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label class="control-label col-xs-2" for="pw" >Password</label>
+    <div class="col-xs-8">
+      <input type="text" 
+             class="form-control"
+             [(ngModel)]="usuario.pw"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-xs-2" for="cp">Confirmar password</label>
+    <div class="col-xs-8">
+      <input type="text" 
+             class="form-control"
+             [(ngModel)]="confirmacionPw"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-xs-2" for="correoE">Correo E.</label>
+    <div class="col-xs-8">
+      <input type="text" 
+             class="form-control"
+             [(ngModel)]="usuario.correoE"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-xs-2" for="idioma">Idioma</label>
+    <div class="col-xs-8">
+      <select class="form-control" [(ngModel)]="usuario.idioma">
+        <option>ES</option>
+        <option>EN</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!--
+Podríamos hacerlo así
+<div *ngIf="mensaje.length>0" class="alert alert-danger">{{mensaje}}</div>
+-->
+<!--Preguntar por la existencia de algo en angular implica que devuelve false si:
+    -es undefined
+    -es null
+    -es una cadena de texto vacía en caso de tratarse de un string
+-->
+<div class="alert alert-danger"></div>
+
+<div class="text-center">
+  <input type="button" 
+         value="Siguiente" 
+         class="btn mr-1 btn-primary" 
+         style="width:110px"
+         (click)="siguiente()"/>
+  <input type="button" 
+         value="Cancelar"  
+         class="btn mr-1 btn-warning" 
+         style="width:110px"
+         routerLink="/"/>
+</div>
+
+
+
+
+
+
+
+

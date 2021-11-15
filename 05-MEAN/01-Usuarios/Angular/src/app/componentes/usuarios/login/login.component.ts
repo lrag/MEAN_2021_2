@@ -23,9 +23,9 @@ export class LoginComponent implements OnInit {
     console.log(this.login+":"+this.password)
     this.autenticacionService.login(this.login, this.password)
       .subscribe(
-        respuesta => {
-          console.log("OK",respuesta)
-          //DElegaremos esto en el servicio, para que esté en él centralizado todo lo relacionado con la autenticación
+        () => {
+          console.log("OK")
+          //Delegaremos esto en el servicio, para que esté en él centralizado todo lo relacionado con la autenticación
           //sessionStorage.setItem("JWT",respuesta.jwt)
           //sessionStorage.setItem("usuario",JSON.stringify(respuesta.usuario))
           

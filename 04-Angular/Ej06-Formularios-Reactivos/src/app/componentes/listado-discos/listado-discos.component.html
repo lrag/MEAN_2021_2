@@ -1,0 +1,36 @@
+
+<h3 class="text-center mt-3 mb-3">
+    Listado de Discos
+</h3>
+
+<div class="text-center"> 
+    <button class="btn btn-primary mr-1" routerLink="/formularioDiscos">Nuevo</button>
+</div>
+
+<br/>
+
+<table class="table table-hover table-striped">    
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Grupo</th>
+            <th>Año</th>
+            <th>Género</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let d of discos" [routerLink]="['/formularioDiscos', d.id ]">
+            <td>{{d.titulo}}</td>
+            <td>{{d.grupo}}</td>
+            <td>{{d.year}}</td>
+            <td>{{d.genero}}</td>
+        </tr>
+        <tr *ngIf="discos.length == 0">
+            <td colspan="4">
+                No hay discos en la tabla.
+            </td>
+        </tr>
+    </tbody>
+</table>  
+
+

@@ -1,0 +1,85 @@
+<h3 class="text-center mt-3 mb-3">
+    Formulario de Discos
+</h3>
+
+<div class="text-center"> 
+    <button class="btn btn-primary mr-1" (click)="insertarDisco()">Insertar</button>
+    <button class="btn btn-primary mr-1" (click)="modificarDisco()">Modificar</button>
+    <button class="btn btn-danger  mr-1" (click)="borrarDisco()">Borrar</button>
+    <button class="btn btn-warning mr-1" (click)="vaciarFormulario()">Vaciar</button>
+    <button class="btn btn-warning mr-1" routerLink="/listadoDiscos">Volver</button>
+</div>
+
+<br/>
+
+<!-- 
+Para utilizar los formularios reactivos necesitamos una etiqueta 'form' 
+Este form jamás hará un submit
+
+Unimos el formulario con el formGroup del componente con [formGroup]
+-->
+<form class="row" [formGroup]="formulario">
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="titulo">Título</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <!--
+        Los elementos del formulario que queramos unir al objeto formGroup los marcamos con 'formControlName'
+        -->
+        <input id="titulo" formControlName="titulo" class="form-control"/>
+        
+        <div *ngIf="(formulario.get('titulo').dirty || formulario.get('titulo').touched)">
+            <small *ngIf="formulario.get('titulo').hasError('required')" class="text-danger">
+                Campo obligatorio.
+            </small>
+        </div>
+
+    </div>
+    
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="grupo">Grupo</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <input id="grupo" formControlName="grupo" class="form-control"/>
+
+        <div *ngIf="(formulario.get('grupo').dirty || formulario.get('grupo').touched)">
+            <small class="text-danger"
+                *ngIf="formulario.get('grupo').hasError('required')">
+                Campo obligatorio.
+            </small>
+        </div>
+
+    </div>                 
+    
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="year">Año</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <input id="year" formControlName="year" class="form-control"/>
+
+        <div *ngIf="(formulario.get('year').dirty || formulario.get('year').touched)">
+            <small class="text-danger"
+                *ngIf="formulario.get('year').hasError('required')">
+                Campo obligatorio.
+            </small>
+            <small class="text-danger"
+                *ngIf="formulario.get('year').hasError('pattern')">
+                Debe ser un numero.
+            </small>
+        </div>
+    </div>
+    
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="genero">Género</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <input id="genero" formControlName="genero" class="form-control"/>
+    </div>
+
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="escort">Notas</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <textarea id="escort" formControlName="notas" class="form-control"></textarea>
+    </div>
+</form>  
