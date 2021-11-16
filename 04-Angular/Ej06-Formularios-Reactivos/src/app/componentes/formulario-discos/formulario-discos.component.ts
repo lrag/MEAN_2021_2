@@ -25,7 +25,7 @@ export class FormularioDiscosComponent implements OnInit {
       id     : formBuilder.control(''),
       titulo : formBuilder.control('', [ Validators.required ]),
       grupo  : formBuilder.control('', [ Validators.required ]),
-      year   : formBuilder.control('', [ Validators.required, Validators.pattern('^[0-9]*$') ]),
+      year   : formBuilder.control('', [ Validators.required, Validators.pattern('^[0-9]{4}$') ]),
       genero : formBuilder.control(''),
       notas  : formBuilder.control('')    
     })
@@ -35,14 +35,19 @@ export class FormularioDiscosComponent implements OnInit {
       this.formulario.setValue(discosService.buscarDisco(idDiscoSel))
     }
 
+    this.formulario.markAllAsTouched()
+
   }
 
   ngOnInit(): void {
   }
 
   public insertarDisco():void{
+
     this.formulario.markAllAsTouched()
+    console.log("Value:",this.formulario.value)
     if(this.formulario.invalid){
+      console.log("Datos invalidos")
       return
     }
 
