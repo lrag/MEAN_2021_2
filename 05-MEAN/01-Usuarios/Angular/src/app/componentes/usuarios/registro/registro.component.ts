@@ -1,14 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Usuario } from 'src/app/entidades/usuario';
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html'
 })
 export class RegistroComponent implements OnInit {
-
-  public formulario:FormGroup
+  
+  public formulario:FormGroup /*= new FormGroup({
+    nombre            : new FormControl('', [ Validators.required ]),
+    login             : new FormControl('', [ Validators.required ]),
+    password          : new FormControl('', [ Validators.required ]),
+    confirmarPassword : new FormControl('', [ Validators.required ]),
+    correoE           : new FormControl('', [ Validators.required ]),        
+    idioma            : new FormControl('', [ Validators.required ])        
+  })*/
 
   constructor(formBuilder:FormBuilder,
               private router:Router) {
@@ -22,7 +30,6 @@ export class RegistroComponent implements OnInit {
       idioma   : formBuilder.control('', [ Validators.required ])        
     })
 
-
   }
 
   ngOnInit(): void {
@@ -30,17 +37,27 @@ export class RegistroComponent implements OnInit {
 
   public siguiente():void{
 
-    console.log("Invalid:", this.formulario.invalid)
+    //Validaciones...
 
+    if(this.formulario.invalid){
+      console.log("INVALIDO")
+      return
+    }
 
     let registro = this.formulario.value
-    console.log("Value:",registro)
+    let usuario:Usuario = new Usuario()
+    usuario.nombre   = registro.nombre
+    usuario.login    = registro.login
+    usuario.password = registro.password
+    usuario.idioma   = registro.idioma
+    usuario.correoE  = registro.correoE
 
+    console.log(usuario)
 
     //Guardamos la informacion del formulario para que se pueda utilizar en la pantalla de aceptación de terminos
-    //sessionStorage.setItem("usuario",blablabla)
+    sessionStorage.setItem("usuario",JSON.stringify(usuario))
 
-    //this.router.navigateByUrl("/aceptacion")
+    this.router.navigateByUrl("/aceptacion")
   }
 
 }
