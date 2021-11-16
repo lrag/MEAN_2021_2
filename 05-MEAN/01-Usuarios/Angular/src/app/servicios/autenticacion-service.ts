@@ -1,6 +1,7 @@
 import { HttpClient } from '@Angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Usuario } from '../entidades/usuario';
 
 import { ConfiguracionUtil } from './configuracion-util';
 
@@ -20,9 +21,7 @@ export class AutenticacionService {
 
     public login(login:string, password:string):Observable<any>{
 
-
-        return new Observable(subscribers => {
-            
+        return new Observable(subscribers => {            
             //POST /login
             //CT:app/json
             //---------------------------
@@ -41,10 +40,19 @@ export class AutenticacionService {
                         subscribers.complete()
                     }
                 )
-
         })
 
+    }
 
+    public altaUsuario(usuario:Usuario):Observable<any>{
+        return this.httpClient.post(ConfiguracionUtil.urlServidor+"/usuarios", usuario)
+    }
+
+    public bajaUsuario():void{
+
+    }
+
+    public modificarUsuario():void{
 
     }
 

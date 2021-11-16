@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Usuario } from 'src/app/entidades/usuario';
+import { AutenticacionService } from 'src/app/servicios/autenticacion-service';
 
 @Component({
   selector: 'app-aceptacion-terminos',
@@ -9,7 +12,9 @@ export class AceptacionTerminosComponent implements OnInit {
   public acepta:boolean = false
   public mensaje:string = ""
 
-  constructor() { }
+  constructor(private autenticacionService:AutenticacionService,
+              private router:Router) {
+  }
 
   ngOnInit(): void {
   }
@@ -21,7 +26,29 @@ export class AceptacionTerminosComponent implements OnInit {
       return
     }
 
-    console.log("ACEPTA")
+
+    let json = sessionStorage.getItem("usuario")
+    if(!json){
+      return
+    }
+    let usuario:Usuario = JSON.parse(json)
+
+    console.log(usuario)
+
+    this.autenticacionService.altaUsuario(usuario)
+    .subscribe(
+      respuesta => { 
+        console.log(respuesta)
+        //retirar al usuario del sessionStorage (tiene el password en limpio!!!!)
+        sessionStorage.removeItem("usuario")
+        //Navegar a login
+        this.router.navigateByUrl("/")
+      },
+      error => { 
+        console.log(error)
+        this.mensaje = error.error.mensaje 
+      }
+    )
 
   }
 
