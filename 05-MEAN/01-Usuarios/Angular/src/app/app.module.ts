@@ -13,6 +13,7 @@ import { RegistroComponent } from './componentes/usuarios/registro/registro.comp
 import { AceptacionTerminosComponent } from './componentes/usuarios/aceptacion-terminos/aceptacion-terminos.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@Angular/common/http';
+import { PerfilComponent } from './componentes/usuarios/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HttpClientModule } from '@Angular/common/http';
     PieComponent,
     MenuComponent,
     LoginComponent,
+    PerfilComponent,
     CabeceraComponent,
     RegistroComponent,
     MaquetacionLoginComponent,
