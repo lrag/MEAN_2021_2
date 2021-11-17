@@ -26,20 +26,21 @@ export class AceptacionTerminosComponent implements OnInit {
       return
     }
 
-    let json:any = sessionStorage.getItem("usuario")
-    //if(!json){
-    //  return
-    //}
-    let usuario:Usuario = JSON.parse(json)
-
-    console.log(usuario)
+    let json:any = sessionStorage.getItem("registro")
+    let registro = JSON.parse(json)
+    let usuario:Usuario = new Usuario()
+    usuario.nombre   = registro.nombre
+    usuario.login    = registro.login
+    usuario.password = registro.password
+    usuario.idioma   = registro.idioma
+    usuario.correoE  = registro.correoE
 
     this.autenticacionService.altaUsuario(usuario)
     .subscribe(
       respuesta => { 
         console.log(respuesta)
         //retirar al usuario del sessionStorage (tiene el password en limpio!!!!)
-        sessionStorage.removeItem("usuario")
+        sessionStorage.removeItem("registro")
         //Navegar a login
         this.router.navigateByUrl("/")
       },

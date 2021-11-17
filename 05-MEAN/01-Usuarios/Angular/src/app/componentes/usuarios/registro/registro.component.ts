@@ -60,19 +60,15 @@ export class RegistroComponent implements OnInit {
       return //pa no seguir
     } 
 
-    /*
-    let usuario:Usuario = new Usuario()
-    usuario.nombre   = registro.nombre
-    usuario.login    = registro.login
-    usuario.password = registro.password
-    usuario.idioma   = registro.idioma
-    usuario.correoE  = registro.correoE
-    */    
-
     //Guardamos la informacion del formulario para que se pueda utilizar en la pantalla de aceptación de terminos
     sessionStorage.setItem("registro",JSON.stringify(registro))
 
     this.router.navigateByUrl("/aceptacion")
+  }
+
+  public cancelar():void{
+    sessionStorage.removeItem("registro")
+    this.router.navigateByUrl("/")
   }
 
 }
