@@ -63,7 +63,13 @@ export class AppModule {
     },
     {
       path      : "tienda",
-      component : MaquetacionTiendaComponent
+      component : MaquetacionTiendaComponent,
+      children  : [
+        {
+          path      : "perfil",
+          component : PerfilComponent
+        }        
+      ]      
     }
   ]
 

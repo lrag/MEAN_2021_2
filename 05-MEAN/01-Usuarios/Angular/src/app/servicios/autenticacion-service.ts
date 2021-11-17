@@ -11,8 +11,10 @@ export class AutenticacionService {
     public constructor(private httpClient:HttpClient ){
     }
 
-    public getUsuario(){
-
+    public getUsuario():Usuario{
+        let json:any = sessionStorage.getItem("usuario")
+        let usuario:Usuario = JSON.parse(json)
+        return usuario
     }
 
     public getJWT(){

@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
           //sessionStorage.setItem("usuario",JSON.stringify(respuesta.usuario))
           
           //Navegar
-          this.router.navigateByUrl("/tienda")
+          this.router.navigateByUrl("/tienda/perfil")
         },
         error => {
           console.log("MAL",error)
