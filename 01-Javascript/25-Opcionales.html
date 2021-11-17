@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+let cliente1 = {
+    nombre : "Bart",
+    direccion : {
+        ciudad : "Springfield",
+        calle  : "Evergreen Terrace"
+    }
+}
+
+let cliente2 = {
+    nombre : "Bart",
+}
+
+console.log(cliente1.direccion) //{ }
+console.log(cliente2.direccion) //undefined
+console.log(cliente1.direccion.calle) //Evergreen terrace
+
+//console.log(cliente2.direccion.calle) //Zasca
+
+if(cliente2!=null){
+    if(cliente2.direccion!=null){
+        console.log(cliente2.direccion.calle)
+    } else {
+        console.log("El cliente no tiene dirección")
+    }
+}
+
+//let calle = cliente2.direccion.calle
+
+//Podemos indicar la opcionalidad de un valor
+
+let calle1 = cliente1.direccion?.calle
+console.log("calle1:"+calle1)
+let calle2 = cliente2.direccion?.calle
+console.log("calle2:"+calle2)
+
+</script>
+
+<body>
+    
+    <h1>25_Opcionales</h1>
+
+</body>
+</html>

@@ -26,11 +26,10 @@ export class AceptacionTerminosComponent implements OnInit {
       return
     }
 
-
-    let json = sessionStorage.getItem("usuario")
-    if(!json){
-      return
-    }
+    let json:any = sessionStorage.getItem("usuario")
+    //if(!json){
+    //  return
+    //}
     let usuario:Usuario = JSON.parse(json)
 
     console.log(usuario)

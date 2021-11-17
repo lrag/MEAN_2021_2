@@ -9,6 +9,8 @@ import { Usuario } from 'src/app/entidades/usuario';
 })
 export class RegistroComponent implements OnInit {
   
+  public errorPassword:boolean = false
+
   public formulario:FormGroup /*= new FormGroup({
     nombre            : new FormControl('', [ Validators.required ]),
     login             : new FormControl('', [ Validators.required ]),
@@ -26,9 +28,17 @@ export class RegistroComponent implements OnInit {
       login    : formBuilder.control('', [ Validators.required ]),
       password : formBuilder.control('', [ Validators.required ]),
       confirmarPassword : formBuilder.control('', [ Validators.required ]),
-      correoE  : formBuilder.control('', [ Validators.required ]),        
+      correoE  : formBuilder.control('', [ Validators.required, Validators.email ]),        
       idioma   : formBuilder.control('', [ Validators.required ])        
     })
+
+    let usuarioGuardadoJson = sessionStorage.getItem("registro")
+    if(usuarioGuardadoJson){
+      let usuarioGuardado = JSON.parse(usuarioGuardadoJson)
+      usuarioGuardado.password = ""
+      usuarioGuardado.confirmarPassword = ""
+      this.formulario.setValue(usuarioGuardado)
+    }
 
   }
 
@@ -37,25 +47,30 @@ export class RegistroComponent implements OnInit {
 
   public siguiente():void{
 
-    //Validaciones...
-
+    //Validaciones...    
+    this.formulario.markAllAsTouched()
     if(this.formulario.invalid){
-      console.log("INVALIDO")
       return
     }
-
+    
+    //Accedemos a los valores del formulario
     let registro = this.formulario.value
+    if(registro.password!=registro.confirmarPassword){
+      this.errorPassword = true
+      return //pa no seguir
+    } 
+
+    /*
     let usuario:Usuario = new Usuario()
     usuario.nombre   = registro.nombre
     usuario.login    = registro.login
     usuario.password = registro.password
     usuario.idioma   = registro.idioma
     usuario.correoE  = registro.correoE
-
-    console.log(usuario)
+    */    
 
     //Guardamos la informacion del formulario para que se pueda utilizar en la pantalla de aceptación de terminos
-    sessionStorage.setItem("usuario",JSON.stringify(usuario))
+    sessionStorage.setItem("registro",JSON.stringify(registro))
 
     this.router.navigateByUrl("/aceptacion")
   }
