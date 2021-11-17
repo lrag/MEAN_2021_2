@@ -1,0 +1,102 @@
+
+
+<h3 class="text-center mt-3 mb-3">
+    Perfil
+</h3>
+
+<br/>
+
+<div *ngIf="mensaje" class="alert alert-success">{{mensaje}}</div>
+<div *ngIf="mensajeError" class="alert alert-danger">{{mensajeError}}</div>
+
+<form class="row" [formGroup]="formulario">
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="nombre">Nombre</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <input id="nombre" formControlName="nombre" class="form-control"/>
+        
+        <div *ngIf="(formulario.get('nombre').dirty || formulario.get('nombre').touched)">
+            <small *ngIf="formulario.get('nombre').hasError('required')" class="text-danger">
+                Campo obligatorio.
+            </small>
+            <small *ngIf="formulario.get('nombre').hasError('minlength')" class="text-danger">
+                La longitud mínima es 10 caracteres
+            </small>
+        </div>
+    </div>
+    
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="pw">Password</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <input id="pw" formControlName="pw" class="form-control"/>
+
+        <div *ngIf="(formulario.get('pw').dirty || formulario.get('pw').touched)">
+            <small class="text-danger"
+                *ngIf="formulario.get('pw').hasError('required')">
+                Campo obligatorio.
+            </small>
+        </div>
+    </div>                 
+    
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="year">Idioma</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <select formControlName="idioma" class="form-control">
+            <option>ES</option>
+            <option>EN</option>
+        </select>
+    </div>
+    
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="correoE">Correo E</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <input id="correoE" formControlName="correoE" class="form-control"/>
+
+        <div *ngIf="(formulario.get('correoE').dirty || formulario.get('correoE').touched)">
+            <small *ngIf="formulario.get('correoE').hasError('required')" class="text-danger" >
+                Campo obligatorio.
+            </small>
+            <small *ngIf="formulario.get('correoE').hasError('email')" class="text-danger" >
+                No es un correo electrónico correcto.
+            </small>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="telefono">Teléfono</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <input id="telefono" formControlName="telefono" class="form-control"/>
+
+        <div *ngIf="(formulario.get('telefono').dirty || formulario.get('telefono').touched)">
+            <small class="text-danger"
+                *ngIf="formulario.get('telefono').hasError('required')">
+                Campo obligatorio.
+            </small>
+        </div>        
+    </div>
+
+    <div class="col-sm-12 col-md-2 mt-1">
+        <label for="direccion">Dirección</label>
+    </div>
+    <div class="col-sm-12 col-md-10 mt-1">
+        <input id="direccion" formControlName="direccion" class="form-control"/>
+
+        <div *ngIf="(formulario.get('direccion').dirty || formulario.get('direccion').touched)">
+            <small class="text-danger"
+                *ngIf="formulario.get('direccion').hasError('required')">
+                Campo obligatorio.
+            </small>
+        </div>        
+    </div>
+</form>  
+
+<div class="text-center mt-4"> 
+    <button class="btn btn-primary mr-1" (click)="guardar()">Guardar</button>
+    <button class="btn btn-danger mr-1">Baja</button>
+</div>
+
