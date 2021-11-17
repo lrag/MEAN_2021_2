@@ -21,7 +21,6 @@ export class PerfilComponent implements OnInit {
       _id       : formBuilder.control(''), //Este no aparece en el formulario, pero hace falta
       nombre    : formBuilder.control('', [ Validators.required ]),
       login     : formBuilder.control(''), //Este no aparece en el formulario, pero hace falta
-      password  : formBuilder.control('', [ Validators.required, Validators.minLength(10) ]),
       idioma    : formBuilder.control(''),
       correoE   : formBuilder.control('', [ Validators.required, Validators.email ]),
       telefono  : formBuilder.control('', [ Validators.required ]),    
