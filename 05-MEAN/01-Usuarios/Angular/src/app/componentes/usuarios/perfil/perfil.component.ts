@@ -50,7 +50,19 @@ export class PerfilComponent implements OnInit {
       return
     }
 
-
+    this.autenticacionService.modificarUsuario(this.formulario.value)
+    .subscribe(
+      data => { 
+        console.log(data)
+        this.mensaje = "El perfil se actualizó correctamente"
+        this.mensajeError = null
+      },
+      err => {
+        console.log(err)
+        this.mensajeError = "Hubo un problema al guardar el perfil"
+        this.mensaje = null
+      }
+    )
     
     
   }

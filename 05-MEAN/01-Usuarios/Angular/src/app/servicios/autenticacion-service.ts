@@ -17,8 +17,8 @@ export class AutenticacionService {
         return usuario
     }
 
-    public getJWT(){
-
+    public getJWT():string|null{
+        return sessionStorage.getItem("JWT")
     }
 
     public login(login:string, password:string):Observable<any>{
@@ -54,9 +54,27 @@ export class AutenticacionService {
 
     }
 
-    public modificarUsuario(usuario:Usuario):void{
+    public modificarUsuario(usuario:Usuario):Observable<any>{
 
-
+        return new Observable( subscribers => {
+            this.httpClient.patch(
+                    ConfiguracionUtil.urlServidor+"/usuarios/"+usuario._id,
+                    usuario,
+                    { headers : { Authorization : "Bearer "+this.getJWT() } }
+                )
+                .subscribe(
+                    () => {
+                        sessionStorage.setItem("usuario",JSON.stringify(usuario))
+                        subscribers.next()
+                        subscribers.complete()
+                    },
+                    err => {
+                        console.log(err)
+                        subscribers.error(err)
+                        subscribers.complete()
+                    }
+                )
+        })
 
     }
 
