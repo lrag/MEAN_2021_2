@@ -9,6 +9,13 @@ let reglasUsrInsercion = {
     correoE  : "required|min:3|max:30|email"
 }
 
+let reglasUsrModificacion = {
+    nombre    : "required|min:3|max:50",
+    correoE   : "required|min:3|max:30|email",
+    telefono  : "required|min:3|max:20",
+    direccion : "required|min:3|max:50"
+}
+
 exports.buscarPorLoginYPw = function(login, password){
 
     return new Promise(function(resolve, reject){
@@ -80,6 +87,54 @@ exports.altaUsuario = function(usuario){
 //-clientes : solo pueden modificarse a si mismos
 exports.modificarUsuario = function(usuario, autoridad){
     
+    return new Promise(function(resolve, reject){
+
+        //Validación
+        Validator.useLang('es')
+        let validador = new Validator(usuario, reglasUsrModificacion)
+        if(validador.fails()){
+            console.log(validador.errors.errors)
+            reject( { codigo:400, 
+                      mensaje:'Los datos del cliente son incorrectos', 
+                      errores: validador.errors.errors } ) //Mal
+            return
+        }        
+                    
+        //Autorización 
+        if(autoridad.rol=="CLIENTE" && autoridad._id!=usuario._id){                        
+            reject( { codigo:403, 
+                        mensaje:'Los clientes solo pueden modificarse a si mismos' } ) //Mal
+            return
+        }
+    
+        //Modificar 
+        process.esquema.collection("usuarios").findOneAndUpdate( 
+                { _id : new ObjectId(usuario._id) },
+                {
+                    $set : {
+                        //Aqui no podemos colocar el _id (es inmutable)
+                        nombre    : usuario.nombre,
+                        correoE   : usuario.correoE,
+                        telefono  : usuario.telefono,
+                        direccion : usuario.direccion,
+                        idioma    : usuario.idioma
+                    }
+                }
+            ) 
+        .then( resultado => {
+            if(!resultado.value){
+                reject({ codigo:404, mensaje:"El usuario no existe"})
+                return
+            }
+            resolve()
+        })
+        .catch( error => {
+            console.log(error)
+            reject({ codigo:500, mensaje:"Error con la base de datos"})
+        })
+
+    })
+
 }
 
 //Autenticación: si
