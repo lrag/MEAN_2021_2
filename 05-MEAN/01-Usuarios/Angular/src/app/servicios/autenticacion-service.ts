@@ -54,7 +54,9 @@ export class AutenticacionService {
 
     }
 
-    public modificarUsuario():void{
+    public modificarUsuario(usuario:Usuario):void{
+
+
 
     }
 

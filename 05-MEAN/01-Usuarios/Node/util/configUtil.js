@@ -1,10 +1,10 @@
 const fs = require("fs")
 
-console.log("Leyendo la configuracion...")
-
 try {
     //__dirname es una variable implícita que guarda la ruta absoluta al fichero en el que estamos
-    let buffer = fs.readFileSync(__dirname+"\\..\\conf.json")
+
+    //let buffer = fs.readFileSync(__dirname+"\\..\\conf.json")
+    let buffer = fs.readFileSync(__dirname+"/../conf.json")
     let json = buffer.toString()
     let conf = JSON.parse(json)
     //Colocamos en process.env las propiedades que tiene el objeto 'conf'

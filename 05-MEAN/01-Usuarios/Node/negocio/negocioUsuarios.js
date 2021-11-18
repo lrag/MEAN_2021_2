@@ -76,9 +76,9 @@ exports.altaUsuario = function(usuario){
 
 //Autenticación: si
 //Autorización :
-//-empleados: si
+//-empleados: pueden modificar cualquier usuario
 //-clientes : solo pueden modificarse a si mismos
-exports.modificarUsuario = function(){
+exports.modificarUsuario = function(usuario, autoridad){
     
 }
 

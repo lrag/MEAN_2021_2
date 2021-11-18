@@ -50,6 +50,9 @@ export class PerfilComponent implements OnInit {
       return
     }
 
+
+    
+    
   }
 
 }

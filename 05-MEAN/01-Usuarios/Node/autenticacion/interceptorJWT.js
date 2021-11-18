@@ -13,7 +13,7 @@ exports.interceptorJWT = function(request, response, next){
     if((request.method.toUpperCase()=="POST" && urlSinParametros == "/login") || 
         (request.method.toUpperCase()=="POST" && urlSinParametros == "/usuarios") ){
         next()
-        return
+        return //pa no seguir
     }  
 
     //Leemos el header 'authorization'
@@ -26,16 +26,15 @@ exports.interceptorJWT = function(request, response, next){
 
     let trozos = authorization.split(" ")
     if( trozos.length!=2 || trozos[0].toLowerCase()!="bearer" ){
-        response.status(400).json({ codigo:400, mensaje:"La cabecera authorization está mal construida" })
+        response.status(400).json({ codigo:401, mensaje:"La cabecera authorization está mal construida" })
         return        
     }
 
     let token = trozos[1]
 
     try {
-        let payload = jwt.verify(token, JWTUtil.getClave(), {algorithm: 'HS512'})
+        let payload = jwt.verify(token, JWTUtil.getClave()) //, {algorithm: 'HS512'})
         request.autoridad = payload
-
     } catch(err){
         response.status(401).json({ codigo:401, mensaje:err.message })
         return 

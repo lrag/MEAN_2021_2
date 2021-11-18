@@ -54,16 +54,47 @@ function altaUsuario(request, response){
 
 //PATCH /usuarios/:id
 //CT: app/json
+//Authorization: Bearer kjhjfvriehr4hfjrghur4.asrhjkdsfhjkwtryit4huiwgrwhjkjew.danjlkfsghjkewhjkghjkwt
 //-------------------
 //{ usuario }
 function modificarUsuario(request, response){
-    response.end("Usuario modificado")
+
+    let idUsuario = request.params.id
+    let usuario   = request.body
+    let autoridad = request.autoridad
+
+    //PATCH /usuarios/42
+    //CT: app/json
+    //Authorization: Bearer kjhjfvriehr4hfjrghur4.{ _id:42, login:Sr.Smith, rol:CLIENTE }.danjlkfsghjkewhjkghjkwt
+    //-------------------
+    //{ 
+    //  _id       : 52 <--OJO
+    //  direccion : "Otra direccion"
+    //}    
+    if(usuario._id && usuario._id!=idUsuario){
+        response.status(401).json({ codigo:401, mensaje:"De qué vas, imbécil"})
+        return
+    }
+    //Y si en el json no viene el id le ponemos el que viene en la url
+    usuario._id = idUsuario
+
+    negocioUsuarios
+        .modificarUsuario(usuario, autoridad)
+        .then( () => {
+            response.json({ codigo:200, mensaje:"El usuario se modificó correctamente" })
+        })
+        .catch(err  => {
+            console.log(err)
+            response.status(err.codigo).json(err)
+        } )
+
 }
 
 //DELETE /usuarios/:id
 function bajaUsuario(request, response){
 
     let id = request.params.id
+
     let autoridad = request.autoridad
     negocioUsuarios
         .bajaUsuario(id, autoridad)
