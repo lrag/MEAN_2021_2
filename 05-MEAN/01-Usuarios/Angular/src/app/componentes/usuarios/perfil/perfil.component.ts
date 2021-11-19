@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Usuario } from 'src/app/entidades/usuario';
 import { AutenticacionService } from 'src/app/servicios/autenticacion-service';
 
@@ -14,7 +15,8 @@ export class PerfilComponent implements OnInit {
   public mensaje:string|null = null
   public mensajeError:string|null = null
 
-  constructor(private formBuilder:FormBuilder,
+  constructor(private router:Router,
+              private formBuilder:FormBuilder,
               private autenticacionService:AutenticacionService) {
 
     this.formulario = formBuilder.group({
@@ -65,7 +67,21 @@ export class PerfilComponent implements OnInit {
   }
 
   public bajaUsuario():void{
-    console.log("BAJA")
+    
+    let usuario:Usuario = this.formulario.value    
+    this.autenticacionService.bajaUsuario(usuario)
+    .subscribe(
+      respuesta => {
+        console.log(respuesta)
+        this.autenticacionService.logout()
+        this.router.navigateByUrl("/")
+      },
+      err => {
+        console.log(err)
+      }
+    )
+
+
   }
 
 }

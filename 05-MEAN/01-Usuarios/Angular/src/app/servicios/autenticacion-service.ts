@@ -46,12 +46,18 @@ export class AutenticacionService {
 
     }
 
+    public logout():void{
+        sessionStorage.removeItem("JWT")
+        sessionStorage.removeItem("usuario")     
+    }
+
     public altaUsuario(usuario:Usuario):Observable<any>{
         return this.httpClient.post(ConfiguracionUtil.urlServidor+"/usuarios", usuario)
     }
 
-    public bajaUsuario():void{
-        //
+    public bajaUsuario(usuario:Usuario):Observable<any>{
+        return this.httpClient.delete(ConfiguracionUtil.urlServidor+"/usuarios/"+usuario._id,
+                                      { headers : { Authorization : "Bearer "+this.getJWT() } })
     }
 
     public modificarUsuario(usuario:Usuario):Observable<any>{
