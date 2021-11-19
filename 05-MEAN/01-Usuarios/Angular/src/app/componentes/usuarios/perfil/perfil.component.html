@@ -99,6 +99,28 @@
 
 <div class="text-center mt-4"> 
     <button class="btn btn-primary mr-1" (click)="guardar()">Guardar</button>
-    <button class="btn btn-danger mr-1">Baja</button>
+    <button class="btn btn-danger mr-1" data-toggle="modal" data-target="#confirmacionBaja">Baja</button>
 </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="confirmacionBaja" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirmación de baja</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ¿Está seguro de que quiere darse de baja?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="bajaUsuario()">Baja</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
