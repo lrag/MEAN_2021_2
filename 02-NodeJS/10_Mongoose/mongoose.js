@@ -67,27 +67,6 @@ function pruebasMongoose(){
 
     let Usuario = mongoose.model('usuarios', esquemaUsuario)
 
-
-    let usrNormalYCorriente = {
-        login     : 'douglasquaid',
-        password  : '1234567890',
-        nombre    : 'Douglas Quaid',
-        direccion : 'Marte',
-        //Esta propiedad no está en el esquema que hemos definido y se ignorará
-        TOCOTO    : 'ARSA'
-    }
-    let usuario2 = new Usuario(usrNormalYCorriente)   
-    console.log(usuario2.tocoto)
-    usuario2.tocoto = "ARSA"   
-    console.log(usuario2)
-    console.log(usuario2.tocoto)
-
-    process.exit(0)
-
-
-
-
-
     //A partir de este momento cada vez que necesitemos un usuario hacemos el new del prototipo
     let usuario = new Usuario()
 
