@@ -51,11 +51,10 @@ export class AutenticacionService {
     }
 
     public bajaUsuario():void{
-
+        //
     }
 
     public modificarUsuario(usuario:Usuario):Observable<any>{
-
         return new Observable( subscribers => {
             this.httpClient.patch(
                     ConfiguracionUtil.urlServidor+"/usuarios/"+usuario._id,
@@ -75,7 +74,6 @@ export class AutenticacionService {
                     }
                 )
         })
-
     }
 
 }

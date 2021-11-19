@@ -94,8 +94,8 @@ function modificarUsuario(request, response){
 function bajaUsuario(request, response){
 
     let id = request.params.id
-
     let autoridad = request.autoridad
+    
     negocioUsuarios
         .bajaUsuario(id, autoridad)
         .then(() => {
