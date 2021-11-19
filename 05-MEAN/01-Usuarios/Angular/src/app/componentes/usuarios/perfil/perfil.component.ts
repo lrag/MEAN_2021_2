@@ -73,14 +73,12 @@ export class PerfilComponent implements OnInit {
     .subscribe(
       respuesta => {
         console.log(respuesta)
-        this.autenticacionService.logout()
         this.router.navigateByUrl("/")
       },
       err => {
         console.log(err)
       }
     )
-
 
   }
 

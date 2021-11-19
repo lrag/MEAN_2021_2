@@ -165,7 +165,7 @@ exports.bajaUsuario = function(idUsuario, autoridad){
                     reject({ codigo:404, mensaje:"El usuario no existe" })
                     return
                 }
-                //return coleccionUsuarios.findOneAndDelete({ _id : new ObjectId(idUsuario) })
+                return coleccionUsuarios.findOneAndDelete({ _id : new ObjectId(idUsuario) })
             })
             .then(resultadoDelete => {
                 console.log("DELETE:", resultadoDelete)

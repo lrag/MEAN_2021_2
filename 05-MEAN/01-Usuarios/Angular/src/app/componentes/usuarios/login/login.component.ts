@@ -19,6 +19,12 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public comprobarIntro(evento:any){
+    if(evento.keyCode == 13){
+      this.entrar()
+    }
+  }
+
   public entrar():void{
     console.log(this.login+":"+this.password)
     this.autenticacionService.login(this.login, this.password)

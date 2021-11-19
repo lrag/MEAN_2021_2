@@ -18,7 +18,7 @@
         <div class="form-group">
         <label class="control-label col-xs-2" for="pw">Pw</label>
         <div class="col-xs-10">
-            <input id="pw" type="text" [(ngModel)]="password" class="form-control"/>
+            <input id="pw" type="text" [(ngModel)]="password" (keyup)="comprobarIntro($event)" class="form-control"/>
         </div>
         </div>  
         

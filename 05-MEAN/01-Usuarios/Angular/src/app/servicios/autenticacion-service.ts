@@ -56,8 +56,25 @@ export class AutenticacionService {
     }
 
     public bajaUsuario(usuario:Usuario):Observable<any>{
-        return this.httpClient.delete(ConfiguracionUtil.urlServidor+"/usuarios/"+usuario._id,
-                                      { headers : { Authorization : "Bearer "+this.getJWT() } })
+
+        return new Observable(subscribers => {
+            this.httpClient.delete(ConfiguracionUtil.urlServidor+"/usuarios/"+usuario._id,
+                                { headers : { Authorization : "Bearer "+this.getJWT() } })
+            .subscribe(
+                respuesta => {
+                    console.log(respuesta)
+                    this.logout()
+                    subscribers.next(respuesta)
+                    subscribers.complete()
+                },
+                err => {
+                    console.log(err)
+                    subscribers.error(err)
+                    subscribers.complete()
+                }
+            )
+        })
+
     }
 
     public modificarUsuario(usuario:Usuario):Observable<any>{
