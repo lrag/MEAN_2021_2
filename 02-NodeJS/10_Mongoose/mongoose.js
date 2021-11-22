@@ -175,7 +175,7 @@ function pruebasMongoose(){
                 console.log("=======================================================")
                 console.log(usuarioEncontrado)
                 usuarioEncontrado.telefono = "555 654 321"
-                //save, si el objeto tiene un valor en _id que existe en la colección MODIFICA
+                //save si el objeto tiene un valor en _id que existe en la colección MODIFICA
                 return usuarioEncontrado.save()
             })
             .then(x => {

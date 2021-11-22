@@ -1,6 +1,7 @@
 //npm install validatorjs
 const Validator = require("validatorjs")
 const Usuario = require("../bbdd/esquemaUsuario").Usuario
+const UsuarioHistorico = require("../bbdd/esquemaUsuarioHistorico").UsuarioHistorico
 
 let reglasUsrInsercion = {
     login    : "required|min:3|max:20",
@@ -137,24 +138,45 @@ exports.bajaUsuario = function(idUsuario, autoridad){
             return
         }
 
-        let coleccionUsuarios = process.esquema.collection("usuarios")
-        let coleccionUsuariosHistorico = process.esquema.collection("usuarios_historico")
-
         let usuarioEncontrado = null
 
-        coleccionUsuarios
-            .findOne({ _id : new ObjectId(idUsuario) })
-            .then( usr => {
+        Usuario
+            .findById(idUsuario) 
+            .then( usr => { //Este objeto lo ha creado mongoose y tiene las funciones chupis de persistencia
                 usuarioEncontrado = usr
                 if(!usuarioEncontrado){
                     reject({ codigo:404, mensaje:"El usuario no existe" })
                     return
                 }
-                return coleccionUsuarios.findOneAndDelete({ _id : new ObjectId(idUsuario) })
+                return usr.remove()
             })
             .then(resultadoDelete => {
                 console.log("DELETE:", resultadoDelete)
-                return coleccionUsuariosHistorico.insertOne(usuarioEncontrado)
+                
+                
+                
+                console.log("===================================",usuarioEncontrado)
+                //delete usuarioEncontrado._id
+                console.log("===================================",usuarioEncontrado)
+
+                let datos = {
+                    login     : usuarioEncontrado.login,
+                    password  : usuarioEncontrado.password,
+                    rol       : usuarioEncontrado.rol,
+                    nombre    : usuarioEncontrado.nombre,
+                    direccion : usuarioEncontrado.direccion,
+                    telefono  : usuarioEncontrado.telefono,
+                    correoE   : usuarioEncontrado.correoE,
+                    idioma    : usuarioEncontrado.idioma                    
+                }             
+                
+                //let usuarioHistorico = new UsuarioHistorico(datos)
+
+                return UsuarioHistorico.create(usuarioEncontrado)
+
+                //return usuarioHistorico.save()
+
+
             })
             .then( resultadoInsertOne => {                
                 console.log("INSERT:", resultadoInsertOne)
