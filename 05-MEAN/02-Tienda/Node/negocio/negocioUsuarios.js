@@ -1,6 +1,6 @@
 //npm install validatorjs
 const Validator = require("validatorjs")
-const ObjectId = require("mongodb").ObjectId
+const Usuario = require("../bbdd/esquemaUsuario").Usuario
 
 let reglasUsrInsercion = {
     login    : "required|min:3|max:20",
@@ -17,25 +17,23 @@ let reglasUsrModificacion = {
 }
 
 exports.buscarPorLoginYPw = function(login, password){
-
     return new Promise(function(resolve, reject){
-        let coleccionUsuarios = process.esquema.collection("usuarios")
-        coleccionUsuarios
-            .findOne({ login:login, password:password }, { projection : { password : 0 }} )
+        //Con mongoose utilizamos el modelo para buscar
+        Usuario.findOne({ login:login, password:password }, '-password' )
             .then(usuarioEncontrado => {
                 if(!usuarioEncontrado){
                     reject({ codigo:404, mensaje:"No existe un usuario con este login y password" })
                     return
                 }
                 //delete usuarioEncontrado.password
+                console.log(usuarioEncontrado)
                 resolve(usuarioEncontrado)
             })
             .catch(err => {
                 console.log(err)
                 reject({ codigo:500, mensaje:"Error con la base de datos!!!" })
             })    
-    })
-
+    })   
 }
 
 //Autenticación : ninguna
