@@ -1,8 +1,7 @@
 //Librerias
 const http = require('http')
 const express = require('express')
-//Librerías 'nuestras'//////////////////////////////////////
-const mongoUtil = require("./bbdd/mongoDBUtil")
+const mongoose = require('mongoose')
 
 const interceptorJWT = require("./autenticacion/interceptorJWT").interceptorJWT
 
@@ -14,18 +13,11 @@ const autenticacionRouter = require("./autenticacion/autenticacionRouter").route
 require("./util/configUtil")
 
 //Segundo paso: conectar a la bbdd
-//aqui cogo la promesa que se ha programado en mongoUtil
-mongoUtil.conectarBBDD()
-//aqui me traigo el then y el catch del archivo, lo paso aqui
-    .then(function(){
-        //esto es el resolve que mando desde desde mongoUtil
-        //Tercer paso: arrancar el servidor
-        arrancarServidor()
-        //lo que sale de aqui es lo q entra en la funcion de la promesa del resolve del archivo MongoDBUtil
-    })
-    .catch(function(){
+mongoose.connect(process.env.url_bbdd) 
+    .then(arrancarServidor)
+    .catch(err => {
+        console.log("No se pudo conectar con la base de datos.", err)
         process.exit(2)
-        //lo que sale de aqui es lo que entra en reject del archivo MongoDBUtil
     })
     
 function arrancarServidor(){

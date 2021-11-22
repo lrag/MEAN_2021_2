@@ -14,7 +14,7 @@ const autenticacionRouter = require("./autenticacion/autenticacionRouter").route
 require("./util/configUtil")
 
 //Segundo paso: conectar a la bbdd
-//aqui cogo la promesa que se ha programado en mongoUtil
+//aqui cojo la promesa que se ha programado en mongoUtil
 mongoUtil.conectarBBDD()
 //aqui me traigo el then y el catch del archivo, lo paso aqui
     .then(function(){
