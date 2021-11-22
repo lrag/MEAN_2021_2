@@ -30,16 +30,9 @@ export class LoginComponent implements OnInit {
     this.autenticacionService.login(this.login, this.password)
       .subscribe(
         () => {
-          console.log("OK")
-          //Delegaremos esto en el servicio, para que esté en él centralizado todo lo relacionado con la autenticación
-          //sessionStorage.setItem("JWT",respuesta.jwt)
-          //sessionStorage.setItem("usuario",JSON.stringify(respuesta.usuario))
-          
-          //Navegar
           this.router.navigateByUrl("/tienda/perfil")
         },
         error => {
-          console.log("MAL",error)
           this.mensaje = "Credenciales incorrectas"
         }
       )

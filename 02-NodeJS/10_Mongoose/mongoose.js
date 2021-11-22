@@ -129,7 +129,7 @@ function pruebasMongoose(){
             //Si el _id es ObjectId mongoose hace automáticamente la conversión de string a ObjectId
             //Usuario.findOne({ _id : new ObjectId("619b52ac79600e9686e1214c")})
             //Usuario.find({ ciudad : "Chinchón" }) //un array con los usuarios que son de Chinchón
-            return Usuario.findById("619b52ac79600e9686e1214c")
+            return Usuario.findById("619b52ac79600e9686e1214a")
         })
         .then( usuarioEncontrado => {
             if(!usuarioEncontrado){
