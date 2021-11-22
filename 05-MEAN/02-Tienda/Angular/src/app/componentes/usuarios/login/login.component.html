@@ -1,0 +1,35 @@
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<div class="card card-primary">
+    <div class="card-header">Login</div>
+    <div class="card-body">
+
+    <div class="form-horizontal" id="formulario">
+        <div class="form-group">
+        <label class="control-label col-xs-2" for="login">Login</label>
+        <div class="col-xs-10">
+            <input id="login" type="text" [(ngModel)]="login" class="form-control"/>
+        </div>
+        </div>   
+        <div class="form-group">
+        <label class="control-label col-xs-2" for="pw">Pw</label>
+        <div class="col-xs-10">
+            <input id="pw" type="text" [(ngModel)]="password" (keyup)="comprobarIntro($event)" class="form-control"/>
+        </div>
+        </div>  
+        
+        <div *ngIf="mensaje.length>0" class="alert alert-danger">{{mensaje}}</div>
+
+    </div>
+
+    <div class="text-center">
+        <input type="button" class="btn mr-1 btn-primary" style="width:110px" (click)="entrar()" value="Entrar" />
+        <input type="button" class="btn mr-1 btn-primary" style="width:110px" routerLink="/registro" value="Registrarse" />
+    </div>   
+
+    </div>
+</div>

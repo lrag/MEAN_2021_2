@@ -1,0 +1,121 @@
+<p></p>
+
+<div class="text-center">
+    <h2>Alta de usuario</h2>
+</div>
+
+<form [formGroup]="formulario">
+
+  <div class="form-horizontal" id="formulario">
+    <div class="form-group">
+      <label class="control-label" for="nombre">Nombre *</label>
+      <div >
+        <input type="text" 
+              class="form-control"
+              formControlName="nombre"/>
+        <div *ngIf="(formulario.get('nombre')?.dirty || formulario.get('nombre')?.touched)">
+          <small *ngIf="formulario.get('nombre')?.hasError('required')" class="text-danger">
+            El nombre es obligatorio.
+          </small>
+        </div>              
+      </div> 
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="login">Login *</label>
+      <div>
+        <input type="text" 
+              class="form-control"
+              formControlName="login"/>
+        <div *ngIf="(formulario.get('login')?.dirty || formulario.get('login')?.touched)">
+          <small *ngIf="formulario.get('login')?.hasError('required')" class="text-danger">
+            El login es obligatorio.
+          </small>
+        </div>                
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="control-label" for="pw" >Password *</label>
+      <div>
+        <input type="text" 
+              class="form-control"
+              formControlName="password"/>
+        <div *ngIf="(formulario.get('password')?.dirty || formulario.get('password')?.touched)">
+          <small *ngIf="formulario.get('password')?.hasError('required')" class="text-danger">
+            El password es obligatorio.
+          </small>
+        </div>                
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="confirmarPassword">Confirmar password  *</label>
+      <div>
+        <input type="text" 
+              class="form-control"
+              formControlName="confirmarPassword"/>
+        <div *ngIf="(formulario.get('confirmarPassword')?.dirty || formulario.get('confirmarPassword')?.touched)">
+          <small *ngIf="formulario.get('confirmarPassword')?.hasError('required')" class="text-danger">
+            Este campo es obligatorio.
+          </small>
+        </div> 
+        <div>
+          <small *ngIf="errorPassword" class="text-danger">
+            Los password no coinciden.
+          </small>
+        </div>              
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="correoE">Correo E. *</label>
+      <div>
+        <input type="text" 
+              class="form-control"
+              formControlName="correoE"/>
+        <div *ngIf="(formulario.get('correoE')?.dirty || formulario.get('correoE')?.touched)">
+          <small *ngIf="formulario.get('correoE')?.hasError('required')" class="text-danger">
+            El correoE es obligatorio.
+          </small>
+          <small *ngIf="formulario.get('correoE')?.hasError('email')" class="text-danger">
+            Tiene que ser una dirección de correo E.
+          </small>
+        </div> 
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="idioma">Idioma *</label>
+      <div>
+        <select class="form-control" formControlName="idioma">
+          <option>ES</option>
+          <option>EN</option>
+        </select>
+        <div *ngIf="(formulario.get('idioma')?.dirty || formulario.get('idioma')?.touched)">
+          <small *ngIf="formulario.get('idioma')?.hasError('required')" class="text-danger">
+            El idioma es obligatorio.
+          </small>
+        </div>         
+      </div>
+    </div>
+  </div>
+
+</form>
+
+<div class="text-center">
+  <input type="button" 
+         value="Siguiente" 
+         class="btn mr-1 btn-primary" 
+         style="width:110px"
+         (click)="siguiente()"/>
+  <input type="button" 
+         value="Cancelar"  
+         class="btn mr-1 btn-warning" 
+         style="width:110px"
+         (click)="cancelar()"/>
+</div>
+
+
+
+
+
+
+
+

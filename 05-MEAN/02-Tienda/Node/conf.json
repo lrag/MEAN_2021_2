@@ -1,0 +1,8 @@
+{
+    "bbdd_ip"       : "localhost",
+    "bbdd_puerto"   : 27017,
+    "bbdd_username" : "admin - lo estamos ignorando", 
+    "bbdd_password" : "admin - lo estamos ignorando", 
+
+    "app_puerto"    : 6001
+}

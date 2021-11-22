@@ -1,7 +1,7 @@
 //npm install mongoose
 let mongoose = require("mongoose")
 
-let urlBBDD = "mongodb://localhost:27017/tienda"
+let urlBBDD = "mongodb://localhost:27017/mongoose"
 
 //Delegamos en mongoose el establecimiento de la conexión con el servidor de BB.DD.
 
@@ -43,7 +43,7 @@ function pruebasMongoose(){
         //no lo añadiremos al esquema            
         //_id       : ObjectID,
         login: {
-            type: String,
+            type    : String,
             required: true
         },
         password  : String,
@@ -78,9 +78,9 @@ function pruebasMongoose(){
     //    console.log(propiedad)
     //}
 
-    usuario.login     = "groucho"
+    usuario.login     = "harpo"
     usuario.password  = "1234567890"
-    usuario.nombre    = "GRoucho"
+    usuario.nombre    = "Harpo"
     usuario.direccion = "C/Tal"
 
     //Nadie nos impide añadirle propiedades que no están en el esquema, pero
@@ -107,10 +107,10 @@ function pruebasMongoose(){
             console.log("Usuario insertado")
 
             let usrNormalYCorriente = {
-                login     : 'douglasquaid',
+                login     : 'harrycallahan',
                 password  : '1234567890',
-                nombre    : 'Douglas Quaid',
-                direccion : 'Marte',
+                nombre    : 'Harry Callahan',
+                direccion : 'S.F.',
                 //Esta propiedad no está en el esquema que hemos definido y se ignorará
                 TOCOTO    : 'ARSA'
             }
@@ -119,6 +119,76 @@ function pruebasMongoose(){
         })
         .then( usuarioInsertado => {
             console.log("Usuario2 insertado")
+
+            ////////////////////
+            //BÚSQUEDA POR _ID//
+            ////////////////////  
+            
+            //Para buscar documentos utilizamos directamente el modelo
+
+            //Si el _id es ObjectId mongoose hace automáticamente la conversión de string a ObjectId
+            //Usuario.findOne({ _id : new ObjectId("619b52ac79600e9686e1214c")})
+            //Usuario.find({ ciudad : "Chinchón" }) //un array con los usuarios que son de Chinchón
+            return Usuario.findById("619b52ac79600e9686e1214c")
+        })
+        .then( usuarioEncontrado => {
+            if(!usuarioEncontrado){
+                console.log("El usuario no existe")
+                return
+            }
+
+            console.log("Usuario encontrado:", usuarioEncontrado)
+
+            //////////
+            //BORRAR//
+            //////////  
+            
+            //Podemos hacerlo en dos fases:
+            //-buscar el objeto
+            //-pedirle que se borre   
+            /*         
+            Usuario.findById("619b56007e18fada98600631")
+            .then( usrEncontrado => {
+                console.log("Borrar:", usrEncontrado)
+                return usrEncontrado.deleteOne()
+            })
+            .then(resultado => {
+                console.log("Usuario borrado.")
+            })
+            .catch(err => console.log(err))
+            */
+
+            //Tambien podemos utilizar directamente el modelo para borrar en una única consulta
+            return Usuario.findByIdAndRemove("619b57fcf4616c36892d36ce")
+        } )
+        .then( resultado => {
+            console.log("Usuario borrado")
+
+            /////////////
+            //MODIFICAR//
+            /////////////
+
+            //Podemos buscar el objeto, cambiarle los valores y modificarlo (dos consultas)
+            /*
+            Usuario.findById("619b59cff64461ef4abd73e8")
+            .then( usuarioEncontrado => {
+                console.log("=======================================================")
+                console.log(usuarioEncontrado)
+                usuarioEncontrado.telefono = "555 654 321"
+                //save, si el objeto tiene un valor en _id que existe en la colección MODIFICA
+                return usuarioEncontrado.save()
+            })
+            .then(x => {
+                console.log("Usuario modificado")
+            })
+            .catch( error => console.log(error) )
+            */
+           
+            //Podemos modificar directamente utilizando el modelo(una única consulta)
+            return Usuario.findByIdAndUpdate("619b59cff64461ef4abd73e8", { correoE : "harrycallahan@sfpd.com" } )
+        })
+        .then( resultado => {
+            console.log("Usuario modificado")
         })
         .catch( err => {
             console.log(err)
