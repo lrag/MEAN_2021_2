@@ -133,6 +133,7 @@ exports.bajaUsuario = function(idUsuario, autoridad){
 
         console.log("Autoridad:", autoridad, "idUsuario:", idUsuario)
 
+        //Autorización
         if(autoridad.rol=="CLIENTE" && autoridad._id != idUsuario){
             reject({ codigo:403, mensaje:"Un cliente solo puede darse de baja a si mismo"})
             return
@@ -156,10 +157,10 @@ exports.bajaUsuario = function(idUsuario, autoridad){
                 
                 
                 console.log("===================================",usuarioEncontrado)
-                //delete usuarioEncontrado._id
-                console.log("===================================",usuarioEncontrado)
 
+                /*Grán fajador
                 let datos = {
+                    _id       : usuarioEncontrado._id,
                     login     : usuarioEncontrado.login,
                     password  : usuarioEncontrado.password,
                     rol       : usuarioEncontrado.rol,
@@ -168,15 +169,15 @@ exports.bajaUsuario = function(idUsuario, autoridad){
                     telefono  : usuarioEncontrado.telefono,
                     correoE   : usuarioEncontrado.correoE,
                     idioma    : usuarioEncontrado.idioma                    
-                }             
+                }  
+                let usuarioHistorico = new UsuarioHistorico(datos)
+                */                           
                 
-                //let usuarioHistorico = new UsuarioHistorico(datos)
-
-                return UsuarioHistorico.create(usuarioEncontrado)
-
-                //return usuarioHistorico.save()
-
-
+                //Fino estilista
+                //Datos ya no es un objeto mongoose, ya no tiene las funciones, solo tiene las propiedades que guardan los datos
+                let datos = usuarioEncontrado.toObject()
+                let usuarioHistorico = new UsuarioHistorico(datos)
+                return usuarioHistorico.save()
             })
             .then( resultadoInsertOne => {                
                 console.log("INSERT:", resultadoInsertOne)

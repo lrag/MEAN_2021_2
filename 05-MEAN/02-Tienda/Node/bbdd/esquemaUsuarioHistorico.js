@@ -17,4 +17,4 @@ let esquemaUsuarioHistorico = new mongoose.Schema({
 })
 
 //Exportamos el modelo
-exports.UsuarioHistorico = mongoose.model('usuarios_historico', esquemaUsuarioHistorico)
+exports.UsuarioHistorico = mongoose.model('usuarios_historicos', esquemaUsuarioHistorico)

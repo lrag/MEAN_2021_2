@@ -6,16 +6,25 @@ Recursos:
 
 -usuarios
     -_id
+    -login
     -password 
     -nombre
     -correoE
     -direccion
     -telefono
+    -rol
 
--productos
+-fabricante (esta no la haremos)
     -_id
     -nombre
-    -fabricante
+    -NIF
+    -direccion
+    -telefono
+
+-productos 
+    -_id
+    -nombre
+    -fabricante - string
     -descripcion
     -imagen
     Simplificacion:
@@ -37,8 +46,6 @@ Recursos:
     -detalles [ detallePedido ]
 
 -facturas
-
-
 
 Funcionalidades para cada Recurso:
 
@@ -71,6 +78,105 @@ GET     /productos      criterio    -
     ...
 
 
+//////////////////////////////
+//Base de datos de la Tienda//
+//////////////////////////////
+
+Recursos:
+
+-usuarios
+-productos
+-detallePedido
+-pedidos
+-facturas
+
+Colecciones:
+
+-usuarios
+-usuariosHistorico
+
+usuarios 
+
+{
+    _id : 8
+    login
+    password
+    nombre
+    email
+    pedidos: ////////////////////
+}
+
+pedidos {
+    _id :
+    codigo :
+    fecha :
+    estado :
+    direccion :
+
+    usuario: {
+        _id : 8
+        nombre :
+    }
+
+    detalles : [
+        {
+            cantidad : number
+            precio   : number
+            producto : {
+                _id : 7
+                referencia
+                nombre
+                descripcion
+                precioCatalogo : 100
+            }
+        }
+    ]
+
+    factura : {
+        _id
+        codigo
+    }
+}
+
+productos :
+
+{
+    _id: 7
+    referencia
+    nombre 
+    fabricante - string
+    descripcion
+    imagen
+    precioCatalogo : 90
+    existencias
+
+    valoracionMedia
+
+    comentarios : [ los 10 primeros ]
+}
+
+comentarios :
+
+{
+    _id
+    producto 
+    titulo
+    texto
+    fecha
+    valoracion
+    usuario : {
+        _id 
+        nombre
+    }
+}
+
+facturas :
+
+{
+    ...
+    ...
+    ...
+}
 
 
 
@@ -81,6 +187,92 @@ GET     /productos      criterio    -
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+peliculas
+
+{
+    _id
+    titulo : "Scrooged"
+    fechaEstreno
+    duracion
+    sinopsis
+    director : {
+        _id :
+        nombre : "Richard Donner"   
+    }
+    actores : [
+        {
+            _id
+            nombre : "Bill Murray",
+            papel : "Frank Cross"
+        }
+    ]
+    reseñas : [
+
+    ]
+}
+
+directores 
+
+{
+    _id
+    nombre 
+    pais
+    fechaNacimiento
+    afoto
+
+    peliculas : [
+        {
+            _id
+            titulo : "Scrooged"
+            fechaEstreno
+            sinopsis
+        }        
+    ]
+
+}
+
+actores 
+
+{
+    _id
+    nombre 
+    pais
+    fechaNacimiento
+    afoto
+    noseque
+    nosecuantos
+
+    peliculas : [
+        {
+            _id
+            titulo : "Scrooged"
+            fechaEstreno
+            duracion
+            sinopsis
+            actores : [
+                {
+                    nombre : "Bill Murray",
+                    papel : "Frank Cross"
+                }
+            ]
+            reseñas : [
+
+            ]
+        }        
+    ]
+
+}
 
 
 
