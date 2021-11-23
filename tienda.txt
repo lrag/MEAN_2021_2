@@ -82,18 +82,13 @@ GET     /productos      criterio    -
 //Base de datos de la Tienda//
 //////////////////////////////
 
-Recursos:
-
--usuarios
--productos
--detallePedido
--pedidos
--facturas
-
 Colecciones:
 
 -usuarios
 -usuariosHistorico
+-productos
+-pedidos
+-facturas
 
 usuarios 
 
@@ -141,13 +136,13 @@ pedidos {
 productos :
 
 {
-    _id: 7
-    referencia
-    nombre 
-    fabricante - string
+    _id
+    nombre
+    categoria
+    fabricante
     descripcion
     imagen
-    precioCatalogo : 90
+    precio
     existencias
 
     valoracionMedia

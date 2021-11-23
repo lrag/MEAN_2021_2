@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken")
 const JWTUtil = require("../util/JWTUtil")
 
 const express = require("express")
-const negocioUsuarios = require("../negocio/negocioUsuarios")
+const negocioUsuarios = require("../modelo/negocio/negocioUsuarios")
 
 let router = express.Router()
 

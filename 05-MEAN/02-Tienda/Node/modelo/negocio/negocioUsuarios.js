@@ -1,7 +1,7 @@
 //npm install validatorjs
 const Validator = require("validatorjs")
-const Usuario = require("../bbdd/esquemaUsuario").Usuario
-const UsuarioHistorico = require("../bbdd/esquemaUsuarioHistorico").UsuarioHistorico
+const Usuario = require("../entidades/esquemaUsuario").Usuario
+const UsuarioHistorico = require("../entidades/esquemaUsuarioHistorico").UsuarioHistorico
 
 let reglasUsrInsercion = {
     login    : "required|min:3|max:20",
