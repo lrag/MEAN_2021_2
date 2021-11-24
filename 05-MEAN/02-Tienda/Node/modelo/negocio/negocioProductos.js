@@ -26,7 +26,9 @@ exports.insertarProducto = function(producto, autoridad){
         }
 
         //Validación
-        validacionUtil.validar(producto, reglasProductoInsercion, reject)
+        if(!validacionUtil.validar(producto, reglasProductoInsercion, reject)){
+            return
+        }
 
         //Insertar el producto
         let productoMG = new Producto(producto)

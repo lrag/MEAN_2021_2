@@ -54,9 +54,9 @@ function insertarProducto(request, response){
     let producto = request.body
     console.log("Alta producto (LC): ", producto)
 
-    negocioProducto
+    negocioProductos
         .insertarProducto(producto, request.autoridad)
-        .then(function(producto){
+        .then(function(productoInsertado){
             response.statusCode = 201
             response.json({ codigo:201, mensaje:"Producto insertado", id:productoInsertado.id })
         })
@@ -65,6 +65,8 @@ function insertarProducto(request, response){
             //-los datos son invalidos
             //-el usuario no tiene permisos
             //-fallo catastrófico
+            console.log("=========================================================")
+            console.log(error)
             response.statusCode = error.codigo
             response.json(error)
         })
