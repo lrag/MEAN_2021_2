@@ -8,6 +8,7 @@ const interceptorJWT = require("./autenticacion/interceptorJWT").interceptorJWT
 //Routers para express
 const usuariosRouter = require("./rest/usuariosREST").router
 const autenticacionRouter = require("./autenticacion/autenticacionRouter").router
+const productosRouter = require("./rest/productosREST").router
 
 //Primer paso: leer el fichero de configuracion
 require("./util/configUtil")
@@ -37,6 +38,7 @@ function arrancarServidor(){
     //Routers
     app.use(autenticacionRouter)
     app.use(usuariosRouter)
+    app.use(productosRouter)
 
     //Arrancamos el puerto
     http.createServer(app).listen(process.env.app_puerto, function(){
