@@ -67,6 +67,33 @@ function pruebasMongoose(){
 
     let Usuario = mongoose.model('usuarios', esquemaUsuario)
 
+    //Cuando creamos el modelo nos dan un prototipo que podríamos programar por nuestra cuanta así:
+    /*
+    function Usuario(obj){
+        this.login = obj.login
+        this.password = obj.password
+        this.nombre = obj.nombre
+        //..
+    }
+    Usuario.prototype.save = function(){
+        console.log("Me inserto!")
+        //esquema.collection('usuario').insertOne({...})
+    }
+    Producto.prototype.remove = function(){
+        //esquema.collection('usuarios').deleteOne({...})
+    }
+    Usuario.findById = function(id){
+        //....
+        return new Usuario({ nombre:'Ringo Starr' })
+    }
+    
+    let usuario1 = new Usuario({ culo:"culete", nombre:'Groucho', login:'groucho', password:'marx'})
+    usuario1.save()
+    console.log(usuario1)
+    let usuario2 = Usuario.findById(123)
+    console.log(usuario2)    
+    */
+
     //A partir de este momento cada vez que necesitemos un usuario hacemos el new del prototipo
     let usuario = new Usuario()
 

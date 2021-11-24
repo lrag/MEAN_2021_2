@@ -1,5 +1,5 @@
 //npm install validatorjs
-const Validator = require("validatorjs")
+const validacionUtil = require("../../util/validacionUtil")
 const Usuario = require("../entidades/esquemaUsuario").Usuario
 const UsuarioHistorico = require("../entidades/esquemaUsuarioHistorico").UsuarioHistorico
 
@@ -43,15 +43,7 @@ exports.altaUsuario = function(usuario){
 
     return new Promise(function(resolve, reject){
         
-        Validator.useLang('es')
-        let validador = new Validator(usuario, reglasUsrInsercion)
-        if(validador.fails()){
-            console.log(validador.errors.errors)
-            reject( { codigo:400, 
-                      mensaje:'Los datos del cliente son incorrectos', 
-                      errores: validador.errors.errors } ) //Mal
-            return
-        }
+        validacionUtil.validar(usuario, reglasUsrInsercion, reject)
 
         //Le asigmanos el rol 'CLIENTE'
         usuario.rol = "CLIENTE"
@@ -88,15 +80,7 @@ exports.modificarUsuario = function(usuario, autoridad){
     return new Promise(function(resolve, reject){
 
         //Validación
-        Validator.useLang('es')
-        let validador = new Validator(usuario, reglasUsrModificacion)
-        if(validador.fails()){
-            console.log(validador.errors.errors)
-            reject( { codigo:400, 
-                      mensaje:'Los datos del cliente son incorrectos', 
-                      errores: validador.errors.errors } ) //Mal
-            return
-        }        
+        validacionUtil.validar(usuario, reglasUsrModificacion, reject)
                     
         //Autorización 
         if(autoridad.rol=="CLIENTE" && autoridad._id!=usuario._id){                        

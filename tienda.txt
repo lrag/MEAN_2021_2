@@ -90,18 +90,22 @@ Colecciones:
 -pedidos
 -facturas
 
-usuarios 
-
+USUARIOS:
 {
     _id : 8
     login
     password
     nombre
     email
-    pedidos: ////////////////////
+    pedidos: 
 }
 
-pedidos {
+Índices:
+-_id
+-login 
+
+PEDIDOS:
+{
     _id :
     codigo :
     fecha :
@@ -133,8 +137,7 @@ pedidos {
     }
 }
 
-productos :
-
+PRODUCTOS:
 {
     _id
     nombre
@@ -145,13 +148,21 @@ productos :
     precio
     existencias
 
-    valoracionMedia
-
-    comentarios : [ los 10 primeros ]
+    //valoracionMedia
+    //comentarios : [ los 10 primeros ]
 }
 
-comentarios :
+Indices
 
+nombre, categoria, precioMin, precioMax
+
+-_id
+-nombre
+-categoria
+-nombre, precio
+-categoria, precio
+
+comentarios:
 {
     _id
     producto 
