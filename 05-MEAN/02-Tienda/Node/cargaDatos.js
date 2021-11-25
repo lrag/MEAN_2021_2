@@ -141,5 +141,6 @@ function cargarProductos(){
             reject(error)
         })
     })
+    
 }
 
