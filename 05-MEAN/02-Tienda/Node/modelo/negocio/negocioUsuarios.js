@@ -137,11 +137,6 @@ exports.bajaUsuario = function(idUsuario, autoridad){
             })
             .then(resultadoDelete => {
                 console.log("DELETE:", resultadoDelete)
-                
-                
-                
-                console.log("===================================",usuarioEncontrado)
-
                 /*Grán fajador
                 let datos = {
                     _id       : usuarioEncontrado._id,

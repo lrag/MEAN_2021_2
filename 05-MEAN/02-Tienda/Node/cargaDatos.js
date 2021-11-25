@@ -113,20 +113,33 @@ let productos = [
     }                                 
 ]
 
-mongoose.connect(process.env.url_bbdd)
-.then( () => {
-    return Producto.deleteMany({})
-})
-.then( rs => {
-    console.log(rs)
-    return Producto.insertMany(productos)
-})
-.then( x => {
-    console.log(x)
-    return mongoose.disconnect()
-})
-.then(() => {
-    console.log("FIN")
-})
-.catch( error => console.log(error))
+cargarProductos()
+    .then( () => console.log("FIN!"))
+    .catch( err => console.log(err))
+
+function cargarProductos(){
+
+    return new Promise(function(resolve, reject){
+        mongoose.connect(process.env.url_bbdd)
+        .then( () => {
+            return Producto.deleteMany({})
+        })
+        .then( rs => {
+            console.log(rs)
+            return Producto.insertMany(productos)
+        })
+        .then( rs => {
+            console.log("Productos insertados:"+rs.length)
+            return mongoose.disconnect()
+        })
+        .then(() => {
+            console.log("FIN")
+            resolve()
+        })
+        .catch( error => {
+            console.log(error)
+            reject(error)
+        })
+    })
+}
 
