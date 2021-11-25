@@ -59,7 +59,7 @@ export class AutenticacionService {
 
         return new Observable(subscribers => {
             this.httpClient.delete(ConfiguracionUtil.urlServidor+"/usuarios/"+usuario._id,
-                                { headers : { Authorization : "Bearer "+this.getJWT() } })
+                                   { headers : { Authorization : "Bearer "+this.getJWT() } })
             .subscribe(
                 respuesta => {
                     console.log(respuesta)

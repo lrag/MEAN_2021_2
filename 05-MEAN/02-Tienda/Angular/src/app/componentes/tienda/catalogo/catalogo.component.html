@@ -1,0 +1,61 @@
+<h3 class="text-center mt-3 mb-3">
+    Catálogo
+</h3>
+
+<!--
+<table class="table table-stripped table-hover">
+    <tr>
+        <th>Nombre</th>
+        <th>Fabricante</th>
+        <th>Precio</th>
+        <th>Existencias</th>
+        <th>Descripcion</th>
+        <th>Imagen</th>
+    </tr>
+    <tr *ngFor="let p of productos">
+        <td>{{p.nombre}}</td>
+        <td>{{p.fabricante}}</td>
+        <td>{{p.precio}}</td>
+        <td>{{p.existencias}}</td>
+        <td>{{p.descripcion?.substring(0,25)}}</td>
+        <td>
+            <img src="https://picsum.photos/150/100?random={{p._id}}" alt="Card image">
+        </td>
+    </tr>
+</table>
+
+<hr class="mt-4 mb-5"/>
+-->
+
+<div class="row">
+
+    <div class="col-4" *ngFor="let producto of productos">
+        <div class="card mt-4">
+            <img class="card-img-top" src="https://picsum.photos/300/200?random={{producto._id}}" alt="Card image">
+            <div class="card-body">
+                <h4 class="card-title">{{producto.nombre}}</h4>
+                <h6 class="card-title">{{producto.fabricante}}</h6>
+                <h6 class="card-title">{{producto.categoria}}</h6>
+                <p class="card-text">{{ producto.descripcion?.substring(0,200)}}...</p>
+                
+                <div class="row">
+                    <h4 class="col-6">{{producto.precio}} €</h4>
+                    <button class="btn btn-primary col-6">Comprar</button>
+                </div>
+            </div>
+        </div>        
+    </div>
+    
+</div>
+
+<hr class="mt-4 mb-5"/>
+    
+<div class="row">
+
+    <div class="col-4" *ngFor="let producto of productos">
+        <app-producto></app-producto>      
+    </div>
+    
+</div>
+
+    

@@ -1,0 +1,14 @@
+<div class="card mt-4">
+    <img class="card-img-top" src="https://picsum.photos/300/200?random={{producto._id}}" alt="Card image">
+    <div class="card-body">
+        <h4 class="card-title">{{producto.nombre}}</h4>
+        <h6 class="card-title">{{producto.fabricante}}</h6>
+        <h6 class="card-title">{{producto.categoria}}</h6>
+        <p class="card-text">{{ producto.descripcion?.substring(0,200)}}...</p>
+        
+        <div class="row">
+            <h4 class="col-6">{{producto.precio}} €</h4>
+            <button class="btn btn-primary col-6">Comprar</button>
+        </div>
+    </div>
+</div> 
