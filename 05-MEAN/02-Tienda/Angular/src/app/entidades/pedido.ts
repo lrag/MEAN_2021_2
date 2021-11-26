@@ -30,8 +30,7 @@ export class Pedido {
           this.detalles?.push(detalle)
         }
     
-        this.calcularTotal()        
-        console.log(this)         
+        this.calcularTotal()      
     } 
     
     public quitarProducto(producto:Producto):void{
@@ -48,7 +47,7 @@ export class Pedido {
 
         this.calcularTotal
     } 
-    
+        
     private calcularTotal():void{
         let detalle:any
         let total:number = 0
