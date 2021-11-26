@@ -25,7 +25,6 @@
 </table>
 
 <hr class="mt-4 mb-5"/>
--->
 
 <div class="row">
 
@@ -48,14 +47,16 @@
     
 </div>
 
-<hr class="mt-4 mb-5"/>
+<hr class="mt-4 mb-4"/>
+-->
     
 <div class="row">
 
-    <div class="col-4" *ngFor="let producto of productos">
-        <app-producto></app-producto>      
-    </div>
-    
+    <div class="col-4" *ngFor="let p of productos">
+        <app-producto [producto]="p"></app-producto>      
+    </div>    
+
 </div>
+
 
     

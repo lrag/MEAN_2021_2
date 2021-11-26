@@ -111,6 +111,7 @@ PEDIDOS:
     fecha :
     estado :
     direccion :
+    total :
 
     usuario: {
         _id : 8
@@ -119,8 +120,6 @@ PEDIDOS:
 
     detalles : [
         {
-            cantidad : number
-            precio   : number
             producto : {
                 _id : 7
                 referencia
@@ -128,6 +127,8 @@ PEDIDOS:
                 descripcion
                 precioCatalogo : 100
             }
+            cantidad : number
+            precio   : number
         }
     ]
 
@@ -141,7 +142,10 @@ PRODUCTOS:
 {
     _id
     nombre
-    categoria
+    categoria: {
+        _id:
+        nombre:
+    }
     fabricante
     descripcion
     imagen
@@ -151,6 +155,18 @@ PRODUCTOS:
     //valoracionMedia
     //comentarios : [ los 10 primeros ]
 }
+
+
+CATEGORIAS
+
+{
+    _id :
+    nombre :
+    descripcion :
+    imagen :
+}
+
+
 
 Indices
 
