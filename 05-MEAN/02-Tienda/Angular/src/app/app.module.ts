@@ -16,6 +16,7 @@ import { HttpClientModule } from '@Angular/common/http';
 import { PerfilComponent } from './componentes/usuarios/perfil/perfil.component';
 import { CatalogoComponent } from './componentes/tienda/catalogo/catalogo.component';
 import { ProductoComponent } from './componentes/tienda/producto/producto.component';
+import { ResumenCestaComponent } from './componentes/tienda/resumen-cesta/resumen-cesta.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ProductoComponent } from './componentes/tienda/producto/producto.compon
     CatalogoComponent,
     CabeceraComponent,
     RegistroComponent,
+    ResumenCestaComponent,
     MaquetacionLoginComponent,
     MaquetacionTiendaComponent,
     AceptacionTerminosComponent,

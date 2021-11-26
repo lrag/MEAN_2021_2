@@ -35,9 +35,16 @@ export class Pedido {
     } 
     
     public quitarProducto(producto:Producto):void{
-        //
-        //
-        //
+        
+        for(let a=0; a<this.detalles.length; a++){
+          let detalle:DetallePedido = this.detalles[a]
+          if(detalle.producto?._id == producto._id){
+            detalle.cantidad--
+            if(detalle.cantidad == 0){
+              this.detalles.splice(a,1)
+            }
+          }
+        }
 
         this.calcularTotal
     } 
