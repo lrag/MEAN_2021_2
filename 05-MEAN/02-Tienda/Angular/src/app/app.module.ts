@@ -81,6 +81,10 @@ export class AppModule {
         {
           path      : "catalogo",
           component : CatalogoComponent
+        },      
+        {
+          path      : "cesta",
+          component : CestaComponent
         }        
       ]      
     }

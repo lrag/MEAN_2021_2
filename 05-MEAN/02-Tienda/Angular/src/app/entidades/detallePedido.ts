@@ -7,5 +7,5 @@ export class DetallePedido {
         public cantidad:number        = 0,
         public precio  :number        = 0,
     ){}
-
+    
 }

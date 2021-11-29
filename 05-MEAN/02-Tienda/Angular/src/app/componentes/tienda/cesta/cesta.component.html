@@ -1,1 +1,9 @@
-<p>cesta works!</p>
+
+<h3 class="text-center mt-3 mb-3">
+    Cesta
+</h3>
+
+<div *ngFor="let dp of cesta.detalles">
+    <app-detalle-cesta [detalle]="dp" [cesta]="cesta"></app-detalle-cesta>
+</div>
+
