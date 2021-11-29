@@ -30,7 +30,26 @@ export class LoginComponent implements OnInit {
     this.autenticacionService.login(this.login, this.password)
       .subscribe(
         () => {
-          this.router.navigateByUrl("/tienda/perfil")
+          //this.router.navigateByUrl("/tienda/catalogo")
+
+          this.router.navigate([
+            "/tienda", 
+            {
+              outlets : {
+                //clave: nombre del router outlet
+                //valor: ruta a aplicar
+                'primary' : ['catalogo'],
+                'izq'     : ['barraIzq'],
+                'der'     : ['resumenCesta']
+              }
+            }
+          ], { skipLocationChange : true })
+
+
+
+
+
+
         },
         error => {
           this.mensaje = "Credenciales incorrectas"

@@ -6,11 +6,12 @@ import { ProductosService } from 'src/app/servicios/productos-service';
 //angular descubre que debe mostrarse un componente
 //1-crea la instancia de la clase adecuada
 //  new CatalogoComponent()
-//    se inicializan las propiedades
+//    se inicializan las propiedades, pero si tienen @Input todavía no se obtiene el valor
 //    se ejecuta el constructor
-//2-Localiza la plantilla y la ejecuta
-//3-Cuando se ha generado el contenido se muestra en el lugar adecuado
-//4-Si el componente implementa OnInit
+//2-Se inyectan los valores asociados a propiedades con el decorados @Input()
+//3-Localiza la plantilla y la ejecuta
+//4-Cuando se ha generado el contenido se muestra en el lugar adecuado
+//5-Si el componente implementa OnInit
 //  se invoca ngOnInit
 
 @Component({

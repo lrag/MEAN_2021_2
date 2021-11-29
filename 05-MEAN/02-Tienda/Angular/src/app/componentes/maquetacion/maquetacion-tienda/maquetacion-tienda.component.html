@@ -4,15 +4,16 @@
 <div class="row">
 
     <div class="col-sm-2">
-        <!--Router outlet IZQ-->
+        <!--Named router outlets-->
+        <router-outlet name="izq"></router-outlet>
     </div>
     <div class="col-sm-8">
+        <!--A este router-outlet le corresponde la segunda carpeta de la barra de navegación-->
+        <!--Este router outlet es el 'primary'-->        
         <router-outlet></router-outlet>
     </div>
     <div class="col-sm-2">
-        <!--Router outlet DER-->
-
-        <app-resumen-cesta></app-resumen-cesta>
+        <router-outlet name="der"></router-outlet>
     </div>
 
 </div>

@@ -35,7 +35,10 @@ export class ResumenCestaComponent implements OnInit {
   }
 
   public borrarDetalle(detallePedido:DetallePedido):void{
-
+    if(!detallePedido.producto){
+      return
+    }
+    this.cesta.borrarDetalle(detallePedido.producto)    
   }
 
 }
