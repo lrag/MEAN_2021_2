@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
   }
 
   public entrar():void{
-    console.log(this.login+":"+this.password)
     this.autenticacionService.login(this.login, this.password)
       .subscribe(
         () => {
