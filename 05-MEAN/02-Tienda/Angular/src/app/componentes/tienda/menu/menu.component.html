@@ -1,23 +1,26 @@
 <div class="navbar navbar-expand-sm bg-dark navbar-dark">
     <ul class="navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link" routerLink="/tienda/perfil">{{usuario?.nombre}}</a>
+
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['/tienda', { outlets: { 'primary':['perfil'], 'der':['resumenCesta'], 'izq':['barraIzq'] }}]">{{usuario?.nombre}}</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="/tienda/catalogo">Catálogo</a>
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['/tienda', { outlets: { 'primary':'catalogo', 'der':'resumenCesta' }}]">Catálogo</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="/tienda/cesta">Cesta</a>
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['/tienda', { outlets: { 'primary':'cesta', 'der':null } }]">Cesta</a>
+            <a routerLink="/tienda/compra" style="display:none"></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="/tienda">Pedidos</a>
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link">Pedidos</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="/tienda">Facturas</a>
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link">Facturas</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" (click)="logout()">Salir</a>
         </li>
+
     </ul>
 </div> 
 

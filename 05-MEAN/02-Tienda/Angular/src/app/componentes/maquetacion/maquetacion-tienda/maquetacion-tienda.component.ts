@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-maquetacion-tienda',
@@ -6,7 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MaquetacionTiendaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) {
+
+    this.router.navigate([
+      "/tienda", 
+      {
+        outlets : {
+          //clave: nombre del router outlet
+          //valor: ruta a aplicar
+          'primary' : ['catalogo'],
+          'izq'     : ['barraIzq'],
+          'der'     : ['resumenCesta']
+        }
+      }
+    ], { skipLocationChange : true })
+
+  }
 
   ngOnInit(): void {
   }

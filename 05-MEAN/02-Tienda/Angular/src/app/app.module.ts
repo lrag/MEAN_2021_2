@@ -99,12 +99,6 @@ export class AppModule {
           //pueden tener 'children' 
         },
         {
-          outlet    : 'izq',
-          path      : 'movida',
-          component : AceptacionTerminosComponent
-          //pueden tener 'children' 
-        },
-        {
           outlet    : 'der',
           path      : 'resumenCesta',
           component : ResumenCestaComponent
