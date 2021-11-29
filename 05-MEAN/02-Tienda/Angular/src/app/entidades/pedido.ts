@@ -45,7 +45,7 @@ export class Pedido {
           }
         }
 
-        this.calcularTotal
+        this.calcularTotal()
     } 
         
     private calcularTotal():void{

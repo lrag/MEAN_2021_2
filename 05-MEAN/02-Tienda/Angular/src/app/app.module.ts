@@ -17,18 +17,22 @@ import { PerfilComponent } from './componentes/usuarios/perfil/perfil.component'
 import { CatalogoComponent } from './componentes/tienda/catalogo/catalogo.component';
 import { ProductoComponent } from './componentes/tienda/producto/producto.component';
 import { ResumenCestaComponent } from './componentes/tienda/resumen-cesta/resumen-cesta.component';
+import { CestaComponent } from './componentes/tienda/cesta/cesta.component';
+import { DetalleCestaComponent } from './componentes/tienda/detalle-cesta/detalle-cesta.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PieComponent,
     MenuComponent,
+    CestaComponent,
     LoginComponent,
     PerfilComponent,
     ProductoComponent,
     CatalogoComponent,
     CabeceraComponent,
     RegistroComponent,
+    DetalleCestaComponent,
     ResumenCestaComponent,
     MaquetacionLoginComponent,
     MaquetacionTiendaComponent,

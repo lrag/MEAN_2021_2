@@ -1,13 +1,13 @@
 
-<h5 class="text-center">Resumen cesta</h5>
+<h5 class="text-center mt-5¡4">Resumen cesta</h5>
 
 <div *ngFor="let dp of cesta.detalles">
 
-    {{dp.producto?.nombre}}
+    {{dp.producto?.nombre}} : {{dp.precio}} € 
 
     <br/>
 
-    {{dp.precio}} €
+    {{dp.precio * dp.cantidad}} €
     <button class="btn btn-sm btn-warning ml-1 mr-1" (click)="disminuirCantidad(dp)">-</button>
     <span>{{dp.cantidad}} </span>
     <button class="btn btn-sm btn-success ml-1 mr-1" (click)="aumentarCantidad(dp)">+</button>
@@ -19,11 +19,14 @@
     </button> 
     
     <hr/>
-
 </div>
 
-<div *ngIf="cesta.detalles.length==0">
-    Cesta vacía
+<h4 *ngIf="cesta.detalles.length>0">
+    Total: {{cesta?.total}} €
+</h4>
+
+<div *ngIf="cesta.detalles.length==0" class="text-center">
+    La cesta está vacía
 </div>
 
 
