@@ -24,12 +24,12 @@ export class CestaService {
         cesta
             .getSubject()
             .subscribe(
-                (cesta: any) => {
-                    console.log("Cambio en la cesta!")
-                    console.log(cesta)
+                (evento: Pedido) => {
+                    console.log("CestaService: Cambio en la cesta!")
+                    console.log(evento)
+                    this.guardarCesta(evento)
                 }
             )
-
         
         //Aqui cestaService se subscribe a los cambios en la cesta
         
@@ -42,9 +42,10 @@ export class CestaService {
     }
 
     public guardarCesta(cesta:any):void{
-        delete cesta.cestaService
+        let x:any = cesta.subject
+        cesta.subject = null
         localStorage.setItem("cesta", JSON.stringify(cesta))
-        cesta.cestaService = this
+        cesta.subject = x
     }
 
     public crearCesta():void{

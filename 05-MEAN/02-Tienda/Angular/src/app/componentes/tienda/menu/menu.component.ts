@@ -13,7 +13,18 @@ export class MenuComponent implements OnInit {
 
   constructor(private router:Router,
               private autenticacionService:AutenticacionService) {
-    this.usuario = autenticacionService.getUsuario()
+    
+    //this.usuario = autenticacionService.getUsuario()
+
+    autenticacionService
+      .getSubjectUsuario()
+      .subscribe(
+        (evento:Usuario) => {
+          console.log("Cambio en el usuario!", evento)
+          this.usuario = evento
+        }
+      )
+
   }
 
   ngOnInit(): void {

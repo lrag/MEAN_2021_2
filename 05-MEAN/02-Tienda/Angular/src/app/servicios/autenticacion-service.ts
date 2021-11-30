@@ -1,12 +1,14 @@
 import { HttpClient } from '@Angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Usuario } from '../entidades/usuario';
 
 import { ConfiguracionUtil } from './configuracion-util';
 
 @Injectable( { providedIn : "root" } )
 export class AutenticacionService {
+
+    private subjectUsuario:BehaviorSubject<Usuario>|null = null 
 
     public constructor(private httpClient:HttpClient ){
     }
@@ -15,6 +17,13 @@ export class AutenticacionService {
         let json:any = sessionStorage.getItem("usuario")
         let usuario:Usuario = JSON.parse(json)
         return usuario
+    }
+
+    public getSubjectUsuario():BehaviorSubject<Usuario>{
+        if(!this.subjectUsuario){
+            this.subjectUsuario = new BehaviorSubject(this.getUsuario())
+        }
+        return this.subjectUsuario
     }
 
     public getJWT():string|null{
@@ -31,8 +40,9 @@ export class AutenticacionService {
             this.httpClient.post(ConfiguracionUtil.urlServidor+"/login", { login:login, password:password })
                 .subscribe(
                     (respuesta:any) => {
+                        let usuario:any = JSON.stringify(respuesta.usuario)
                         sessionStorage.setItem("JWT",respuesta.jwt)
-                        sessionStorage.setItem("usuario",JSON.stringify(respuesta.usuario))   
+                        sessionStorage.setItem("usuario",usuario)
                         subscribers.next()  
                         subscribers.complete()
                     },
@@ -87,6 +97,7 @@ export class AutenticacionService {
                 .subscribe(
                     () => {
                         sessionStorage.setItem("usuario",JSON.stringify(usuario))
+                        this.subjectUsuario?.next(usuario)
                         subscribers.next()
                         subscribers.complete()
                     },

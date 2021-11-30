@@ -6,9 +6,7 @@ import { Usuario } from "./usuario";
 
 export class Pedido {
 
-    //private cestaService:CestaService|null = null
-
-    private subject:BehaviorSubject<Pedido>|null = null
+  private subject:BehaviorSubject<Pedido>|null = null
 
     public constructor(
         public _id      : string|null  = null,
@@ -28,12 +26,6 @@ export class Pedido {
       return this.subject
     }
 
-    /*
-    public setCestaService(cestaService:CestaService){
-      this.cestaService = cestaService
-    }
-    */
-
     public addProducto(producto:Producto):void{
         let detalle:any = null
         for(let detalleAux of this.detalles){
@@ -49,10 +41,7 @@ export class Pedido {
           this.detalles?.push(detalle)
         }
     
-        this.calcularTotal()        
-        
-        //Avisa a cestaService, si tiene una referencia a él, de que ha cambiado
-        //this.cestaService?.guardarCesta(this)
+        this.calcularTotal()     
 
         this.subject?.next(this) 
     } 
@@ -70,8 +59,8 @@ export class Pedido {
         }
 
         this.calcularTotal()
-        //Avisa a cestaService, si tiene una referencia a él, de que ha cambiado
-        //this.cestaService?.guardarCesta(this)
+
+        this.subject?.next(this)
     } 
 
     public borrarDetalle(producto:Producto):void{
@@ -84,8 +73,8 @@ export class Pedido {
       }
 
       this.calcularTotal()
-      //Avisa a cestaService, si tiene una referencia a él, de que ha cambiado
-      //this.cestaService?.guardarCesta(this)
+
+      this.subject?.next(this)
     }
         
     private calcularTotal():void{
