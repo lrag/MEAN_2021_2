@@ -41,8 +41,7 @@ export class Pedido {
           this.detalles?.push(detalle)
         }
     
-        this.calcularTotal()     
-
+        this.calcularTotal()   
         this.subject?.next(this) 
     } 
     
@@ -59,7 +58,6 @@ export class Pedido {
         }
 
         this.calcularTotal()
-
         this.subject?.next(this)
     } 
 
@@ -73,10 +71,22 @@ export class Pedido {
       }
 
       this.calcularTotal()
-
       this.subject?.next(this)
     }
         
+    public vaciar():void{
+      console.log("Me vacío")
+      this._id       = null,
+      this.codigo    = null,
+      this.fecha     = null,
+      this.estado    = null,
+      this.direccion = null,
+      this.usuario   = null,
+      this.detalles  = [],
+      this.total     = null
+      this.subject?.next(this) 
+    }
+
     private calcularTotal():void{
         let detalle:any
         let total:number = 0

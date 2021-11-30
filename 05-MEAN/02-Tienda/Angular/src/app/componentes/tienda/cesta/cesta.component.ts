@@ -17,4 +17,13 @@ export class CestaComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public vaciarCesta():void{
+    
+    this.cestaService.crearCesta()
+    this.cesta = this.cestaService.getCesta()
+    
+    //this.cesta.vaciar()
+
+  }
+
 }

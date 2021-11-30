@@ -1,14 +1,20 @@
 import { Injectable } from "@angular/core";
 import { Pedido } from "../entidades/pedido";
+import { Usuario } from "../entidades/usuario";
+import { AutenticacionService } from "./autenticacion-service";
 
 @Injectable({ providedIn : 'root' })
 export class CestaService {
 
     private cesta:Pedido
+    private usuario:Usuario
 
-    public constructor(){
+    public constructor(autenticacionService:AutenticacionService){
 
-        let json:string|null = localStorage.getItem("cesta")
+        //Obtenemos el usuario que está autenticado
+        this.usuario = autenticacionService.getUsuario()
+
+        let json:string|null = localStorage.getItem("cesta_"+this.usuario._id)
         let cesta:any 
         if(json){
             cesta = JSON.parse(json)
@@ -18,7 +24,7 @@ export class CestaService {
         } else {
             cesta = new Pedido()
             console.log(JSON.stringify(cesta))
-            localStorage.setItem("cesta",JSON.stringify(cesta))
+            localStorage.setItem("cesta_"+this.usuario._id,JSON.stringify(cesta))
         }
 
         cesta
@@ -44,11 +50,23 @@ export class CestaService {
     public guardarCesta(cesta:any):void{
         let x:any = cesta.subject
         cesta.subject = null
-        localStorage.setItem("cesta", JSON.stringify(cesta))
+        localStorage.setItem("cesta_"+this.usuario._id, JSON.stringify(cesta))
         cesta.subject = x
     }
 
     public crearCesta():void{
+        this.cesta = new Pedido()
+        this.guardarCesta(this.cesta)
+
+        this.cesta
+            .getSubject()
+            .subscribe(
+                (evento: Pedido) => {
+                    console.log("CestaService: Cambio en la cesta!")
+                    console.log(evento)
+                    this.guardarCesta(evento)
+                }
+            )        
     }
 
 }
