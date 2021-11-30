@@ -1,8 +1,14 @@
+import { BehaviorSubject } from "rxjs";
+import { CestaService } from "../servicios/cesta-service";
 import { DetallePedido } from "./detallePedido";
 import { Producto } from "./producto";
 import { Usuario } from "./usuario";
 
 export class Pedido {
+
+    //private cestaService:CestaService|null = null
+
+    private subject:BehaviorSubject<Pedido>|null = null
 
     public constructor(
         public _id      : string|null  = null,
@@ -14,6 +20,19 @@ export class Pedido {
         public detalles : DetallePedido[] = [],
         public total    : number|null  = null
     ){}
+
+    public getSubject(){
+      if(!this.subject){
+        this.subject = new BehaviorSubject(new Pedido())
+      }
+      return this.subject
+    }
+
+    /*
+    public setCestaService(cestaService:CestaService){
+      this.cestaService = cestaService
+    }
+    */
 
     public addProducto(producto:Producto):void{
         let detalle:any = null
@@ -30,7 +49,12 @@ export class Pedido {
           this.detalles?.push(detalle)
         }
     
-        this.calcularTotal()      
+        this.calcularTotal()        
+        
+        //Avisa a cestaService, si tiene una referencia a él, de que ha cambiado
+        //this.cestaService?.guardarCesta(this)
+
+        this.subject?.next(this) 
     } 
     
     public quitarProducto(producto:Producto):void{
@@ -46,6 +70,8 @@ export class Pedido {
         }
 
         this.calcularTotal()
+        //Avisa a cestaService, si tiene una referencia a él, de que ha cambiado
+        //this.cestaService?.guardarCesta(this)
     } 
 
     public borrarDetalle(producto:Producto):void{
@@ -58,6 +84,8 @@ export class Pedido {
       }
 
       this.calcularTotal()
+      //Avisa a cestaService, si tiene una referencia a él, de que ha cambiado
+      //this.cestaService?.guardarCesta(this)
     }
         
     private calcularTotal():void{

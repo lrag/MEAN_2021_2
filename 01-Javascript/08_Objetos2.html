@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+    /////////////////////////////////////
+    //OTRA MANERA DE DEFINIR PROTOTIPOS//
+    //   Sin usar funciones o clases   //
+    ///////////////////////////////////// 
+
+    //Definimos un prototipo creando un objeto normal y corriente
+    //Si usamos pascal case para la variable estamos declarando nuestras intenciones
+    let Avion = {
+        fabricante : null,
+        modelo     : null,
+        year       : null
+    }
+    //A partir de ese objeto crearemos otros CLONANDOLO
+    //Esta clonación NO ES EN PROFUNDIDAD
+    //Al clonar un objeto el nuevo tendrá las mismas propiedades y 
+    //los mismos valores que el original
+    //Para clonar un objeto utilizamos 'Object.create'
+    let a1 = Object.create(Avion)
+    a1.fabricante = "Fairchild Republic"
+    a1.modelo = "A-10 Thunderbolt II"
+    
+    let a2 = Object.create(Avion)
+    a2.fabricante = "Boeing"
+    a2.modelo = "747"
+    
+    console.log(a1)
+    console.log(a2)
+
+
+    console.log("=============================================")
+
+    //
+    //Composición de objetos
+    //
+    //Relaciones que se establecen entre distintos objetos
+    //Poseen CARDINALIDAD
+    //1-1
+    //1-n
+    //n-m
+    let factura = {
+        codigo  : 'FAC-1',
+        fecha   : 'HOY',
+        total   : 150,
+        cliente : {
+            id     : 86,
+            nombre : "Venancio" 
+        }
+    }
+
+    //Si definimos prototipos y usamos composicion de objetos
+    //cuidado al clonar!
+    let Persona = {
+        id       : '',
+        nombre   : '',
+        telefono : '',
+        direccion : {
+            ciudad : '',
+            calle  : '',
+            numero : ''
+        }
+    }
+
+    //Como la clonación no es en profundidad las dos
+    //personas COMPARTEN LA MISMA DIRECCION!!!!
+    let p1 = Object.create(Persona)
+    p1.nombre = "M.A. Baracus"
+    p1.direccion.calle = "La furgo"
+    let p2 = Object.create(Persona)
+    p2.nombre = "'Howling Mad' Murdock"
+    p2.direccion.calle = "Frenopático de los Angeles" //Machacamos el anterior valor
+
+    console.log(p1) //!!
+    console.log(p2)
+
+    
+
+    //
+    //Añadiendo funciones
+    //
+    //Primera forma de hacerlo:
+    //-Colocando la función directamente en el objeto 'original'
+    //-Todos los clones compartirán la función
+    console.log("=============================================")
+    let Libro = {
+        titulo   : null,
+        autor    : null,
+        //Esta función será compartida por todos los objetos que se clonen
+        toString : function(){
+            return this.titulo+", "+this.autor
+        }
+    }
+    let l1 = Object.create(Libro)
+    let l2 = Object.create(Libro)
+    l1.titulo = "La sombra de un pavo"
+    l1.autor = "Johnny Mahoney"
+    l2.titulo = "Detrás del último ya no viene nadie"
+    l2.autor = "Mongler Jr."
+    console.log(l1)   
+    console.log(l2)    
+    console.log(l1.toString())    
+    console.log(l2.toString())    
+
+
+    //
+    //Añadiendo funciones (y II)
+    //
+    //Segunda forma:
+    //-Añadiendo las funciones al prototipo despues de haberlo declarado
+    //-La diferencia con el anterior es que si sacamos el prototipo a un
+    // fichero a parte queda más legible
+    console.log("=============================================")
+    let Curso = {
+        nombre : null,
+        horas  : 0,
+        nivelDolor : 0 //Entre 0-10
+    }
+    Curso.toString = function(){
+        return this.nombre+", "+this.horas+", "+this.nivelDolor
+    }
+
+    let c1 = Object.create(Curso)
+    c1.nombre = 'Java Experto'
+    c1.horas  = 260
+    c1.nivelDolor = 6
+    let c2 = Object.create(Curso)
+    c2.nombre = 'En javascript las funciones son objetos, que se asignan siempre a otros objetos'
+    c2.horas  = 300
+    c2.nivelDolor = Number.MAX_VALUE
+
+    console.log(c1)
+    console.log(c2)    
+    console.log(c1.toString())
+    console.log(c2.toString())    
+
+    //
+    //Añadir un prototipo a un objeto
+    //Sirve para cuando clonamos objetos y para cuando usamos funciones prototipo como en el 08_Objetos
+    //
+    console.log("=============================================")    
+    let Amoto = {
+        marca  : null,
+        modelo : null
+    }
+    Amoto.saludar = function(){
+        console.log("Hola, soy el amoto "+this.marca+" "+this.modelo)
+    }
+
+    //Esta moto está creada utilizando un prototipo
+    let moto1 = Object.create(Amoto)
+    moto1.marca = "Derbi"
+    moto1.modelo = "Lobito"
+    moto1.saludar()
+
+    //La moto hecha a partir del prototipo
+    console.log(moto1)
+
+    
+    let json = JSON.stringify(moto1)
+    //El json de la moto
+    console.log(json)
+    
+    let moto1Bis = JSON.parse(json)
+    //La 'moto' construida a partir del json son son
+    console.log(moto1Bis)
+    //moto1Bis.saludar() //ZASCA! No está hecho a partir del prototipo!!!!!!!!
+    
+    //En JS podemos coger cualquier objeto y asignarle un prototipo
+    Object.setPrototypeOf(moto1Bis, Amoto)
+    moto1Bis.saludar()
+
+</script>
+
+
+<body>
+
+    <h1>12_Objetos</h1>
+    
+</body>
+</html>

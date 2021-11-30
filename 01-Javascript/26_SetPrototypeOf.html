@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script type="application/javascript">
+
+console.log("============================================")
+
+//Definimos una función prototipo (o una clase, da igual)
+function Coche(marca, modelo){
+    this.marca = marca
+    this.modelo = modelo 
+}
+//Añadimos una función al prototipo
+Coche.prototype.saludar = function(){
+    console.log("Hola")
+}
+
+//Este objeto está creado a partir del prototipo
+let coche1 = new Coche("Simca","1200 Ti")
+
+//Pero coche2 no
+let json = JSON.stringify(coche1)
+let coche2 = JSON.parse(json)
+
+console.log(coche1) //Dice que es un Coche
+console.log(coche2) //Dice que es un objeto
+
+//A cualquier objeto le podemos asignar un prototipo en cualquier momento:
+Object.setPrototypeOf(coche2, Coche.prototype)
+console.log(coche2) //Ahora dice que es un coche
+
+coche1.saludar()
+coche2.saludar() //Esto ya no falla
+
+console.log("=================================")
+let obj = {
+}
+console.log(obj)
+Object.setPrototypeOf(obj, Coche.prototype)
+console.log(obj)
+
+
+
+console.log("=================================")
+class Avion {
+
+    fabricante = null
+    modelo     = null
+
+    constructor(fabricante, modelo){
+        this.fabricante = fabricante
+        this.modelo     = modelo
+    }
+
+    saludar(){
+        console.log("Hola, soy el avion "+this.fabricante+","+this.modelo)
+    }
+}
+
+let avion1 = new Avion("Supermarine", "Spitfire")
+console.log(avion1)
+let json2 = JSON.stringify(avion1)
+let avion2 = JSON.parse(json2)
+console.log(avion2)
+
+Object.setPrototypeOf(avion2, Avion.prototype)
+console.log(avion2)
+
+let obj2 = {}
+Object.setPrototypeOf(obj2, Avion.prototype)
+console.log(obj2)
+
+</script>
+
+
+<body>
+    
+</body>
+</html>
