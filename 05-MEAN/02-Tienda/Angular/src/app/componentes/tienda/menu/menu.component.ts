@@ -41,8 +41,8 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   public logout():void{
     this.autenticacionService.logout()
-    //this.router.navigateByUrl("/")
-    window.location.href = "/"
+    this.router.navigateByUrl("/")
+    //window.location.href = "/"
   }
 
 }

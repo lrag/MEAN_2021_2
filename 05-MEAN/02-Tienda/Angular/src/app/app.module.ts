@@ -20,6 +20,7 @@ import { ResumenCestaComponent } from './componentes/tienda/resumen-cesta/resume
 import { CestaComponent } from './componentes/tienda/cesta/cesta.component';
 import { DetalleCestaComponent } from './componentes/tienda/detalle-cesta/detalle-cesta.component';
 import { BarraIzquierdaComponent } from './componentes/tienda/barra-izquierda/barra-izquierda.component';
+import { ConfirmacionCompraComponent } from './componentes/tienda/confirmacion-compra/confirmacion-compra.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { BarraIzquierdaComponent } from './componentes/tienda/barra-izquierda/ba
     MaquetacionLoginComponent,
     MaquetacionTiendaComponent,
     AceptacionTerminosComponent,
+    ConfirmacionCompraComponent,
   ],
   imports: [
     FormsModule, 
@@ -88,6 +90,10 @@ export class AppModule {
         {
           path      : "cesta",
           component : CestaComponent
+        },
+        {
+          path      : "compra",
+          component : ConfirmacionCompraComponent
         },
         //  
         //Rutas para los named router outlets
