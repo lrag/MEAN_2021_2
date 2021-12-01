@@ -15,6 +15,8 @@ import { CestaService } from 'src/app/servicios/cesta-service';
 //4-Cuando se ha generado el contenido se muestra en el lugar adecuado
 //5-Si el componente implementa OnInit
 //  se invoca ngOnInit
+//6-Si el componente implementa OnDestroy
+//  se invoca ngOnDestroy si el componente va a desaparecer
 
 @Component({
   selector: 'app-detalle-cesta',

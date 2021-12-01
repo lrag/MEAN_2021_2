@@ -6,10 +6,13 @@ import { AutenticacionService } from "./autenticacion-service";
 @Injectable({ providedIn : 'root' })
 export class CestaService {
 
+    private subscription:any
     private cesta:Pedido
     private usuario:Usuario
 
     public constructor(autenticacionService:AutenticacionService){
+
+        console.log("Creando CestaService")
 
         //Obtenemos el usuario que está autenticado
         this.usuario = autenticacionService.getUsuario()
@@ -27,7 +30,8 @@ export class CestaService {
             localStorage.setItem("cesta_"+this.usuario._id,JSON.stringify(cesta))
         }
 
-        cesta
+        //Aqui cestaService se subscribe a los cambios en la cesta
+        this.subscription = cesta
             .getSubject()
             .subscribe(
                 (evento: Pedido) => {
@@ -36,8 +40,6 @@ export class CestaService {
                     this.guardarCesta(evento)
                 }
             )
-        
-        //Aqui cestaService se subscribe a los cambios en la cesta
         
         //cesta.setCestaService(this)
         this.cesta = cesta
@@ -58,7 +60,8 @@ export class CestaService {
         this.cesta = new Pedido()
         this.guardarCesta(this.cesta)
 
-        this.cesta
+        this.subscription.unsubscribe()
+        this.subscription = this.cesta
             .getSubject()
             .subscribe(
                 (evento: Pedido) => {

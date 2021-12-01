@@ -34,7 +34,6 @@ class CatalogoComponent implements OnInit {
     this.productosService.listarProductos()
     .subscribe(
       resultado => {
-        console.log(resultado)
         this.productos=resultado
       },
       err => {

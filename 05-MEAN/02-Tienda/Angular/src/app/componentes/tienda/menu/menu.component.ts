@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/entidades/usuario';
 import { AutenticacionService } from 'src/app/servicios/autenticacion-service';
@@ -7,32 +7,42 @@ import { AutenticacionService } from 'src/app/servicios/autenticacion-service';
   selector: 'app-menu',
   templateUrl: './menu.component.html'
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
  
+  private subscripcion:any
   public usuario:Usuario|null = null
 
   constructor(private router:Router,
               private autenticacionService:AutenticacionService) {
-    
-    //this.usuario = autenticacionService.getUsuario()
 
-    autenticacionService
+    console.log("Creando MenuComponent")
+
+    this.subscripcion = this.autenticacionService
       .getSubjectUsuario()
       .subscribe(
         (evento:Usuario) => {
-          console.log("Cambio en el usuario!", evento)
-          this.usuario = evento
+            console.log("Cambio en el usuario!") //, evento)
+            this.usuario = evento
         }
-      )
-
+      ) 
+      
+  }
+     
+  //Callbacks
+  //Este es invocado cuando el componente ya es visible:
+  ngOnInit(): void {      
   }
 
-  ngOnInit(): void {
+  //Este es invocado cuando el componente va a ser eliminado
+  ngOnDestroy():void {
+    console.log("Adios mundo cruel")
+    //this.subscripcion.unsubscribe()
   }
 
   public logout():void{
     this.autenticacionService.logout()
-    this.router.navigateByUrl("/")
+    //this.router.navigateByUrl("/")
+    window.location.href = "/"
   }
 
 }

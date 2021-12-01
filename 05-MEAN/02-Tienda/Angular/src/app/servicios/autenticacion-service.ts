@@ -43,6 +43,7 @@ export class AutenticacionService {
                         let usuario:any = JSON.stringify(respuesta.usuario)
                         sessionStorage.setItem("JWT",respuesta.jwt)
                         sessionStorage.setItem("usuario",usuario)
+                        this.subjectUsuario?.next(respuesta.usuario)
                         subscribers.next()  
                         subscribers.complete()
                     },
@@ -58,7 +59,8 @@ export class AutenticacionService {
 
     public logout():void{
         sessionStorage.removeItem("JWT")
-        sessionStorage.removeItem("usuario")     
+        sessionStorage.removeItem("usuario")   
+        this.subjectUsuario?.next(new Usuario())  
     }
 
     public altaUsuario(usuario:Usuario):Observable<any>{
