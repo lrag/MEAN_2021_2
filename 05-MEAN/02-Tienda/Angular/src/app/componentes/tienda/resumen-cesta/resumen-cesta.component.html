@@ -1,6 +1,10 @@
 
 <h5 class="text-center mt-5¡4">Resumen cesta</h5>
 
+{{cesta.direccion}}<br/>
+{{cesta.fecha}}<br/>
+{{cesta.formaPago}}
+
 <div *ngFor="let dp of cesta.detalles">
 
     {{dp.producto?.nombre}} : {{dp.precio}} € 

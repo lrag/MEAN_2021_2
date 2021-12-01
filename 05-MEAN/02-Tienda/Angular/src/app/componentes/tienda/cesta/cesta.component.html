@@ -22,7 +22,7 @@
     <h4>
         Total {{ cesta.total }} €
         <input type="button" value="Guardar" class="btn btn-primary ml-2" style="width:110px"/>
-        <button class="btn btn-primary ml-2">Comprar</button>
+        <button class="btn btn-primary ml-2" [routerLink]="['/tienda', { outlets: { 'primary':'compra', 'der':'resumenCesta' }}]">Comprar</button>
         <button class="btn btn-danger ml-2" (click)="vaciarCesta()">Vaciar</button>
     </h4>
 </div>

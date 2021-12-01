@@ -16,7 +16,8 @@ export class Pedido {
         public direccion: string|null  = null,
         public usuario  : Usuario|null = null,
         public detalles : DetallePedido[] = [],
-        public total    : number|null  = null
+        public total    : number|null  = null,
+        public formaPago: string|null  = null
     ){}
 
     public getSubject(){
@@ -74,6 +75,7 @@ export class Pedido {
       this.subject?.next(this)
     }
         
+    /*
     public vaciar():void{
       console.log("Me vacío")
       this._id       = null,
@@ -86,6 +88,7 @@ export class Pedido {
       this.total     = null
       this.subject?.next(this) 
     }
+    */
 
     private calcularTotal():void{
         let detalle:any
