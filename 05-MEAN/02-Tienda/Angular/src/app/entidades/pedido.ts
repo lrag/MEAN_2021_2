@@ -1,4 +1,4 @@
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { CestaService } from "../servicios/cesta-service";
 import { DetallePedido } from "./detallePedido";
 import { Producto } from "./producto";
@@ -6,7 +6,7 @@ import { Usuario } from "./usuario";
 
 export class Pedido {
 
-  private subject:BehaviorSubject<Pedido>|null = null
+  private subject:Subject<Pedido>|null = null
 
     public constructor(
         public _id      : string|null  = null,
@@ -22,7 +22,7 @@ export class Pedido {
 
     public getSubject(){
       if(!this.subject){
-        this.subject = new BehaviorSubject(new Pedido())
+        this.subject = new Subject()
       }
       return this.subject
     }

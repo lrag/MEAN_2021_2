@@ -25,6 +25,8 @@ export class CestaService implements OnDestroy {
             //Le asignamos el prototipo de Pedido
             Object.setPrototypeOf(cesta, Pedido.prototype)
         } else {
+            console.log("==================================")
+            console.log("Creando cesta en LocalStorage")
             cesta = new Pedido()
             console.log(JSON.stringify(cesta))
             localStorage.setItem("cesta_"+this.usuario._id,JSON.stringify(cesta))
@@ -35,6 +37,7 @@ export class CestaService implements OnDestroy {
             .getSubject()
             .subscribe(
                 (evento: Pedido) => {
+                    console.log("==================================")
                     console.log("CestaService: Cambio en la cesta!")
                     console.log(evento)
                     this.guardarCesta(evento)
@@ -48,6 +51,8 @@ export class CestaService implements OnDestroy {
     public ngOnDestroy(){
         console.log("ADIOS MUNDO CRUEL")
         //Cancelamos la subscripción que tenemos con la cesta
+        console.log("==================================")
+        console.log("Cancelando subscripción a la cesta")        
         this.subscription.unsubscribe()
     }
 
@@ -65,12 +70,14 @@ export class CestaService implements OnDestroy {
     public crearCesta():void{
         this.cesta = new Pedido()
         this.guardarCesta(this.cesta)
-
+        console.log("==================================")
+        console.log("Cancelando subscripción a la cesta")
         this.subscription.unsubscribe()
         this.subscription = this.cesta
             .getSubject()
             .subscribe(
                 (evento: Pedido) => {
+                    console.log("==================================")
                     console.log("CestaService: Cambio en la cesta!")
                     console.log(evento)
                     this.guardarCesta(evento)

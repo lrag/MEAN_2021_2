@@ -31,7 +31,7 @@ export class DetalleCestaComponent implements OnInit {
 
   private producto:any
 
-  constructor() { 
+  constructor(private cestaService:CestaService) { 
     //Aqui es demasiado pronto para extraer el producto del detalle que nos inyectarán con @Input
     //dirante la ejecución del constructor aún no hemos recibido esos valores
     //this.producto = this.detalle.producto
@@ -47,6 +47,7 @@ export class DetalleCestaComponent implements OnInit {
 
   public disminuirCantidad():void{
     this.cesta.quitarProducto(this.producto)
+    this.cestaService.guardarCesta(this.cesta)
   }
   
   public aumentarCantidad():void{

@@ -5,7 +5,7 @@ import { CestaService } from 'src/app/servicios/cesta-service';
 @Component({
   selector: 'app-maquetacion-tienda',
   templateUrl: './maquetacion-tienda.component.html',
-  providers: [ CestaService ]
+  providers: [ CestaService ] //Registrando aquí a CestaService conseguimos que se cree uno nuevo cuando se autentica un usuario
 })
 export class MaquetacionTiendaComponent implements OnInit {
 

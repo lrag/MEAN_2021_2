@@ -14,9 +14,6 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   constructor(private router:Router,
               private autenticacionService:AutenticacionService) {
-
-    console.log("Creando MenuComponent")
-
     this.subscripcion = this.autenticacionService
       .getSubjectUsuario()
       .subscribe(
@@ -36,7 +33,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   //Este es invocado cuando el componente va a ser eliminado
   ngOnDestroy():void {
     console.log("Adios mundo cruel")
-    //this.subscripcion.unsubscribe()
+    this.subscripcion.unsubscribe()
   }
 
   public logout():void{
