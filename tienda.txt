@@ -40,42 +40,65 @@ Recursos:
     -_id
     -codigo
     -fecha
-    -direccion_entrega
-    -forma_pago
+    -estado
+    -direccion (entrega)
     -usuario
     -detalles [ detallePedido ]
+    -forma_pago
+    -total
 
 -facturas
+    -parecidas a los pedidos
 
 Funcionalidades para cada Recurso:
 
--usuarios
-    -alta
-    -modificacion
-    -baja
-    -login (buscar usuario por login y pw)
+//usuarios////////////////////////////////
+-alta
+-modificacion
+-baja
+-login (buscar usuario por login y pw)
 
 API de usuarios:
 
-Metodo  URL             Query_P     Body    Respuesta   Funcionalidad
-POST    /usuarios       -           {json}  {json}      Alta de usuario
-PATCH   /usuarios/:id   -           {json}  {json}      Modificar
-DELETE  /usuarios/:id   -           -       {json}      Borrado (lógico)
+Metodo | URL            | Query_P    | Body   | Respuesta  | Funcionalidad
+------------------------------------------------------------------------------
+POST   | /usuarios      | -          | {json} | {json}     | Alta de usuario
+PATCH  | /usuarios/:id  | -          | {json} | {json}     | Modificar
+DELETE | /usuarios/:id  | -          | -      | {json}     | Borrado (lógico)
 
 //Esta no es REST :)
 POST    /login          -           {json}  {usr}, token JWT
 
--productos
-    -listar por criterio
+//productos///////////////////////////////
+-listar por criterio
 
-Metodo  URL             Query_P     Body    Respuesta   Funcionalidad
-GET     /productos      criterio    -       
+Metodo | URL           | Query_P     Body    Respuesta   Funcionalidad
+------------------------------------------------------------------------------
+GET    | /productos    | criterio    -       
 
--pedidos
-    ...
+//pedidos/////////////////////////////////
+-buscar por id
+-listar pedidos por criterio
+-insertar
+-modificar (los que no se han facturado)
+-borrar (los que no se han facturado)
+
+Metodo | URL            | Query_P    | Body   | Respuesta  | Funcionalidad
+------------------------------------------------------------------------------
+GET    | /pedidos/:id   | -          | -      | {json}     | buscarPedidoPorId
+GET    | /pedidos       | criterio   | -      | {json}     | listarPedidosPorCriterio
+POST   | /pedidos       | -          | {json} | _id        | insertarPedido
+PATCH  | /pedidos/:id   | -          | {json} | _id        | modificarPedido (si no está facturado)
+DELETE | /pedidos/:id   | -          | -      | -          | borrarPedido (si no está facturado)
+
+
+POST   | /ordenesCompra | -          | {json} | -          | COMPRAR
+
+//facturas/////////////////////////////////
+-insertar
+-buscar popr id
+-listar por criterio
     
--facturas
-    ...
 
 
 //////////////////////////////
@@ -111,6 +134,7 @@ PEDIDOS:
     fecha :
     estado :
     direccion :
+    formaPago :
     total :
 
     usuario: {

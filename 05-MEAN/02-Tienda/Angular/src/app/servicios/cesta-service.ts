@@ -18,18 +18,15 @@ export class CestaService implements OnDestroy {
         this.usuario = autenticacionService.getUsuario()
 
         let json:string|null = localStorage.getItem("cesta_"+this.usuario._id)
-        let cesta:any 
+        let cesta:Pedido = new Pedido()
         if(json){
-            cesta = JSON.parse(json)
-            //cesta no tiene el prototipo de la clase Pedido y no cuenta con las funciones
-            //Le asignamos el prototipo de Pedido
-            Object.setPrototypeOf(cesta, Pedido.prototype)
+            let detallesCesta = JSON.parse(json)
+            cesta.detalles = detallesCesta.detalles
+            cesta.total = detallesCesta.total
         } else {
             console.log("==================================")
             console.log("Creando cesta en LocalStorage")
-            cesta = new Pedido()
-            console.log(JSON.stringify(cesta))
-            localStorage.setItem("cesta_"+this.usuario._id,JSON.stringify(cesta))
+            this.guardarCesta(cesta)
         }
         
         this.cesta = cesta
@@ -51,18 +48,11 @@ export class CestaService implements OnDestroy {
     }
 
     public guardarCesta(cesta:any):void{
-        let x:any = cesta.subject
-        cesta.subject = null
-        localStorage.setItem("cesta_"+this.usuario._id, JSON.stringify(cesta))
-        cesta.subject = x
-
         let detallesCesta = {
             detalles : cesta.detalles,
             total    : cesta.total
         }
-        localStorage.setItem("_cesta_"+this.usuario._id, JSON.stringify(detallesCesta))
-
-
+        localStorage.setItem("cesta_"+this.usuario._id, JSON.stringify(detallesCesta))
     }
 
     public crearCesta():void{

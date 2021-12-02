@@ -1,9 +1,11 @@
 
 <h5 class="text-center mt-5¡4">Resumen cesta</h5>
 
+<!--
 {{cesta.direccion}}<br/>
 {{cesta.fecha}}<br/>
 {{cesta.formaPago}}
+-->
 
 <div *ngFor="let dp of cesta.detalles">
 
@@ -28,7 +30,7 @@
 <h4 *ngIf="cesta.detalles.length>0" class="text-center">
     Total: {{cesta?.total}} €
     <br/>
-    <button class="btn btn-primary btn-sm" routerLink="/tienda/compra">Comprar</button>
+    <button *ngIf="mostrarBtnComprar" class="btn btn-primary btn-sm" routerLink="/tienda/compra">Comprar</button>
 </h4>
 
 <div *ngIf="cesta.detalles.length==0" class="text-center">
