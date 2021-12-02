@@ -31,21 +31,11 @@ export class CestaService implements OnDestroy {
             console.log(JSON.stringify(cesta))
             localStorage.setItem("cesta_"+this.usuario._id,JSON.stringify(cesta))
         }
-
-        //Aqui cestaService se subscribe a los cambios en la cesta
-        this.subscription = cesta
-            .getSubject()
-            .subscribe(
-                (evento: Pedido) => {
-                    console.log("==================================")
-                    console.log("CestaService: Cambio en la cesta!")
-                    console.log(evento)
-                    this.guardarCesta(evento)
-                }
-            )
         
-        //cesta.setCestaService(this)
         this.cesta = cesta
+        
+        //Aqui cestaService se subscribe a los cambios en la cesta
+        this.subscribirseALosCambiosEnLaCesta()
     }
 
     public ngOnDestroy(){
@@ -65,14 +55,30 @@ export class CestaService implements OnDestroy {
         cesta.subject = null
         localStorage.setItem("cesta_"+this.usuario._id, JSON.stringify(cesta))
         cesta.subject = x
+
+        let detallesCesta = {
+            detalles : cesta.detalles,
+            total    : cesta.total
+        }
+        localStorage.setItem("_cesta_"+this.usuario._id, JSON.stringify(detallesCesta))
+
+
     }
 
     public crearCesta():void{
+        //Cancelamos la subscripción a la cesta antígua
+        this.subscription.unsubscribe()
+        //Creamos la nueva cesta
         this.cesta = new Pedido()
+        //Guardamos la cesta
         this.guardarCesta(this.cesta)
         console.log("==================================")
         console.log("Cancelando subscripción a la cesta")
-        this.subscription.unsubscribe()
+        //Nos subscribimos a la nueva cesta
+        this.subscribirseALosCambiosEnLaCesta()      
+    }
+
+    private subscribirseALosCambiosEnLaCesta():void{
         this.subscription = this.cesta
             .getSubject()
             .subscribe(
@@ -82,7 +88,7 @@ export class CestaService implements OnDestroy {
                     console.log(evento)
                     this.guardarCesta(evento)
                 }
-            )        
+            )          
     }
 
 }

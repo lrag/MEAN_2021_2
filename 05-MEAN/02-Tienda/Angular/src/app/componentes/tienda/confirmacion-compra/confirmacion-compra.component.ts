@@ -20,8 +20,6 @@ export class ConfirmacionCompraComponent implements OnInit {
 
     let usuario:Usuario = autenticacionService.getUsuario()
 
-
-    console.log(usuario.direccion == null || usuario.telefono == null)
     if(usuario.direccion == null || usuario.telefono == null){
       this.mensajeError = "Por favor complete su perfil"
     }
