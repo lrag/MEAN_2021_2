@@ -103,3 +103,25 @@ fs.readFile("./recursos/fichero1.txt")
     })
  
 console.log("FIN en falso")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

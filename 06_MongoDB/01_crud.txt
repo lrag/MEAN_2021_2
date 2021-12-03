@@ -297,7 +297,6 @@ db.peliculas.find( {
                            ]
                    } )
 
-
 // find bad movies 
 db.peliculas.find( { "imdb_rating" : { $not: { $gt: 7 }}})
 //ídem, sin hacer el tonto

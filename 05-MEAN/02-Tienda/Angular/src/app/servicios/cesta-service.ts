@@ -11,7 +11,6 @@ export class CestaService implements OnDestroy {
     private usuario:Usuario
 
     public constructor(autenticacionService:AutenticacionService){
-
         console.log("Creando CestaService")
 
         //Obtenemos el usuario que está autenticado

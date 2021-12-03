@@ -144,6 +144,8 @@ PEDIDOS:
 
     detalles : [
         {
+            cantidad : number
+            precio   : number
             producto : {
                 _id : 7
                 referencia
@@ -151,8 +153,6 @@ PEDIDOS:
                 descripcion
                 precioCatalogo : 100
             }
-            cantidad : number
-            precio   : number
         }
     ]
 
