@@ -1,4 +1,7 @@
+const Usuario = require("../entidades/esquemaUsuario").Usuario
 const Producto = require("../entidades/esquemaProducto").Producto
+const Factura = require("../entidades/esquemaFactura").Factura
+const Pedido = require("../entidades/esquemaPedido").Pedido
 const validacionUtil = require("../../util/validacionUtil")
 
 let reglasPedido = {
@@ -12,6 +15,7 @@ exports.comprar = function (pedido, autoridad){
 
     return new Promise(function(resolve, reject){
         
+        console.log("==============================================")
         /*
         1-Validar los datos recibidos
         2-Buscar los datos del usuario
@@ -21,8 +25,9 @@ exports.comprar = function (pedido, autoridad){
         6-Insertar el pedido como 'FACTURADO'
         7-Insertar la factura con una referencia al pedido
         */
-
-        validacionUtil.validar(pedido, reglasPedido, reject)
+        if(!validacionUtil.validar(pedido, reglasPedido, reject)){
+            return
+        }
 
         if(pedido?.usuario?._id != autoridad._id){
             reject({ codigo:403, mensaje:"AL LADROOOOOON!!!!!!!"})
@@ -108,7 +113,7 @@ exports.comprar = function (pedido, autoridad){
             })
             .then( resultado => {
                 console.log("Pedido insertado")
-                console.log(resultado)
+                resolve()
             })
             .catch( err => {
                 console.log("AL MENOS UN PRODUCTO NO EXISTIA O HA PETADO LA BB.DD")

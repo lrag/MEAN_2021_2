@@ -19,6 +19,7 @@ export class CestaService implements OnDestroy {
         let json:string|null = localStorage.getItem("cesta_"+this.usuario._id)
         let cesta:Pedido = new Pedido()
         if(json){
+            //En el local storage tenemos solo los detalles, no una cesta entera
             let detallesCesta = JSON.parse(json)
             cesta.detalles = detallesCesta.detalles
             cesta.total = detallesCesta.total
@@ -47,6 +48,8 @@ export class CestaService implements OnDestroy {
     }
 
     public guardarCesta(cesta:any):void{
+        //No vamos a guardar la cesta entera en el local storage porque incluye datos del usuario
+        //Guardaremos únicamente el array de detalles y el total
         let detallesCesta = {
             detalles : cesta.detalles,
             total    : cesta.total
@@ -55,6 +58,10 @@ export class CestaService implements OnDestroy {
     }
 
     public crearCesta():void{
+
+        this.cesta.total = 0
+        this.cesta.detalles = []
+
         //Cancelamos la subscripción a la cesta antígua
         this.subscription.unsubscribe()
         //Creamos la nueva cesta

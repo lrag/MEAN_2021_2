@@ -61,9 +61,12 @@ function comprar(request, response){
     negocioPedidos
         .comprar(pedido, request.autoridad)
         .then( () => {
-            response.end("COMPRA EFECTUADA")
+            response
+                .status(201)
+                .json({ codigo: 201, mensaje:"Compra efectuada" })
         })
         .catch(function(error){
+            console.log(error)
             response.statusCode = error.codigo
             response.json(error)
         })
