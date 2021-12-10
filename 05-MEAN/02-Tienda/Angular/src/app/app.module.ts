@@ -12,7 +12,7 @@ import { LoginComponent } from './componentes/usuarios/login/login.component';
 import { RegistroComponent } from './componentes/usuarios/registro/registro.component';
 import { AceptacionTerminosComponent } from './componentes/usuarios/aceptacion-terminos/aceptacion-terminos.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@Angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@Angular/common/http';
 import { PerfilComponent } from './componentes/usuarios/perfil/perfil.component';
 import { CatalogoComponent } from './componentes/tienda/catalogo/catalogo.component';
 import { ProductoComponent } from './componentes/tienda/producto/producto.component';
@@ -23,6 +23,7 @@ import { BarraIzquierdaComponent } from './componentes/tienda/barra-izquierda/ba
 import { ConfirmacionCompraComponent } from './componentes/tienda/confirmacion-compra/confirmacion-compra.component';
 import { ListadoPedidosComponent } from './componentes/tienda/listado-pedidos/listado-pedidos.component';
 import { ListadoFacturasComponent } from './componentes/tienda/listado-facturas/listado-facturas.component';
+import { InterceptorJWT } from './interceptores/interceptor-JWT';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,14 @@ import { ListadoFacturasComponent } from './componentes/tienda/listado-facturas/
     ReactiveFormsModule,
     RouterModule.forRoot(AppModule.rutas)
   ],
-  providers: [],
+  providers: [
+    //Para registrar un interceptor HTTP:
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : InterceptorJWT,
+      multi : true
+    }
+  ],  
   bootstrap: [AppComponent]
 })
 export class AppModule { 

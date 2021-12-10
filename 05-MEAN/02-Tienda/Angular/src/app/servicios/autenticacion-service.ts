@@ -70,8 +70,10 @@ export class AutenticacionService {
     public bajaUsuario(usuario:Usuario):Observable<any>{
 
         return new Observable(subscribers => {
-            this.httpClient.delete(ConfiguracionUtil.urlServidor+"/usuarios/"+usuario._id,
-                                   { headers : { Authorization : "Bearer "+this.getJWT() } })
+            //InterceptorJWT se encargará de añadir el header authorization
+            //this.httpClient.delete(ConfiguracionUtil.urlServidor+"/usuarios/"+usuario._id,
+            //                       { headers : { Authorization : "Bearer "+this.getJWT() } })
+            this.httpClient.delete(ConfiguracionUtil.urlServidor+"/usuarios/"+usuario._id)
             .subscribe(
                 respuesta => {
                     console.log(respuesta)
@@ -93,9 +95,7 @@ export class AutenticacionService {
         return new Observable( subscribers => {
             this.httpClient.patch(
                     ConfiguracionUtil.urlServidor+"/usuarios/"+usuario._id,
-                    usuario,
-                    { headers : { Authorization : "Bearer "+this.getJWT() } }
-                )
+                    usuario)
                 .subscribe(
                     () => {
                         sessionStorage.setItem("usuario",JSON.stringify(usuario))

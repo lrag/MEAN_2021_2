@@ -14,8 +14,10 @@ export class FacturasService{
     public listarFacturas():Observable<any>{
         let JWT = this.autenticacionService.getJWT()
         let idUsuario = this.autenticacionService.getUsuario()._id
-        return this.httpClient.get(ConfiguracionUtil.urlServidor+"/clientes/"+idUsuario+"/facturas", 
-                                   { headers : { Authorization : "Bearer "+JWT } })
+        //InterceptorJWT se encargará de añadir el header authorization
+        //return this.httpClient.get(ConfiguracionUtil.urlServidor+"/clientes/"+idUsuario+"/facturas", 
+        //                           { headers : { Authorization : "Bearer "+JWT } })
+        return this.httpClient.get(ConfiguracionUtil.urlServidor+"/clientes/"+idUsuario+"/facturas")
     }
 
 }

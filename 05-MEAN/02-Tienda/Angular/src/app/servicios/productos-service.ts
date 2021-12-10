@@ -13,8 +13,10 @@ export class ProductosService{
 
     public listarProductos(/*criterio*/):Observable<any>{
         let JWT = this.autenticacionService.getJWT()
-        return this.httpClient.get(ConfiguracionUtil.urlServidor+"/productos", 
-                                   { headers : { Authorization : "Bearer "+JWT } })
+        //InterceptorJWT se encargará de añadir el header authorization
+        //return this.httpClient.get(ConfiguracionUtil.urlServidor+"/productos", 
+        //                           { headers : { Authorization : "Bearer "+JWT } })
+        return this.httpClient.get(ConfiguracionUtil.urlServidor+"/productos")
     }
 
 }
