@@ -83,6 +83,8 @@ function listarPedidosPorCliente(request, response){
             response.json(listado)
         })
         .catch(function(error){
+            //El cliente intenta listar pedidos de otra persona
+            //Fallo dramático en la bb.dd o la aplicación
             console.log(error)
             response.statusCode = error.codigo
             response.json(error)

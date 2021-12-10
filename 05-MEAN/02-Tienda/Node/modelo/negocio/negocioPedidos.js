@@ -4,6 +4,7 @@ const Factura = require("../entidades/esquemaFactura").Factura
 const Pedido = require("../entidades/esquemaPedido").Pedido
 const ObjectID = require("bson").ObjectID
 const validacionUtil = require("../../util/validacionUtil")
+const negocioFacturas = require("./negocioFacturas")
 
 let reglasPedido = {
     direccion  : 'required',
@@ -11,6 +12,7 @@ let reglasPedido = {
     fecha      : 'required',
     usuario    : 'required'
 }
+
 
 exports.comprar = function (pedido, autoridad){
 
@@ -71,7 +73,7 @@ exports.comprar = function (pedido, autoridad){
                     })
                     arrayDePromesas.push(promesa)
                 }
-                //Con Pro☺mise.all podemos 'detener el proceso' hasta que se cumplan o fallen las promesas contenidas en un array
+                //Con Promise.all podemos 'detener el proceso' hasta que se cumplan o fallen las promesas contenidas en un array
                 console.log("Buscando los productos para completar los datos de los detalles")
                 return Promise.all(arrayDePromesas)
             })
@@ -98,16 +100,12 @@ exports.comprar = function (pedido, autoridad){
                 return Promise.all(arrayDePromesas)
             })
             .then( x => {
-                //Crear la factura debería estar en 'negocioFacturas.js'
                 console.log("Existencias actualizadas")
-                let facturaMG = new Factura(pedido)
-                facturaMG.codigo = "FAC-1"+Math.round(Date.now()/100) //Por poner algo
-                facturaMG.usuario = pedido.usuario
-                return facturaMG.save()
+                return negocioFacturas.crearFactura(pedido)
             })
-            .then( resultado => {
+            .then( facturaInsertada => {
                 console.log("Factura insertada")
-                pedido.factura = resultado._id
+                pedido.factura = facturaInsertada._id
                 pedido.estado = "FACTURADO"
                 pedido.codigo = "PED-"+Math.round(Date.now()/100) //Por poner algo
                 let pedidoMG = new Pedido(pedido)
@@ -131,7 +129,7 @@ exports.listarPedidosPorCliente = function(idCliente, autoridad){
     return new Promise(function(resolve, reject){
 
         if(idCliente!=autoridad._id){
-            reject({ codigo:403, mensaje:"Los clientes solo pueden ver sus facturas"})
+            reject({ codigo:403, mensaje:"Los clientes solo pueden ver sus pedidos"})
             return
         }
 

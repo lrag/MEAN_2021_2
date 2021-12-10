@@ -5,8 +5,6 @@ let router = vipExpress.Router()
 
 router.get("/clientes/:idCliente/facturas", listarFacturasPorCliente)
 //router.get("/facturas/:id", buscarFactura)
-//router.patch("/facturas/:id", modificarFacturas)
-//router.delete("/facturas/:id", borrarFactura)
 
 exports.router = router
 

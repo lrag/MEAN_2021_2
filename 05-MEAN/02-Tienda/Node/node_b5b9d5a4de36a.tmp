@@ -1,3 +1,10 @@
+/*
+npm install express
+npm install mongoose
+npm install jsonwebtoken
+npm install validatorjs
+*/
+
 //Librerias
 const http = require('http')
 const express = require('express')
