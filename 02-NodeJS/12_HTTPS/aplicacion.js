@@ -8,7 +8,7 @@ const express = require("express")
 //
 //Certificado:
 //{
-//  key  : XXX
+//  key  : XXX,
 //  cert : YYY
 //}
 
@@ -31,12 +31,15 @@ servidorHttps.listen(443, function(){
     console.log("Esperando peticiones https en el puerto 443")
 }) 
 
+
 http.createServer(function(request, response){
-    response.end("POR FAVOR, HAZME LA PETICION A 'HTTPS://localhost:443/inicio'")
+    //response.setHeader('content-type','text/html')
+    //response.end("POR FAVOR, HAZME LA PETICION A <a href='https://localhost:443/inicio'>HTTPS://localhost:443/inicio</a>")
+    
     response.writeHead(301, {
         Location : 'https://localhost:443/'+request.url
       });
-    response.end();    
+    response.end();   
 }).listen(80, function(){
     console.log("Esperando peticiones http en el puerto 80")
 })

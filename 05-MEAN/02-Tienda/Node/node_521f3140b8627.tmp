@@ -7,6 +7,8 @@ npm install validatorjs
 
 //Librerias
 const http = require('http')
+const https = require('https')
+const certificadoUtil = require('./util/CertificadoUtil')
 const express = require('express')
 const mongoose = require('mongoose')
 
@@ -51,8 +53,9 @@ function arrancarServidor(){
     app.use(pedidosRouter)
     app.use(facturasRouter)
 
-    //Arrancamos el puerto
-    http.createServer(app).listen(process.env.app_puerto, function(){
+    //Arrancamos el servidor
+    let certificado = certificadoUtil.getCertificado()
+    https.createServer(certificado, app).listen(process.env.app_puerto, function(){
         console.log("Esperando peticiones en el puerto "+process.env.app_puerto)
     })
     
