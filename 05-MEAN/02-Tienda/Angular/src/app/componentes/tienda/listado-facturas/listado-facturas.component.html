@@ -1,0 +1,25 @@
+<h4 class="text-center mt-4">
+    Listado de facturas
+</h4>
+
+<table class="table table-hover table-striped">    
+    <thead>
+        <tr>
+            <th>Codigo</th>
+            <th>Fecha</th>
+            <th>Total</th>
+            <th>Forma Pago</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let f of facturas">
+            <td>{{f.codigo}}</td>
+            <td>{{f.fecha}}</td>
+            <td>{{f.total}}</td>
+            <td>{{f.formaPago}}</td>
+        </tr>
+        <tr *ngIf="facturas.length == 0">
+            <td colspan="4">No hay facturas</td>
+        </tr>
+    </tbody>
+</table> 

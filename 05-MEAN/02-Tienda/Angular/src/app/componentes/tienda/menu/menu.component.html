@@ -9,13 +9,12 @@
         </li>
         <li class="nav-item" routerLinkActive="active">
             <a class="nav-link" [routerLink]="['/tienda', { outlets: { 'primary':'cesta', 'der':null } }]">Cesta</a>
-            <a routerLink="/tienda/compra" style="display:none"></a>
         </li>
         <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link">Pedidos</a>
+            <a class="nav-link" [routerLink]="['/tienda', { outlets: { 'primary':'listadoPedidos', 'der':['resumenCesta'] } }]">Pedidos</a>
         </li>
         <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link">Facturas</a>
+            <a class="nav-link" [routerLink]="['/tienda', { outlets: { 'primary':'listadoFacturas', 'der':['resumenCesta'] } }]">Facturas</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" (click)="logout()">Salir</a>

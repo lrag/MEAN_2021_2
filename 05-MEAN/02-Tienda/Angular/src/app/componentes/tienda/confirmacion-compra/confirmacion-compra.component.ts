@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Pedido } from 'src/app/entidades/pedido';
 import { Usuario } from 'src/app/entidades/usuario';
 import { AutenticacionService } from 'src/app/servicios/autenticacion-service';
@@ -17,7 +18,8 @@ export class ConfirmacionCompraComponent implements OnInit {
 
   constructor(private cestaService:CestaService,
               private pedidosService:PedidosService,
-              private autenticacionService:AutenticacionService) {
+              private autenticacionService:AutenticacionService,
+              private router:Router) {
     this.cesta = cestaService.getCesta()
 
     let usuario:Usuario = autenticacionService.getUsuario()
@@ -41,9 +43,17 @@ export class ConfirmacionCompraComponent implements OnInit {
     this.pedidosService.comprar(this.cesta)
     .subscribe(
       x => { 
-        console.log(x)
         this.mensaje = "La compra se ha efectuado"
         this.cestaService.crearCesta()
+        //Ocultamos el resumen cesta
+        this.router.navigate([
+          "/tienda", 
+          {
+            outlets : {
+              'der'     : null
+            }
+          }
+        ], { skipLocationChange : true })        
       },
       err => {
         console.log(err)

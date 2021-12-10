@@ -10,6 +10,7 @@ const usuariosRouter = require("./rest/usuariosREST").router
 const autenticacionRouter = require("./autenticacion/autenticacionRouter").router
 const productosRouter = require("./rest/productosREST").router
 const pedidosRouter = require("./rest/pedidosREST").router
+const facturasRouter = require("./rest/facturasREST").router
 
 //Primer paso: leer el fichero de configuracion
 require("./util/configUtil")
@@ -41,6 +42,7 @@ function arrancarServidor(){
     app.use(usuariosRouter)
     app.use(productosRouter)
     app.use(pedidosRouter)
+    app.use(facturasRouter)
 
     //Arrancamos el puerto
     http.createServer(app).listen(process.env.app_puerto, function(){

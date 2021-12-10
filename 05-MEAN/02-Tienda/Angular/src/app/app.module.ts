@@ -21,6 +21,8 @@ import { CestaComponent } from './componentes/tienda/cesta/cesta.component';
 import { DetalleCestaComponent } from './componentes/tienda/detalle-cesta/detalle-cesta.component';
 import { BarraIzquierdaComponent } from './componentes/tienda/barra-izquierda/barra-izquierda.component';
 import { ConfirmacionCompraComponent } from './componentes/tienda/confirmacion-compra/confirmacion-compra.component';
+import { ListadoPedidosComponent } from './componentes/tienda/listado-pedidos/listado-pedidos.component';
+import { ListadoFacturasComponent } from './componentes/tienda/listado-facturas/listado-facturas.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { ConfirmacionCompraComponent } from './componentes/tienda/confirmacion-c
     RegistroComponent,
     DetalleCestaComponent,
     ResumenCestaComponent,
+    ListadoPedidosComponent,
     BarraIzquierdaComponent,
+    ListadoFacturasComponent,
     MaquetacionLoginComponent,
     MaquetacionTiendaComponent,
     AceptacionTerminosComponent,
@@ -94,6 +98,14 @@ export class AppModule {
         {
           path      : "compra",
           component : ConfirmacionCompraComponent
+        },
+        {
+          path      : "listadoPedidos",
+          component : ListadoPedidosComponent
+        },
+        {
+          path      : "listadoFacturas",
+          component : ListadoFacturasComponent
         },
         //  
         //Rutas para los named router outlets

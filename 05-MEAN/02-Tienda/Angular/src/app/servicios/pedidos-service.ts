@@ -25,4 +25,11 @@ export class PedidosService {
 
     }
 
+    public listarPedidos():Observable<any>{
+        let JWT = this.autenticacionService.getJWT()
+        let idUsuario = this.autenticacionService.getUsuario()._id
+        return this.httpClient.get(ConfiguracionUtil.urlServidor+"/clientes/"+idUsuario+"/pedidos", 
+                                   { headers : { Authorization : "Bearer "+JWT } })
+    }    
+
 }

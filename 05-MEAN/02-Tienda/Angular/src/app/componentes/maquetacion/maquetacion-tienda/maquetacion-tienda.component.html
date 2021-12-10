@@ -1,19 +1,23 @@
 
 <app-menu></app-menu>
 
-<div class="row">
+<div class="container-fluid">
 
-    <div class="col-sm-2">
-        <!--Named router outlets-->
-        <router-outlet name="izq"></router-outlet>
-    </div>
-    <div class="col-sm-8">
-        <!--A este router-outlet le corresponde la segunda carpeta de la barra de navegación-->
-        <!--Este router outlet es el 'primary'-->        
-        <router-outlet></router-outlet>
-    </div>
-    <div class="col-sm-2">
-        <router-outlet name="der"></router-outlet>
+    <div class="row">
+
+        <div class="col-sm-2">
+            <!--Named router outlets-->
+            <router-outlet name="izq"></router-outlet>
+        </div>
+        <div class="col-sm-8">
+            <!--A este router-outlet le corresponde la segunda carpeta de la barra de navegación-->
+            <!--Este router outlet es el 'primary'-->        
+            <router-outlet></router-outlet>
+        </div>
+        <div class="col-sm-2">
+            <router-outlet name="der"></router-outlet>
+        </div>
+
     </div>
 
 </div>

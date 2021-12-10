@@ -58,10 +58,6 @@ export class CestaService implements OnDestroy {
     }
 
     public crearCesta():void{
-
-        this.cesta.total = 0
-        this.cesta.detalles = []
-
         //Cancelamos la subscripción a la cesta antígua
         this.subscription.unsubscribe()
         //Creamos la nueva cesta

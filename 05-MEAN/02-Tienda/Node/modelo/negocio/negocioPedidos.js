@@ -2,6 +2,7 @@ const Usuario = require("../entidades/esquemaUsuario").Usuario
 const Producto = require("../entidades/esquemaProducto").Producto
 const Factura = require("../entidades/esquemaFactura").Factura
 const Pedido = require("../entidades/esquemaPedido").Pedido
+const ObjectID = require("bson").ObjectID
 const validacionUtil = require("../../util/validacionUtil")
 
 let reglasPedido = {
@@ -97,9 +98,10 @@ exports.comprar = function (pedido, autoridad){
                 return Promise.all(arrayDePromesas)
             })
             .then( x => {
+                //Crear la factura debería estar en 'negocioFacturas.js'
                 console.log("Existencias actualizadas")
                 let facturaMG = new Factura(pedido)
-                facturaMG.codigo = "FAC-1"
+                facturaMG.codigo = "FAC-1"+Math.round(Date.now()/100) //Por poner algo
                 facturaMG.usuario = pedido.usuario
                 return facturaMG.save()
             })
@@ -107,6 +109,7 @@ exports.comprar = function (pedido, autoridad){
                 console.log("Factura insertada")
                 pedido.factura = resultado._id
                 pedido.estado = "FACTURADO"
+                pedido.codigo = "PED-"+Math.round(Date.now()/100) //Por poner algo
                 let pedidoMG = new Pedido(pedido)
                 pedidoMG.usuario = pedido.usuario
                 return pedidoMG.save()
@@ -123,3 +126,24 @@ exports.comprar = function (pedido, autoridad){
     })
 }
 
+exports.listarPedidosPorCliente = function(idCliente, autoridad){
+
+    return new Promise(function(resolve, reject){
+
+        if(idCliente!=autoridad._id){
+            reject({ codigo:403, mensaje:"Los clientes solo pueden ver sus facturas"})
+            return
+        }
+
+        Pedido
+            .find({ "usuario._id" : new ObjectID(idCliente)})
+            .then( pedidos => {
+                resolve(pedidos)
+            })
+            .catch(err => {
+                console.log(err)
+                reject({ codigo:500, mensaje:'Error en la base de datos, JDT'})
+            })
+    })
+
+}
