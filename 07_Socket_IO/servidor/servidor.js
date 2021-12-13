@@ -45,6 +45,9 @@ servidor.listen(8000, function(){
 
 //io.on(<nombre_evento>, function manejadora de ese evento)
 
+//En este array gurdaremos la lista con los alias de los usuarios conectados
+let aliasUsuarios = []
+
 io.on("connection", function(socket){
     console.log("Nueva conexión")
 
@@ -58,6 +61,17 @@ io.on("connection", function(socket){
 //Dentro de las funciones 
 function usuarioDesconectado(){
     console.log("Usuario desconectado")
+
+    //Sacar el alias de la lista
+    for(let a=0; a<aliasUsuarios.length; a++){
+        if(aliasUsuarios[a]==this.alias){
+            aliasUsuarios.splice(a,1)
+            break
+        }
+    }
+
+    //Enviar la nueva lista a los usuarios conectados
+    io.emit("aliasUsuarios", JSON.stringify(aliasUsuarios))
 }
 
 function aliasRecibido(alias){
@@ -65,8 +79,30 @@ function aliasRecibido(alias){
     //Debemos asociar el alias al socket
     //aqui 'this' es el socket 
     this.alias = alias
+
+    //Comprobamos que el alias no esté repetido
+    //...
+
+    //Metemos el alias en la lista
+    aliasUsuarios.push(alias)
+
+    //Avisamos a todos los que están conectados (lo cual incluye al que se acaba de conectar) 
+    //del cambio en la lista de participantes
+    io.emit("aliasUsuarios", JSON.stringify(aliasUsuarios))
 }
 
 function mensajeRecibido(mensaje){
-    console.log("Mensaje recibido:"+mensaje)
+    //Mensaje es un JSON con dos propiedades:
+    //-alias
+    //-texto
+    let m = JSON.parse(mensaje)
+    //console.log(`Mensaje recibido de ${this.alias}:${m.texto}`)
+    console.log(`Mensaje recibido de ${m.alias}:${m.texto}`)
+
+    //Para enviar un mensaje desde el servidor al cliente:
+    //Si queremos enviarselo a solo un cliente usamos su socket
+    //socket.emit("clave", "valor")
+
+    //Si queremos enviar un mensaje a todos los sockets que haya (broadcast)
+    io.emit("mensaje", mensaje)
 }

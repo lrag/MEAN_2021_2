@@ -24,7 +24,8 @@ function conectar(){
 
     //Con el evento 'connect' nos enteramos de que la conexión se ha establecido
     socket.on("connect", conexionEstablecida)
-
+    socket.on("mensaje", mensajeRecibido)
+    socket.on("aliasUsuarios", rellenarAliasUsuarios)
 }
 
 function conexionEstablecida(){
@@ -47,7 +48,25 @@ function enviarMensaje(){
     if(texto.trim().length == 0){
         return
     }
-    socket.emit("mensaje", texto)
+    let mensaje = {
+        alias :  $("#alias").val(),
+        texto : texto
+    }
+    socket.emit("mensaje", JSON.stringify(mensaje))
+    $("#mensaje").val("")
+}
+
+function mensajeRecibido(mensajeJSON){
+    let mensaje = JSON.parse(mensajeJSON)
+    $(`<div>${mensaje.alias}: ${mensaje.texto}</div>`).appendTo("#mensajes")
+}
+
+function rellenarAliasUsuarios(json){
+    $("#usuarios").html("")
+    let arrayAliasUsuarios = JSON.parse(json)
+    for(let alias of arrayAliasUsuarios){
+        $(`<li>${alias}</li>`).appendTo("#usuarios")
+    }
 }
 
 function modoDesconectado(){
@@ -57,6 +76,9 @@ function modoDesconectado(){
     $("#btnDesconectar").prop("disabled",true)
     $("#btnEnviar").prop("disabled",true)
     $("#mensaje").prop("disabled",true)
+
+    $("#mensajes").html("")
+    $("#usuarios").html("")
 }
 
 function modoConectado(){
