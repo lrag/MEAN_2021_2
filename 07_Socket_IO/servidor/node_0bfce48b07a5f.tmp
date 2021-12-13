@@ -81,7 +81,13 @@ function aliasRecibido(alias){
     this.alias = alias
 
     //Comprobamos que el alias no esté repetido
-    //...
+    for(let a of aliasUsuarios){
+        if(a == alias){
+            this.emit("aliasRepetido","pues eso")
+            return
+        }
+    }
+
 
     //Metemos el alias en la lista
     aliasUsuarios.push(alias)

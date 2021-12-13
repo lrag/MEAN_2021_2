@@ -18,7 +18,7 @@ function conectar(){
         "http://localhost:8000", 
         {
             //forceNew     : true,
-            //reconnection : false
+            reconnection : false
         } 
     )
 
@@ -26,6 +26,7 @@ function conectar(){
     socket.on("connect", conexionEstablecida)
     socket.on("mensaje", mensajeRecibido)
     socket.on("aliasUsuarios", rellenarAliasUsuarios)
+    socket.on("aliasRepetido", aliasRepetido)
 }
 
 function conexionEstablecida(){
@@ -67,6 +68,11 @@ function rellenarAliasUsuarios(json){
     for(let alias of arrayAliasUsuarios){
         $(`<li>${alias}</li>`).appendTo("#usuarios")
     }
+}
+
+function aliasRepetido(){
+    alert("El alias ya existe. Escoja otro")
+    desconectar()
 }
 
 function modoDesconectado(){
