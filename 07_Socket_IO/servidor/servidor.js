@@ -48,20 +48,23 @@ servidor.listen(8000, function(){
 io.on("connection", function(socket){
     console.log("Nueva conexión")
 
+    //Dentro de las funciones que pasamos como parámetro para manejar eventos
+    //'this' será el socket
     socket.on("disconnect",usuarioDesconectado)
     socket.on("alias", aliasRecibido)
     socket.on("mensaje", mensajeRecibido)
 })
 
+//Dentro de las funciones 
 function usuarioDesconectado(){
     console.log("Usuario desconectado")
 }
 
 function aliasRecibido(alias){
     console.log("Alias recibido:"+alias)
-
     //Debemos asociar el alias al socket
-    socket.alias = alias
+    //aqui 'this' es el socket 
+    this.alias = alias
 }
 
 function mensajeRecibido(mensaje){
