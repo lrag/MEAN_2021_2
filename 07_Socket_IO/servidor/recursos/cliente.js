@@ -1,3 +1,5 @@
+//Con esta variable referenciaremos al socket
+let socket = null
 
 function conectar(){
 
@@ -11,16 +13,12 @@ function conectar(){
     //La función connect es síncrona
     //Devuelve un socket, pero que todavía no está establecido puesto
     //que conectar en realidad es una tarea asíncrona    
-    
-    
-    //
-    //CUIDADO CON ESTE LET, LUIS RAMÓN
-    //    
-    let socket = io.connect(
+ 
+    socket = io.connect(
         "http://localhost:8000", 
         {
-            forceNew     : true,
-            reconnection : true
+            //forceNew     : true,
+            //reconnection : false
         } 
     )
 
@@ -31,6 +29,11 @@ function conectar(){
 
 function conexionEstablecida(){
     modoConectado()
+}
+
+function desconectar(){
+    socket.disconnect() //Esta función es asíncrona
+    modoDesconectado()
 }
 
 function modoDesconectado(){
@@ -56,6 +59,7 @@ function inicializar(){
     console.log("inicializando...")
 
     $("#btnConectar").click(conectar)
+    $("#btnDesconectar").click(desconectar)
 
     modoDesconectado()
 }

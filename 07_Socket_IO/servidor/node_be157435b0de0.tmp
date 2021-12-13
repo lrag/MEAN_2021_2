@@ -47,5 +47,8 @@ servidor.listen(8000, function(){
 
 io.on("connection", function(socket){
     console.log("Nueva conexión")
-})
 
+    socket.on("disconnect", function(){
+        console.log("Usuario desconectado")
+    })
+})
