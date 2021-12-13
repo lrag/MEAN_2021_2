@@ -48,7 +48,22 @@ servidor.listen(8000, function(){
 io.on("connection", function(socket){
     console.log("Nueva conexión")
 
-    socket.on("disconnect", function(){
-        console.log("Usuario desconectado")
-    })
+    socket.on("disconnect",usuarioDesconectado)
+    socket.on("alias", aliasRecibido)
+    socket.on("mensaje", mensajeRecibido)
 })
+
+function usuarioDesconectado(){
+    console.log("Usuario desconectado")
+}
+
+function aliasRecibido(alias){
+    console.log("Alias recibido:"+alias)
+
+    //Debemos asociar el alias al socket
+    socket.alias = alias
+}
+
+function mensajeRecibido(mensaje){
+    console.log("Mensaje recibido:"+mensaje)
+}

@@ -48,7 +48,15 @@ servidor.listen(8000, function(){
 io.on("connection", function(socket){
     console.log("Nueva conexión")
 
-    socket.on("disconnect", function(){
-        console.log("Usuario desconectado")
-    })
+    socket.on("disconnect",usuarioDesconectado)
+    socket.on("alias", aliasRecibido)
+
 })
+
+function usuarioDesconectado(){
+    console.log("Usuario desconectado")
+}
+
+function aliasRecibido(alias){
+    console.log("Alias recibido:"+alias)
+}

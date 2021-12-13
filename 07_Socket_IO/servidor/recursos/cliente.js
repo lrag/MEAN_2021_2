@@ -29,11 +29,25 @@ function conectar(){
 
 function conexionEstablecida(){
     modoConectado()
+    //Enviamos el alias
+    //Los mensajes tienen solo dos valores:
+    //-nombre del mensaje (string)
+    //-valor del mensaje (string)
+    let alias = $("#alias").val()
+    socket.emit("alias", alias)
 }
 
 function desconectar(){
     socket.disconnect() //Esta función es asíncrona
     modoDesconectado()
+}
+
+function enviarMensaje(){
+    let texto = $("#mensaje").val()
+    if(texto.trim().length == 0){
+        return
+    }
+    socket.emit("mensaje", texto)
 }
 
 function modoDesconectado(){
@@ -60,6 +74,7 @@ function inicializar(){
 
     $("#btnConectar").click(conectar)
     $("#btnDesconectar").click(desconectar)
+    $("#btnEnviar").click(enviarMensaje)
 
     modoDesconectado()
 }
