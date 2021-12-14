@@ -60,7 +60,7 @@ io.on("connection", function(socket){
 
 //Dentro de las funciones 
 function usuarioDesconectado(){
-    console.log("Usuario desconectado")
+    console.log("Usuario desconectado:"+this.alias)
 
     //Sacar el alias de la lista
     for(let a=0; a<aliasUsuarios.length; a++){
@@ -76,10 +76,7 @@ function usuarioDesconectado(){
 
 function aliasRecibido(alias){
     console.log("Alias recibido:"+alias)
-    //Debemos asociar el alias al socket
-    //aqui 'this' es el socket 
-    this.alias = alias
-
+    
     //Comprobamos que el alias no esté repetido
     for(let a of aliasUsuarios){
         if(a == alias){
@@ -87,7 +84,10 @@ function aliasRecibido(alias){
             return
         }
     }
-
+    
+    //Debemos asociar el alias al socket
+    //aqui 'this' es el socket 
+    this.alias = alias
 
     //Metemos el alias en la lista
     aliasUsuarios.push(alias)
