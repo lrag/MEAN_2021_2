@@ -18,11 +18,16 @@ function rellenarSalas(salas){
         div.append(" "+sala)
         $("#salas").append(div)   
     }
+    $(`[name=sala][value=General]`).prop("checked",true)
 }
 
 function seleccionarSala(){
+    //let sala = document.querySelector(("[name=sala]:checked")).value
     let sala = $("[name=sala]:checked").val()
     console.log(sala)
+
+    socket.emit("cambiarSala", sala)
+
 }
 
 function conectar(){

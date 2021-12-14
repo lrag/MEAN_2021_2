@@ -62,6 +62,27 @@ io.on("connection", function(socket){
     socket.on("disconnect",usuarioDesconectado)
     socket.on("alias", aliasRecibido)
     socket.on("mensaje", mensajeRecibido)
+    socket.on("cambiarSala", cambiarSala)
+
+    //Rooms en socket.io
+    //Identificadas con una cadena de texto
+    //Los sockets pueden unirse a cualquier número de 'rooms' con socket.join('nombre_room')
+    //Pueden abandonarlas con socket.leave('nombre_room')
+    //
+    //Para enviar un mensaje a todos los sockets que esten en un 'room':
+    //io.to('nombre_room').emit('clave_mensaje','mensaje)
+    //Se pueden concatenar varias salas y así enviar un mensaje a los sockets de todas ellas
+    //io.to('nombre_room_1').to('nombre_room_2').emit('clave_mensaje','mensaje')
+
+    //Para averiguar en cuantas 'rooms' está un socket podemos invocar socket.rooms
+    //Devuelve un SET con todas las rooms
+
+    //Nada mas crearse un socket este se añade a una 'room' en la que únicamente está él
+    //El nombre de ese 'room' será el id del socket
+
+    //Unimos a los nuevos usuarios a la sala 'General'
+    //No hay que crear las salas. Unimos los sockets a ellas directamente    
+    socket.join("General")
 })
 
 //Dentro de las funciones 
@@ -116,5 +137,72 @@ function mensajeRecibido(mensaje){
     //socket.emit("clave", "valor")
 
     //Si queremos enviar un mensaje a todos los sockets que haya (broadcast)
-    io.emit("mensaje", mensaje)
+    //io.emit("mensaje", mensaje)
+
+    //Si queremos emitir un mensaje a los sockets que esten en una sala:
+    //io.to('nombre_room').emit('mensaje', mensaje)
+
+    let rooms = this.rooms
+    for(let room of rooms){
+        //Como no hemos sacado al socket de su sala personal evitamos el envíarle dos veces el mensaje
+        if(room != this.id){
+            io.to(room).emit('mensaje', mensaje)
+        }
+    }
+
+}
+
+function cambiarSala(sala){
+    //Dentro de las funciones que añadimos con socket.on
+    //'this' es el socket
+    console.log("El usuario "+this.alias+" se cambia a la sala "+sala)
+
+    //Comprobamos que la sala existe
+    //Grán fajador:
+    //let encontrado = false
+    //for(let s of salas){
+    //    if(s == sala){
+    //        encontrado = true
+    //        break
+    //    }
+    //}
+    //if(!encontrado){
+    //    console.log("La sala no existe!")
+    //    return
+    //}
+    //Fino estilista:
+    if(!salas.find( s => s==sala )){
+        console.log("La sala no existe!")
+        return
+    }
+
+    console.log(this.rooms)
+
+    //Sacamos al socket de las salas en las que esté
+    //Los sockets saben en que salas están
+    let salasSocket = this.rooms
+    for(let room of salasSocket){
+        //Todos los sockets están por defecto en una sala cuyo nombre coincide con su identificador
+        //No pasa nada si le sacamos de su sala personal, pero vamos a dejarla por que si
+        if(room != this.id){
+            this.leave(room)
+            let mensaje = {
+                alias : "Chat3000",
+                texto : `----${this.alias} abandona la sala------------------------------`
+            }
+            io.to(room).emit("mensaje", JSON.stringify(mensaje))
+        }
+    }    
+    
+    //Unimos al socket a la nueva sala
+    this.join(sala)
+
+    //Avisamos a los usuarios de esa sala de que ha llegado otro    
+    let mensaje = {
+        alias : "Chat3000",
+        texto : `----${this.alias} se ha unido a la sala '${sala}'------------------------------`
+    }
+    io.to(sala).emit("mensaje", JSON.stringify(mensaje))
+    
+    console.log(this.rooms)
 }
