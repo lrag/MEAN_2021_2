@@ -2,27 +2,27 @@
 let esquema
 
 function conectar(){
+    return new Promise(function(resolve, reject){
+        console.log("Conectando con la aplicacion MongoDB Realm...")
 
-    console.log("Conectando con la aplicacion MongoDB Realm...")
+        //Obtenemos un objeto que representa a la aplicación que corre en los servidores de MongoDB
+        //tenemos que utilizar el identificador único que le haya correspondido
+        const app = new Realm.App({ id: "agenda-nifxu" })
 
-    //Obtenemos un objeto que representa a la aplicación que corre en los servidores de MongoDB
-    //tenemos que utilizar el identificador único que le haya correspondido
-    const app = new Realm.App({ id: "agenda-nifxu" })
-
-    //Nos autenticamos como usuario anónimo
-    //Creamos unas credenciales
-    let credenciales = Realm.Credentials.anonymous()
-    app.logIn(credenciales)
-        .then( usuario => {
-            console.log(usuario)
-            //Utilizaremos el usuario para obtener una 'conexión' a la bb.dd que está en Atlas
-            const mongo = usuario.mongoClient("mongodb-atlas")
-            //Obtenemos el esquema
-            esquema = mongo.db("bbdd_agenda")
-
-            listarContactos()
-        })
-        .catch( err => console.log(err))
+        //Nos autenticamos como usuario anónimo
+        //Creamos unas credenciales
+        let credenciales = Realm.Credentials.anonymous()
+        app.logIn(credenciales)
+            .then( usuario => {
+                console.log(usuario)
+                //Utilizaremos el usuario para obtener una 'conexión' a la bb.dd que está en Atlas
+                const mongo = usuario.mongoClient("mongodb-atlas")
+                //Obtenemos el esquema
+                esquema = mongo.db("bbdd_agenda")
+                resolve()
+            })
+            .catch( err => reject(err))
+    })
 }
 
 function listarContactos(){
@@ -42,5 +42,9 @@ $(inicializar)
 function inicializar(){
     console.log("inicializando...")
 
-    conectar()    
+    conectar() 
+        .then( () => {
+            listarContactos()
+        })
+        .catch( err => console.log(err)) 
 }
