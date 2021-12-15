@@ -1,3 +1,5 @@
+//Guardamos el esquema en esta variable
+let esquema
 
 function conectar(){
 
@@ -13,10 +15,27 @@ function conectar(){
     app.logIn(credenciales)
         .then( usuario => {
             console.log(usuario)
+            //Utilizaremos el usuario para obtener una 'conexión' a la bb.dd que está en Atlas
+            const mongo = usuario.mongoClient("mongodb-atlas")
+            //Obtenemos el esquema
+            esquema = mongo.db("bbdd_agenda")
+
+            listarContactos()
         })
         .catch( err => console.log(err))
+}
 
+function listarContactos(){
+    esquema
+        .collection("contactos")
+        .find() //En RealmWeb find no devuelvle un cursor sino la promesa de la query
+        //.toArray()
+        .then(rellenarTablaContactos)
+        .catch( err => console.log(err))
+}
 
+function rellenarTablaContactos(contactos){
+    console.log(contactos)
 }
 
 $(inicializar)
