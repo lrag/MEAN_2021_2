@@ -36,11 +36,45 @@ function listarContactos(){
 
 function rellenarTablaContactos(contactos){
     console.log(contactos)
+
+    $("#tablaContactos").html('')
+    $(contactos).each(function(pos, contacto){
+        $(`<tr>
+                <td>${contacto.nombre}</td>
+                <td>${contacto.direccion}</td>
+                <td>${contacto.telefono}</td>
+                <td>${contacto.correoE}</td>
+           </tr>`)
+        .appendTo("#tablaContactos")
+    })    
+
+}
+
+function insertarContacto(){
+
+    let contacto = {}
+    $("#formulario [campo]").each(function(pos, nodo){
+        contacto[nodo.id]=nodo.value
+    })
+    console.log(contacto)
+
+    esquema
+        .collection("contactos")
+        .insertOne(contacto)
+        .then( X => {
+            console.log(X)  
+            listarContactos()  
+        })
+        .catch(err => console.log(err))
+
+
 }
 
 $(inicializar)
 function inicializar(){
     console.log("inicializando...")
+
+    $("#btnInsertar").click(insertarContacto)
 
     conectar() 
         .then( () => {
