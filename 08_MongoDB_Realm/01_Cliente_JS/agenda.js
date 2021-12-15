@@ -45,9 +45,30 @@ function rellenarTablaContactos(contactos){
                 <td>${contacto.telefono}</td>
                 <td>${contacto.correoE}</td>
            </tr>`)
+        .click(function (e){
+            seleccionarContacto(contacto._id)
+        })        
         .appendTo("#tablaContactos")
     })    
 
+}
+
+function seleccionarContacto(idContacto){
+    console.log("Seleccionar:"+idContacto)
+
+    esquema
+        .collection("contactos")
+        .findOne({ _id : idContacto })
+        .then( contacto => {
+            if(!contacto){
+                mostrarError("El contacto no existe")
+                return
+            }
+            for(let propiedad in contacto){
+                $("#"+propiedad).val(contacto[propiedad])
+            }
+        })
+        .catch(err => console.log(err))
 }
 
 function insertarContacto(){
@@ -66,8 +87,11 @@ function insertarContacto(){
             listarContactos()  
         })
         .catch(err => console.log(err))
+}
 
-
+function mostrarError(mensaje){
+    $("#alertError").css("display","block")
+    $("#mensajeError").html(mensaje)
 }
 
 $(inicializar)
@@ -75,6 +99,8 @@ function inicializar(){
     console.log("inicializando...")
 
     $("#btnInsertar").click(insertarContacto)
+
+    $("#alertError").css("display","none")
 
     conectar() 
         .then( () => {
