@@ -230,20 +230,6 @@ facturas :
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 peliculas
 
 {
