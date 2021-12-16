@@ -44,7 +44,19 @@ export class AutenticacionService {
     public logout():void{
     }
     
-    public altaUsuario(usuario:Usuario):Observable<any>{
+    public altaUsuario(usuario:any):Observable<any>{
+        
+        let app:App = new App({ id : "agendausuarios-cvemp" })        
+        
+        app.emailPasswordAuth.registerUser(usuario.email, usuario.password)
+        .then( () => {
+            
+        })
+        .catch( err => {
+            console.log(err)
+        })
+
+        //ESTO AHY KE KITARLO
         return new Observable()
     }
     

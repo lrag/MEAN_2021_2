@@ -1,19 +1,16 @@
 <div class="navbar navbar-expand-sm bg-dark navbar-dark">
     <ul class="navbar-nav">
         <li class="nav-item active">
-            <a class="nav-link" routerLink="/tienda/perfil">{{usuario?.nombre}}</a>
+            <a class="nav-link" routerLink="/agenda/perfil">{{usuario?.nombre}}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/contactos">Contactos</a>
+            <a class="nav-link" routerLink="/agenda/contactos">Contactos</a>
         </li>
         <li class="nav-item">
             <a class="nav-link">Citas</a>
         </li>
         <li class="nav-item">
             <a class="nav-link">Movidas</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link">Historias</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" (click)="logout()">Salir</a>

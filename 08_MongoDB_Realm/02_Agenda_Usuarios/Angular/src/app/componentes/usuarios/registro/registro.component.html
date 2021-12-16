@@ -21,19 +21,21 @@
       </div> 
     </div>
     <div class="form-group">
-      <label class="control-label" for="login">Login *</label>
+      <label class="control-label" for="email">Correo E. *</label>
       <div>
-        <input type="text" 
+        <input type="text" id="email"
               class="form-control"
-              formControlName="login"/>
-        <div *ngIf="(formulario.get('login')?.dirty || formulario.get('login')?.touched)">
-          <small *ngIf="formulario.get('login')?.hasError('required')" class="text-danger">
-            El login es obligatorio.
+              formControlName="email"/>
+        <div *ngIf="(formulario.get('email')?.dirty || formulario.get('email')?.touched)">
+          <small *ngIf="formulario.get('email')?.hasError('required')" class="text-danger">
+            El correoE es obligatorio.
           </small>
-        </div>                
+          <small *ngIf="formulario.get('email')?.hasError('email')" class="text-danger">
+            Tiene que ser una dirección de correo E.
+          </small>
+        </div> 
       </div>
-    </div>
-    
+    </div>       
     <div class="form-group">
       <label class="control-label" for="pw" >Password *</label>
       <div>
@@ -65,51 +67,22 @@
         </div>              
       </div>
     </div>
-    <div class="form-group">
-      <label class="control-label" for="correoE">Correo E. *</label>
-      <div>
-        <input type="text" 
-              class="form-control"
-              formControlName="correoE"/>
-        <div *ngIf="(formulario.get('correoE')?.dirty || formulario.get('correoE')?.touched)">
-          <small *ngIf="formulario.get('correoE')?.hasError('required')" class="text-danger">
-            El correoE es obligatorio.
-          </small>
-          <small *ngIf="formulario.get('correoE')?.hasError('email')" class="text-danger">
-            Tiene que ser una dirección de correo E.
-          </small>
-        </div> 
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label" for="idioma">Idioma *</label>
-      <div>
-        <select class="form-control" formControlName="idioma">
-          <option>ES</option>
-          <option>EN</option>
-        </select>
-        <div *ngIf="(formulario.get('idioma')?.dirty || formulario.get('idioma')?.touched)">
-          <small *ngIf="formulario.get('idioma')?.hasError('required')" class="text-danger">
-            El idioma es obligatorio.
-          </small>
-        </div>         
-      </div>
-    </div>
+
   </div>
 
 </form>
 
 <div class="text-center">
   <input type="button" 
-         value="Siguiente" 
+         value="Registrarse" 
          class="btn mr-1 btn-primary" 
          style="width:110px"
-         (click)="siguiente()"/>
+         (click)="registro()"/>
   <input type="button" 
          value="Cancelar"  
          class="btn mr-1 btn-warning" 
          style="width:110px"
-         (click)="cancelar()"/>
+         routerLink="/"/>
 </div>
 
 
