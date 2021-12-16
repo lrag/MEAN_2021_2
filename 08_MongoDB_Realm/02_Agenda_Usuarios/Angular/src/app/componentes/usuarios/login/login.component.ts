@@ -31,12 +31,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         () => {
           console.log("OK")
-          //Delegaremos esto en el servicio, para que esté en él centralizado todo lo relacionado con la autenticación
-          //sessionStorage.setItem("JWT",respuesta.jwt)
-          //sessionStorage.setItem("usuario",JSON.stringify(respuesta.usuario))
-          
-          //Navegar
-          this.router.navigateByUrl("/tienda/perfil")
+          this.router.navigateByUrl("/agenda/perfil")
         },
         error => {
           console.log("MAL",error)
