@@ -47,7 +47,7 @@ export class RegistroComponent implements OnInit {
     this.autenticacionService.altaUsuario(registro)
     .subscribe( 
       () => console.log("OK"),
-      (err) => console.log(err)
+      err => console.log(err)
     )
 
   }

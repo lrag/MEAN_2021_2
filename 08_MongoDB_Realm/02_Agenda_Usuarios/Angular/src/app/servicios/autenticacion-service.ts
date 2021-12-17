@@ -20,10 +20,9 @@ export class AutenticacionService {
 
         return new Observable(function(subscribers){
             //Con javascript:
-            //let app:App = new Realm.App({ id: "agenda-nifxu" })
+            //let app:App = new Realm.App({ id: "agendausuarios-cvemp" })
             //Con typescript:
             let app:App = new App({ id : "agendausuarios-cvemp" })
-
             let credenciales = Credentials.emailPassword(login, password)
 
             app.logIn(credenciales)
@@ -38,26 +37,59 @@ export class AutenticacionService {
                 subscribers.complete()
             })   
         })
-
     }
     
     public logout():void{
     }
     
-    public altaUsuario(usuario:any):Observable<any>{
-        
-        let app:App = new App({ id : "agendausuarios-cvemp" })        
-        
-        app.emailPasswordAuth.registerUser(usuario.email, usuario.password)
-        .then( () => {
-            
-        })
-        .catch( err => {
-            console.log(err)
-        })
+    public altaUsuario(registro:any):Observable<any>{
 
-        //ESTO AHY KE KITARLO
-        return new Observable()
+        return new Observable(function(subscribers){
+
+            let app:App = new App({ id : "agendausuarios-cvemp" })        
+        
+            //Primero registramos el usuario
+            app.emailPasswordAuth.registerUser(registro.email, registro.password)
+            .then( () => {
+                console.log("Usuario registado")
+                //Necesitamos insertar la información adicional en la coleccion 'custom-user-data'
+                //Nos hacen falta dos cosas:
+                //-la información extra (la obtenemos del formulario y la hemos recibido por parámetro)
+                //-el id del usuario
+                //-el esquema para poder hacer el insertOne
+                //Hacemos login con el usuario que se acaba de registrar:
+                let credenciales = Credentials.emailPassword(registro.email, registro.password)
+                return app.logIn(credenciales)
+            })
+            .then( usuario => {
+                //HABER KE ME DECIS
+                console.log(usuario)
+                let id = usuario.id
+    
+                let customUserData = {
+                    idUsuario   : id,
+                    nombre      : registro.nombre,
+                    //direccion : registro.direccion //Este dato no lo pedimos durante el registro
+                    //telefono  : registro.telefono  //ídem
+                }
+    
+                console.log("Insertando custom_user_data")
+                const mongo = usuario.mongoClient("mongodb-atlas")
+                //Obtenemos el esquema
+                const esquema = mongo.db("bbdd_agenda_usuarios")
+                return esquema.collection("custom_user_data").insertOne(customUserData)
+            })
+            .then( resultado => {
+                console.log("Custom user data insertado")
+                subscribers.next()
+                subscribers.complete()
+            })
+            .catch( err => {
+                console.log(err)
+                subscribers.error()
+                subscribers.complete()
+            })
+        })
     }
     
     public bajaUsuario(usuario:Usuario):Observable<any>{

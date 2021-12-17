@@ -1,6 +1,6 @@
 
 export class ConfiguracionUtil {
-    public static readonly urlServidor:string = "http://localhost:6001"
+    public static readonly idApp:string = "agendausuarios-cvemp"
 }
 
 
