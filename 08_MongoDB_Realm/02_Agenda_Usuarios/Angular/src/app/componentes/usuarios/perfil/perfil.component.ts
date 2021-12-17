@@ -21,24 +21,14 @@ export class PerfilComponent implements OnInit {
 
     this.formulario = formBuilder.group({
       _id       : formBuilder.control(''), //Este no aparece en el formulario, pero hace falta
+      email     : formBuilder.control('', [ Validators.required, Validators.email ]),
       nombre    : formBuilder.control('', [ Validators.required ]),
-      login     : formBuilder.control(''), //Este no aparece en el formulario, pero hace falta
-      idioma    : formBuilder.control(''),
-      correoE   : formBuilder.control('', [ Validators.required, Validators.email ]),
-      telefono  : formBuilder.control('', [ Validators.required ]),    
       direccion : formBuilder.control('', [ Validators.required ]),    
-      rol       : formBuilder.control(''), //Este no aparece en el formulario, pero hace falta  
+      telefono  : formBuilder.control('', [ Validators.required ]),    
     })
 
-    /*
-    let json:any = sessionStorage.getItem("usuario")
-    let usuario:Usuario = JSON.parse(json)
-    usuario.password = ""
-    this.formulario.setValue(usuario)
-    */
     let usuario:Usuario = autenticacionService.getUsuario()
     this.formulario.setValue(usuario)
-    
 
   }
 

@@ -26,7 +26,7 @@
         </div>
     </div>
     <!--
-    PAra cambiar el password debemos hacer una pantalla especifica para esa acción
+    Para cambiar el password debemos hacer una pantalla especifica para esa acción
     <div class="col-sm-12 col-md-2 mt-1">
         <label for="pw">Password</label>
     </div>
@@ -41,28 +41,17 @@
         </div>
     </div> 
     -->                
-    
-    <div class="col-sm-12 col-md-2 mt-1">
-        <label for="year">Idioma</label>
-    </div>
-    <div class="col-sm-12 col-md-10 mt-1">
-        <select formControlName="idioma" class="form-control">
-            <option>ES</option>
-            <option>EN</option>
-        </select>
-    </div>
-    
     <div class="col-sm-12 col-md-2 mt-1">
         <label for="correoE">Correo E</label>
     </div>
     <div class="col-sm-12 col-md-10 mt-1">
-        <input id="correoE" formControlName="correoE" class="form-control"/>
+        <input id="correoE" formControlName="email" class="form-control"/>
 
-        <div *ngIf="(formulario.get('correoE')?.dirty || formulario.get('correoE')?.touched)">
-            <small *ngIf="formulario.get('correoE')?.hasError('required')" class="text-danger" >
+        <div *ngIf="(formulario.get('email')?.dirty || formulario.get('email')?.touched)">
+            <small *ngIf="formulario.get('email')?.hasError('required')" class="text-danger" >
                 Campo obligatorio.
             </small>
-            <small *ngIf="formulario.get('correoE')?.hasError('email')" class="text-danger" >
+            <small *ngIf="formulario.get('email')?.hasError('email')" class="text-danger" >
                 No es un correo electrónico correcto.
             </small>
         </div>
@@ -101,7 +90,6 @@
     <button class="btn btn-primary mr-1" (click)="guardar()">Guardar</button>
     <button class="btn btn-danger mr-1" data-toggle="modal" data-target="#confirmacionBaja">Baja</button>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="confirmacionBaja" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
