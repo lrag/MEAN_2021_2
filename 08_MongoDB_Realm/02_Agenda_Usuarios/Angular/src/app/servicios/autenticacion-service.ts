@@ -13,10 +13,18 @@ export class AutenticacionService {
     public constructor(private realmService:RealmService){
     }
 
-    public getUsuario():Usuario{
-        return new Usuario()
+    public getUsuario():Usuario{        
+        let app:App = this.realmService.getApp()
+        let usuarioRealm:any = app.currentUser
+        return new Usuario(
+                usuarioRealm.id,
+                usuarioRealm._profile.data.email,
+                usuarioRealm.customData.nombre,
+                usuarioRealm.customData.direccion,
+                usuarioRealm.customData.telefono,
+            )    
     }
-
+    
     public login(login:string, password:string):Observable<any>{
 
         return new Observable(subscribers => {
