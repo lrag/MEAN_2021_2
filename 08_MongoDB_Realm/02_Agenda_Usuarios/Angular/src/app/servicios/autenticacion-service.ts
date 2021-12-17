@@ -1,10 +1,7 @@
-import { HttpClient } from '@Angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../entidades/usuario';
 import { App, Credentials } from 'realm-web'
-
-import { ConfiguracionUtil } from './configuracion-util';
 import { RealmService } from './realm-service';
 
 @Injectable( { providedIn : "root" } )
@@ -26,7 +23,6 @@ export class AutenticacionService {
     }
     
     public login(login:string, password:string):Observable<any>{
-
         return new Observable(subscribers => {
             let app:App = this.realmService.getApp()
             let credenciales = Credentials.emailPassword(login, password)
@@ -103,7 +99,43 @@ export class AutenticacionService {
     }
     
     public modificarUsuario(usuario:Usuario):Observable<any>{
-        return new Observable()
+        
+
+        console.log(this.realmService.getApp().currentUser)
+
+        return new Observable( subscribers => {
+
+            console.log("Modificando custom_user_data")
+            this.realmService
+                .getEsquema()
+                .collection("custom_user_data")
+                .findOneAndUpdate(
+                    { idUsuario : usuario._id },
+                    { $set : {
+                            nombre    : usuario.nombre,
+                            direccion : usuario.direccion,
+                            telefono  : usuario.telefono
+                        } 
+                    }
+                )
+                .then( (rs:any) => {
+                    console.log(rs)
+                    console.log("Actualizando el local storage")
+                    return this.realmService.getApp().currentUser.refreshCustomData()
+                })
+                .then( (x:any) =>{
+                    console.log("YA")
+                    console.log(this.realmService.getApp().currentUser)
+                    subscribers.next()
+                    subscribers.complete()
+                })
+                .catch( (error:any) => {
+                    console.log(error) 
+                    subscribers.error(error)
+                    subscribers.complete()
+                })   
+
+        })
     }
 
 }

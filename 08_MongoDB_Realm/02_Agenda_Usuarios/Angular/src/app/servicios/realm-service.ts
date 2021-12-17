@@ -7,6 +7,7 @@ import { ConfiguracionUtil } from "./configuracion-util";
 export class RealmService {
 
     private app:App|any 
+    private esquema:any
 
     public constructor(){
     }
@@ -22,6 +23,14 @@ export class RealmService {
             this.app = new App({ id : ConfiguracionUtil.idApp })    
         }
         return this.app
+    }
+
+    public getEsquema():any{
+        if(!this.esquema){
+            let mongo = this.getApp().currentUser.mongoClient("mongodb-atlas")
+            this.esquema = mongo.db("bbdd_agenda_usuarios")
+        }
+        return this.esquema
     }
 
 }

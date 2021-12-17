@@ -21,7 +21,7 @@ export class PerfilComponent implements OnInit {
 
     this.formulario = formBuilder.group({
       _id       : formBuilder.control(''), //Este no aparece en el formulario, pero hace falta
-      email     : formBuilder.control('', [ Validators.required, Validators.email ]),
+      email     : formBuilder.control({ value:'', disabled: true }), //No se puede modificar
       nombre    : formBuilder.control('', [ Validators.required ]),
       direccion : formBuilder.control('', [ Validators.required ]),    
       telefono  : formBuilder.control('', [ Validators.required ]),    

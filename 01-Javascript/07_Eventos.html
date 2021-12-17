@@ -165,6 +165,11 @@ function inicializar(){
     document.getElementById("botoncillo").addEventListener('click', f2)
     document.getElementById("botoncillo").addEventListener('click', f3)    
 
+
+    //
+    document.getElementById("password").onkeydown = ocultarPassword
+    document.getElementById("btnEntrar").onclick = entrar
+
     //RESUMEN
     //
     //Si cuando se pulsa un botón queremos que se ejecute una función que no recibe parametros 
@@ -183,6 +188,27 @@ function inicializar(){
     //  dibujarRedondel(e.x, e.y, 10)
     //}
     
+}
+
+let password = ""
+let asteriscos = ""
+function ocultarPassword(evento){
+    
+    if(evento.keyCode==8){
+        password = password.substring(0, password.length-1)
+        asteriscos = asteriscos.substring(0, asteriscos.length-1)
+    } else {
+        let char = evento.key
+        password += char
+        asteriscos += "*"
+    }    
+    
+    document.getElementById("password").value = asteriscos 
+    evento.preventDefault()
+}
+
+function entrar(){
+    console.log("PASSWORD:"+password)
 }
 
 function validarFormulario(){
@@ -220,6 +246,10 @@ window.onload = inicializar
     <span id="div1"></span>
 
     <hr/>
+
+    Password:
+    <input type="text" id="password"/>
+    <input type="button" value="Entrar" id="btnEntrar"/>
 
     <div id="lienzo" style='background-color: #C0C1D0'>Lienzo</div>
 
