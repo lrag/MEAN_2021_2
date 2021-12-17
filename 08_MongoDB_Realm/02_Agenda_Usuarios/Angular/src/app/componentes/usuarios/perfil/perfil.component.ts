@@ -27,7 +27,7 @@ export class PerfilComponent implements OnInit {
       correoE   : formBuilder.control('', [ Validators.required, Validators.email ]),
       telefono  : formBuilder.control('', [ Validators.required ]),    
       direccion : formBuilder.control('', [ Validators.required ]),    
-      rol       : formBuilder.control('') //Este no aparece en el formulario, pero hace falta  
+      rol       : formBuilder.control(''), //Este no aparece en el formulario, pero hace falta  
     })
 
     /*

@@ -5,11 +5,12 @@ import { Usuario } from '../entidades/usuario';
 import { App, Credentials } from 'realm-web'
 
 import { ConfiguracionUtil } from './configuracion-util';
+import { RealmService } from './realm-service';
 
 @Injectable( { providedIn : "root" } )
 export class AutenticacionService {
 
-    public constructor(){
+    public constructor(private realmService:RealmService){
     }
 
     public getUsuario():Usuario{
@@ -18,11 +19,8 @@ export class AutenticacionService {
 
     public login(login:string, password:string):Observable<any>{
 
-        return new Observable(function(subscribers){
-            //Con javascript:
-            //let app:App = new Realm.App({ id: "agendausuarios-cvemp" })
-            //Con typescript:
-            let app:App = new App({ id : "agendausuarios-cvemp" })
+        return new Observable(subscribers => {
+            let app:App = this.realmService.getApp()
             let credenciales = Credentials.emailPassword(login, password)
 
             app.logIn(credenciales)
@@ -44,9 +42,9 @@ export class AutenticacionService {
     
     public altaUsuario(registro:any):Observable<any>{
 
-        return new Observable(function(subscribers){
+        return new Observable(subscribers => {
 
-            let app:App = new App({ id : "agendausuarios-cvemp" })        
+            let app:App = this.realmService.getApp()   
         
             //Primero registramos el usuario
             app.emailPasswordAuth.registerUser(registro.email, registro.password)
