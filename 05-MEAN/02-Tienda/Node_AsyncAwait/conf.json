@@ -1,0 +1,5 @@
+{
+    "url_bbdd"      : "mongodb://localhost:27017/tienda",
+    "app_puerto"    : 7000
+}
+
