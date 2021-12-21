@@ -8,36 +8,16 @@ router.get("/clientes/:idCliente/facturas", listarFacturasPorCliente)
 
 exports.router = router
 
-///////////////////////////////////////////
-//Funciones de la lógica de control      //
-///////////////////////////////////////////
-//
-//Reciben el request y el response
-//Su tarea consiste en:
-//-extraer del request la información necesaria
-//  -query parameters (?)
-//  -valores incluidos en la ruta (:)
-//  -valores presentes en los headers
-//  -movidas en el body
-//
-//-invocar la función con la lógica de negocio
-//
-//-configurar la respuesta
-//
-//-Y YA
-
-//GET /clientes/:idCliente/facturas
-function listarFacturasPorCliente(request, response){
+async function listarFacturasPorCliente(request, response){
 
     let idCliente = request.params.idCliente
+    try {
+        let listado = await negocioFacturas.listarFacturasPorCliente(idCliente, request.autoridad)
+        response.json(listado)    
+    } catch (error){
+        response.statusCode = error.codigo
+        response.json(error)
+    }    
 
-    negocioFacturas.listarFacturasPorCliente(idCliente, request.autoridad)
-        .then( listado => {
-            response.json(listado)
-        })
-        .catch(function(error){
-            response.statusCode = error.codigo
-            response.json(error)
-        })
 }
 

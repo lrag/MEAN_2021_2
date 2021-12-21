@@ -1,25 +1,18 @@
 const Factura = require("../entidades/esquemaFactura").Factura
 const ObjectID = require("bson").ObjectID
 
-exports.listarFacturasPorCliente = function(idCliente, autoridad){
+exports.listarFacturasPorCliente = async function(idCliente, autoridad){
 
-    return new Promise(function(resolve, reject){
+    if(idCliente!=autoridad._id){
+        throw { codigo:403, mensaje:"Los clientes solo pueden ver sus facturas"}
+    }        
 
-        if(idCliente!=autoridad._id){
-            reject({ codigo:403, mensaje:"Los clientes solo pueden ver sus facturas"})
-            return
-        }        
-
-        Factura
-            .find({ "usuario._id" : new ObjectID(idCliente)})
-            .then( facturas => {
-                resolve(facturas)
-            })
-            .catch(err => {
-                console.log(err)
-                reject({ codigo:500, mensaje:'Error en la base de datos, JDT'})
-            })
-    })
+    try{
+        let facturas = await Factura.find({ "usuario._id" : new ObjectID(idCliente)})
+        return facturas
+    } catch (error){
+        throw { codigo:500, mensaje:'Error en la base de datos, JDT'} 
+    }
 
 }
 
@@ -32,7 +25,7 @@ exports.crearFactura = async function(pedido){
         let facturaInsertada = await facturaMG.save()
         return facturaInsertada
     } catch(error){
-        throw new Error({ codigo:500, mensaje:'Error en la base de datos, JDT'})
+        throw { codigo:500, mensaje:'Error en la base de datos, JDT' } 
     }
 
 }

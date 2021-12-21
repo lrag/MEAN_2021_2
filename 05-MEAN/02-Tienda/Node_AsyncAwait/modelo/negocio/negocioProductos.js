@@ -16,57 +16,38 @@ let reglasProductoInsercion = {
 }
 
 //Autorizacion: el usuario que inserta debe ser EMPLEADO
-exports.insertarProducto = function(producto, autoridad){
-    
-    return new Promise(function(resolve, reject){
-        //Autorizacion
-        if(autoridad.rol != "EMPLEADO"){
-            reject({ codigo:403, mensaje:"Solo los empleados pueden añadir productos"})
-            return
-        }
+exports.insertarProducto = async function(producto, autoridad){
 
-        //Validación
-        if(!validacionUtil.validar(producto, reglasProductoInsercion, reject)){
-            return
-        }
+    //Autorizacion
+    if(autoridad.rol != "EMPLEADO"){
+        throw { codigo:403, mensaje:"Solo los empleados pueden añadir productos"}
+    }
 
-        //Insertar el producto
+    //Validación
+    let errorValidacion = validacionUtil.validar(producto, reglasProductoInsercion)
+    if(errorValidacion!=null){
+        throw errorValidacion
+    }
+
+    //Insertar el producto
+    try{
         let productoMG = new Producto(producto)
-        productoMG
-            .save()
-            .then( productoInsertado => {
-                resolve(productoInsertado)
-            })
-            .catch(err => {
-                console.log(err)
-                reject({ codigo:500, mensaje:'Error en la base de datos, TJ'})
-            })        
-    })
+        return await productoMG.save()
+    } catch(error) {
+        throw { codigo:500, mensaje:'Error en la base de datos, TJ'}
+    }
+
 }
 
 //Autorización: el usuario debe estar autenticado
-exports.listarProductos = function(criterio){
-
-    return new Promise(function(resolve, reject){
-        //Aquí es donde se listan los productos
-        //Si se logran listar la promesa invoca resolve y entrega los productos
-        //Si no, invoca reject y pasa un error
-        Producto
-            .find({})
-            .then( productos => {
-                resolve(productos)
-            })
-            .catch(err => {
-                console.log(err)
-                reject({ codigo:500, mensaje:'Error en la base de datos, JDT'})
-            })
-    })
-
-
+exports.listarProductos = async function(criterio){
+    //Aquí es donde se listan los productos
+    //Si se logran listar la promesa invoca resolve y entrega los productos
+    //Si no, invoca reject y pasa un error    
+    try{
+        return await Producto.find({})
+    } catch (error) {
+        throw { codigo:500, mensaje:'Error en la base de datos, JDT' }
+    }
 }
-
-
-
-
-
 

@@ -30,18 +30,15 @@ exports.router = router
 //-Y YA
 
 //GET /productos?criterio...
-function listarProductos(request, response){
-
+async function listarProductos(request, response){
     //Extraer el criterio de la peticion...
-
-    negocioProductos.listarProductos(/*criterio*/)
-        .then( listado => {
-            response.json(listado)
-        })
-        .catch(function(error){
-            response.statusCode = error.codigo
-            response.json(error)
-        })
+    try {
+        let listado = await negocioProductos.listarProductos(/*criterio*/)
+        response.json(listado)
+    } catch (error){
+        response.statusCode = error.codigo
+        response.json(error)
+    }
 }
 
 
