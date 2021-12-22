@@ -27,10 +27,8 @@ export class ContactosComponent implements OnInit {
     this.listarContactos()
   }
   
-  private listarContactos():void{
-    
+  private listarContactos():void{    
     this.contactosService.listar()
-
   }
 
   ngOnInit(): void {
