@@ -13,6 +13,7 @@ import { RegistroComponent } from './componentes/usuarios/registro/registro.comp
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@Angular/common/http';
 import { PerfilComponent } from './componentes/usuarios/perfil/perfil.component';
+import { ContactosComponent } from './componentes/contactos/contactos.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PerfilComponent } from './componentes/usuarios/perfil/perfil.component'
     PerfilComponent,
     CabeceraComponent,
     RegistroComponent,
+    ContactosComponent,
     MaquetacionLoginComponent,
     MaquetacionAgendaComponent
   ],
@@ -61,6 +63,10 @@ export class AppModule {
         {
           path      : "perfil",
           component : PerfilComponent
+        },      
+        {
+          path      : "contactos",
+          component : ContactosComponent
         }        
       ]      
     }

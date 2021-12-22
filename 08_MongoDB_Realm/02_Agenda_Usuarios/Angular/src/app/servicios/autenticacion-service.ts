@@ -100,7 +100,6 @@ export class AutenticacionService {
     
     public modificarUsuario(usuario:Usuario):Observable<any>{
         
-
         console.log(this.realmService.getApp().currentUser)
 
         return new Observable( subscribers => {
