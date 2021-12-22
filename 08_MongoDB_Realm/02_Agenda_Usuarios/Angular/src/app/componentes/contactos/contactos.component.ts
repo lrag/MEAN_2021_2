@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactosComponent implements OnInit {
 
+  
+
   constructor() { }
 
   ngOnInit(): void {
