@@ -71,7 +71,7 @@ exports.comprar = async function (pedido, autoridad){
         console.log("Existencias actualizadas")
         let factura = await negocioFacturas.crearFactura(pedido)
         console.log("Factura insertada")
-        pedido.factura = facturaInsertada._id //Aqui deberíamos guardar la factura entera como en Toronto
+        pedido.factura = factura._id //Aqui deberíamos guardar la factura entera como en Toronto
         pedido.estado = "FACTURADO"
         pedido.codigo = "PED-"+Math.round(Date.now()/100) //Por poner algo
         
