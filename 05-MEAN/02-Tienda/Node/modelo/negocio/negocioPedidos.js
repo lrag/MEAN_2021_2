@@ -1,18 +1,3 @@
-const Usuario = require("../entidades/esquemaUsuario").Usuario
-const Producto = require("../entidades/esquemaProducto").Producto
-const Factura = require("../entidades/esquemaFactura").Factura
-const Pedido = require("../entidades/esquemaPedido").Pedido
-const ObjectID = require("bson").ObjectID
-const validacionUtil = require("../../util/validacionUtil")
-const negocioFacturas = require("./negocioFacturas")
-
-let reglasPedido = {
-    direccion  : 'required',
-    formaPago  : 'required',
-    fecha      : 'required',
-    usuario    : 'required'
-}
-
 
 exports.comprar = function (pedido, autoridad){
 

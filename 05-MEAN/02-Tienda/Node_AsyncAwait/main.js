@@ -31,7 +31,7 @@ mongoose.connect(process.env.url_bbdd)
         console.log("No se pudo conectar con la base de datos.", err)
         process.exit(2)
     })
-    
+
 function arrancarServidor(){
     console.log("Arrancando el servidor...")
 

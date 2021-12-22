@@ -45,7 +45,7 @@ exports.altaUsuario = function(usuario){
         
         validacionUtil.validar(usuario, reglasUsrInsercion, reject)
 
-        //Le asigmanos el rol 'CLIENTE'
+        //Le asignanos el rol 'CLIENTE'
         usuario.rol = "CLIENTE"
 
         Usuario
@@ -156,6 +156,7 @@ exports.bajaUsuario = function(idUsuario, autoridad){
                 //Datos ya no es un objeto mongoose, ya no tiene las funciones, solo tiene las propiedades que guardan los datos
                 let datos = usuarioEncontrado.toObject()
                 let usuarioHistorico = new UsuarioHistorico(datos)
+                usuarioHistorico.fechaBorrado = Date.now()
                 return usuarioHistorico.save()
             })
             .then( resultadoInsertOne => {                

@@ -56,38 +56,32 @@ function borrarPedido(request, response){
 //CT:App/sjon
 //-------------------
 //{ pedido }
-function comprar(request, response){
-
-    let pedido = request.body
-    negocioPedidos
-        .comprar(pedido, request.autoridad)
-        .then( () => {
-            response
-                .status(201)
-                .json({ codigo: 201, mensaje:"Compra efectuada" })
-        })
-        .catch(function(error){
-            console.log(error)
-            response.statusCode = error.codigo
-            response.json(error)
-        })
+async function comprar(request, response){
+    try {
+        let pedido = request.body
+        await negocioPedidos.comprar(pedido, request.autoridad)
+        response.status(201).json({ codigo: 201, mensaje:"Compra efectuada" })
+    } catch (error) {
+        console.log(error)
+        response.statusCode = error.codigo
+        response.json(error)
+    }
 }
 
 //GET /clientes/:idCliente/pedidos
-function listarPedidosPorCliente(request, response){
+async function listarPedidosPorCliente(request, response){
 
     let idCliente = request.params.idCliente
 
-    negocioPedidos.listarPedidosPorCliente(idCliente, request.autoridad)
-        .then( listado => {
-            response.json(listado)
-        })
-        .catch(function(error){
-            //El cliente intenta listar pedidos de otra persona
-            //Fallo dramático en la bb.dd o la aplicación
-            console.log(error)
-            response.statusCode = error.codigo
-            response.json(error)
-        })
+    try {
+        let listado = await negocioPedidos.listarPedidosPorCliente(idCliente, request.autoridad)
+        response.json(listado)
+    } catch( error ){
+        //El cliente intenta listar pedidos de otra persona
+        //Fallo dramático en la bb.dd o la aplicación
+        console.log(error)
+        response.statusCode = error.codigo
+        response.json(error)
+    }
 }
 

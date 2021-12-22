@@ -7,13 +7,14 @@ let esquemaUsuarioHistorico = new mongoose.Schema({
         type    : String,
         required: true
     },
-    password  : String,
-    rol       : String,
-    nombre    : String,
-    direccion : String,
-    telefono  : String,
-    correoE   : String,
-    idioma    : String        
+    password     : String,
+    rol          : String,
+    nombre       : String,
+    direccion    : String,
+    telefono     : String,
+    correoE      : String,
+    idioma       : String,
+    fechaBorrado : Number       
 })
 
 //Exportamos el modelo

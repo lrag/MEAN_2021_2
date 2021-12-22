@@ -31,25 +31,22 @@ exports.router = router
 //CT: app/json
 //--------------
 //{ usuario }
-function altaUsuario(request, response){
-    
+async function altaUsuario(request, response){
     let usuario = request.body
     console.log("Alta Usuario (LC): ", usuario)
 
-    negocioUsuarios
-        .altaUsuario(usuario)
-        .then(function(id){
-            response.statusCode = 201
-            response.json({ codigo:201, mensaje:"Usuario insertado", id:id })
-        })
-        .catch(function(error){
-            //Este catch se ejecuta si:
-            //-los datos son invalidos
-            //-ya existe un usuario con ese login
-            //-fallo catastrófico
-            response.statusCode = error.codigo
-            response.json(error)
-        })
+    try {
+        let id = await negocioUsuarios.altaUsuario(usuario)
+        response.statusCode = 201
+        response.json({ codigo:201, mensaje:"Usuario insertado", id:id })
+    } catch(error){
+        //Este catch se ejecuta si:
+        //-los datos son invalidos
+        //-ya existe un usuario con ese login
+        //-fallo catastrófico
+        response.statusCode = error.codigo
+        response.json(error)
+    }
 }
 
 //PATCH /usuarios/:id
@@ -57,7 +54,7 @@ function altaUsuario(request, response){
 //Authorization: Bearer kjhjfvriehr4hfjrghur4.asrhjkdsfhjkwtryit4huiwgrwhjkjew.danjlkfsghjkewhjkghjkwt
 //-------------------
 //{ usuario }
-function modificarUsuario(request, response){
+async function modificarUsuario(request, response){
 
     let idUsuario = request.params.id
     let usuario   = request.body
@@ -78,32 +75,28 @@ function modificarUsuario(request, response){
     //Y si en el json no viene el id le ponemos el que viene en la url
     usuario._id = idUsuario
 
-    negocioUsuarios
-        .modificarUsuario(usuario, autoridad)
-        .then( () => {
-            response.json({ codigo:200, mensaje:"El usuario se modificó correctamente" })
-        })
-        .catch(err  => {
-            console.log(err)
-            response.status(err.codigo).json(err)
-        } )
-
+    try {
+        await negocioUsuarios.modificarUsuario(usuario, autoridad)
+        response.json({ codigo:200, mensaje:"El usuario se modificó correctamente" })
+    } catch(err) {
+        console.log(err)
+        response.status(err.codigo).json(err)
+    } 
 }
 
 //DELETE /usuarios/:id
-function bajaUsuario(request, response){
+async function bajaUsuario(request, response){
 
     let id = request.params.id
     let autoridad = request.autoridad
 
-    negocioUsuarios
-        .bajaUsuario(id, autoridad)
-        .then(() => {
-            response.json({ mensaje:"El usuario se ha dado de baja" })
-        })
-        .catch(error => {
-            response.statusCode = error.codigo
-            response.json(error)
-        })
+    try{
+        await negocioUsuarios.bajaUsuario(id, autoridad)
+        response.json({ codigo:200, mensaje:"El usuario se ha dado de baja" })
+    } catch(error) {
+        response.statusCode = error.codigo
+        response.json(error)
+    }
 
 }
+

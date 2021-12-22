@@ -17,157 +17,120 @@ let reglasUsrModificacion = {
     direccion : "required|min:3|max:50"
 }
 
-exports.buscarPorLoginYPw = function(login, password){
-    return new Promise(function(resolve, reject){
+exports.buscarPorLoginYPw = async function(login, password){    
+    try {
         //Con mongoose utilizamos el modelo para buscar
-        Usuario.findOne({ login:login, password:password }, '-password -__v' )
-            .then(usuarioEncontrado => {
-                if(!usuarioEncontrado){
-                    reject({ codigo:404, mensaje:"No existe un usuario con este login y password" })
-                    return
-                }
-                //delete usuarioEncontrado.password
-                console.log(usuarioEncontrado)
-                resolve(usuarioEncontrado)
-            })
-            .catch(err => {
-                console.log(err)
-                reject({ codigo:500, mensaje:"Error con la base de datos!!!" })
-            })    
-    })   
+        let usuarioEncontrado = await Usuario.findOne({ login:login, password:password }, '-password -__v' )
+        if(!usuarioEncontrado){
+            throw { codigo:404, mensaje:"No existe un usuario con este login y password" }
+        }        
+        console.log(usuarioEncontrado)
+        return usuarioEncontrado
+    } catch (error) {
+        throw { codigo:500, mensaje:"Error con la base de datos!!!" }
+    }   
 }
 
 //Autenticación : ninguna
 //Autorización  : ninguna
-exports.altaUsuario = function(usuario){
+exports.altaUsuario = async function(usuario){
 
-    return new Promise(function(resolve, reject){
-        
-        validacionUtil.validar(usuario, reglasUsrInsercion, reject)
+    try{
+        let errores = validacionUtil.validar(usuario, reglasUsrInsercion)
+        if(errores){
+            throw { codigo:400, mensaje:"Datos invalidos", errores:errores }
+        }
 
-        //Le asigmanos el rol 'CLIENTE'
+        //Le asignanos el rol 'CLIENTE'
         usuario.rol = "CLIENTE"
 
-        Usuario
-            .findOne({ login : usuario.login})
-            .then(function(usuarioEncontrado){
-                if(usuarioEncontrado){
-                    reject({ codigo:400, mensaje:"Ya existe un usuario con ese login" })
-                    return
-                }                
-                let usuarioMG = new Usuario(usuario)
-                return usuarioMG.save() 
-            })
-            .then(function(resultado){
-                console.log("Usuario insertado")
-                console.log(resultado)
-                resolve(resultado._id) //Todo fue bien :)
-            })
-            .catch(function(err){
-                console.log(err)
-                reject({ codigo:500, mensaje:"Error con la base de datos!!!" })
-            })
-    })
-
+        let usuarioEncontrado = await Usuario.findOne({ login : usuario.login})        
+        if(usuarioEncontrado){
+            throw { codigo:400, mensaje:"Ya existe un usuario con ese login" }
+        }  
+        let usuarioMG = new Usuario(usuario)
+        let usuarioInsertado = await usuarioMG.save()         
+        console.log("Usuario insertado")
+        console.log(usuarioInsertado)
+        return usuarioInsertado._id
+    } catch (error) {
+        throw { codigo:500, mensaje:"Error con la base de datos!!!" }
+    }
 }
 
 //Autenticación: si
 //Autorización :
 //-empleados: pueden modificar cualquier usuario
 //-clientes : solo pueden modificarse a si mismos
-exports.modificarUsuario = function(usuario, autoridad){
-    
-    return new Promise(function(resolve, reject){
-
+exports.modificarUsuario = async function(usuario, autoridad){
+    try{
         //Validación
-        validacionUtil.validar(usuario, reglasUsrModificacion, reject)
+        let errores = validacionUtil.validar(usuario, reglasUsrModificacion)
+        if(errores){
+            throw { codigo:400, mensaje:"Datos invalidos", errores:errores }
+        }        
                     
         //Autorización 
         if(autoridad.rol=="CLIENTE" && autoridad._id!=usuario._id){                        
-            reject( { codigo:403, 
-                        mensaje:'Los clientes solo pueden modificarse a si mismos' } ) //Mal
-            return
+            throw { codigo:403, mensaje:'Los clientes solo pueden modificarse a si mismos' } //Mal, tendriamos que tomar medidas contra este usuario
         }
     
         //Modificar
-        Usuario.findByIdAndUpdate(usuario._id, usuario)
-        .then( resultado => {
-            if(!resultado){
-                reject({ codigo:404, mensaje:"El usuario no existe"})
-                return
-            }
-            resolve()
-        })
-        .catch( error => {
-            console.log(error)
-            reject({ codigo:500, mensaje:"Error con la base de datos"})
-        })
-
-    })
-
+        let usuarioModificado = await Usuario.findByIdAndUpdate(usuario._id, usuario)
+        if(!usuarioModificado){
+            throw { codigo:404, mensaje:"El usuario no existe"}
+        }   
+        return  
+    } catch (error) {
+        throw { codigo:500, mensaje:"Error con la base de datos!!!" }
+    }        
 }
 
 //Autenticación: si
 //Autorización :
 //-empleados: si
 //-clientes : solo pueden borrarse a si mismos
-exports.bajaUsuario = function(idUsuario, autoridad){
+exports.bajaUsuario = async function(idUsuario, autoridad){
 
-    return new Promise(function(resolve,reject){
-
+    try {
         console.log("Autoridad:", autoridad, "idUsuario:", idUsuario)
 
         //Autorización
         if(autoridad.rol=="CLIENTE" && autoridad._id != idUsuario){
-            reject({ codigo:403, mensaje:"Un cliente solo puede darse de baja a si mismo"})
-            return
+            throw { codigo:403, mensaje:"Un cliente solo puede darse de baja a si mismo"}
         }
 
-        let usuarioEncontrado = null
-
-        Usuario
-            .findById(idUsuario) 
-            .then( usr => { //Este objeto lo ha creado mongoose y tiene las funciones chupis de persistencia
-                usuarioEncontrado = usr
-                if(!usuarioEncontrado){
-                    reject({ codigo:404, mensaje:"El usuario no existe" })
-                    return
-                }
-                return usr.remove()
-            })
-            .then(resultadoDelete => {
-                console.log("DELETE:", resultadoDelete)
-                /*Grán fajador
-                let datos = {
-                    _id       : usuarioEncontrado._id,
-                    login     : usuarioEncontrado.login,
-                    password  : usuarioEncontrado.password,
-                    rol       : usuarioEncontrado.rol,
-                    nombre    : usuarioEncontrado.nombre,
-                    direccion : usuarioEncontrado.direccion,
-                    telefono  : usuarioEncontrado.telefono,
-                    correoE   : usuarioEncontrado.correoE,
-                    idioma    : usuarioEncontrado.idioma                    
-                }  
-                let usuarioHistorico = new UsuarioHistorico(datos)
-                */                           
-                
-                //Fino estilista
-                //Datos ya no es un objeto mongoose, ya no tiene las funciones, solo tiene las propiedades que guardan los datos
-                let datos = usuarioEncontrado.toObject()
-                let usuarioHistorico = new UsuarioHistorico(datos)
-                return usuarioHistorico.save()
-            })
-            .then( resultadoInsertOne => {                
-                console.log("INSERT:", resultadoInsertOne)
-                resolve()
-            })
-            .catch(error => {
-                console.log(error)
-                reject({ codigo:500, mensaje:"Error con la base de datos!!!" })
-            })
-
-    })
+        let usuarioEncontrado = await Usuario.findById(idUsuario) 
+        if(!usuarioEncontrado){
+            throw { codigo:404, mensaje:"El usuario no existe" }
+        }
+        let resultadoDelete = await usuarioEncontrado.remove()
+        console.log("DELETE:", resultadoDelete)
+        /*Grán fajador
+        let datos = {
+            _id       : usuarioEncontrado._id,
+            login     : usuarioEncontrado.login,
+            password  : usuarioEncontrado.password,
+            rol       : usuarioEncontrado.rol,
+            nombre    : usuarioEncontrado.nombre,
+            direccion : usuarioEncontrado.direccion,
+            telefono  : usuarioEncontrado.telefono,
+            correoE   : usuarioEncontrado.correoE,
+            idioma    : usuarioEncontrado.idioma                    
+        }  
+        let usuarioHistorico = new UsuarioHistorico(datos)
+        */                           
+        
+        //Fino estilista
+        //Datos ya no es un objeto mongoose, ya no tiene las funciones, solo tiene las propiedades que guardan los datos
+        let datos = usuarioEncontrado.toObject()
+        let usuarioHistorico = new UsuarioHistorico(datos)
+        let usuarioHistoricoInsertado = await usuarioHistorico.save()
+        console.log("INSERT:", usuarioHistoricoInsertado)
+        return
+    } catch (error) {
+        throw { codigo:500, mensaje:"Error con la base de datos!!!" }
+    }  
 
 }
 

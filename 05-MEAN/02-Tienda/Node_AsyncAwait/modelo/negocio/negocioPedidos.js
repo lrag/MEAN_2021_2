@@ -13,11 +13,9 @@ let reglasPedido = {
     usuario    : 'required'
 }
 
-
-exports.comprar = function (pedido, autoridad){
-
-    return new Promise(function(resolve, reject){
-        
+exports.comprar = async function (pedido, autoridad){
+  
+    try {
         console.log("==============================================")
         /*
         1-Validar los datos recibidos
@@ -28,120 +26,80 @@ exports.comprar = function (pedido, autoridad){
         6-Insertar el pedido como 'FACTURADO'
         7-Insertar la factura con una referencia al pedido
         */
-        if(!validacionUtil.validar(pedido, reglasPedido, reject)){
-            return
+        let errores = validacionUtil.validar(pedido, reglasPedido)
+        if(errores){
+            throw { codigo:400, mensaje:"Datos invalidos"}
         }
 
         if(pedido?.usuario?._id != autoridad._id){
-            reject({ codigo:403, mensaje:"AL LADROOOOOON!!!!!!!"})
-            return
+            throw { codigo:403, mensaje:"AL LADROOOOOON!!!!!!!"}
         }
 
-        //1-Buscamos el usuario y se lo asignamos al pedido
-        Usuario
-            .findById(pedido.usuario._id)
-            .then( usuarioMG => {
-                pedido.usuario = usuarioMG
-                console.log("Usuario encontrado:"+pedido.usuario.nombre)
+        let usuarioMG = await Usuario.findById(pedido.usuario._id)
+        pedido.usuario = usuarioMG
+        console.log("Usuario encontrado:"+pedido.usuario.nombre)
 
-                //No sabemos cuantas busquedas hay que hacer
-                //Tenemos que lanzarlas en un bucle
-                //No podemos concatenarlas
-                //Tenemos que esperar a que se ejecuten todas las busquedas para continuar con el proceso
-                //
-                //Metemos las promesas en un array:
-                let arrayDePromesas = []
-                for(let detalle of pedido.detalles){
-                    //Esta es la promesa de buscar un producto y, si se encuentra, añadir los datos que le faltan al detalle
-                    //Hace el resolve con el detalle, no con el producto encontrado!!!
-                    let promesa = new Promise(function(resolve, reject){
-                        Producto
-                            .findById(detalle.producto._id)
-                            .then( productoMG => {
-                                if(!productoMG){
-                                    reject("No existe el producto: "+detalle.producto._id)
-                                    return
-                                } 
-                                detalle.precio = productoMG.precio
-                                detalle.producto = productoMG
-                                resolve(detalle)
-                            })
-                            .catch( err => {
-                                console.log(err)
-                                reject("ERROR CON LA BB.DD")
-                            })
-                    })
-                    arrayDePromesas.push(promesa)
-                }
-                //Con Promise.all podemos 'detener el proceso' hasta que se cumplan o fallen las promesas contenidas en un array
-                console.log("Buscando los productos para completar los datos de los detalles")
-                return Promise.all(arrayDePromesas)
-            })
-            .then( arrayDeDetalles => { 
-                console.log("Se han encontrado todos los productos")
-                //arrayDeDetalles es un array en el que están los valores devueltos por las promesas que hemos recopilado
-                console.log("Calculando el total del pedido")
-                let totalPedido = 0
-                for(let detalle of arrayDeDetalles){
-                    totalPedido += detalle.cantidad*detalle.producto.precio
-                }
-                console.log("Total:"+totalPedido)
-                pedido.total = totalPedido
+        //Aqui ya no buscamos los productos en paralelo :(
+        console.log("Buscando los productos para completar los datos de los detalles")
+        for(let detalle of pedido.detalles){ 
+            let productoMG = await Producto.findById(detalle.producto._id)
+            if(!productoMG){
+                throw { codigo:400, mensaje: "No existe el producto: "+detalle.producto._id }
+            } 
+            detalle.precio = productoMG.precio
+            detalle.producto = productoMG
+        }
+        console.log("Se han encontrado todos los productos")
+        
+        console.log("Calculando el total del pedido")
+        let totalPedido = 0
+        for(let detalle of pedido.detalles){
+            totalPedido += detalle.cantidad*detalle.producto.precio
+        }
+        console.log("Total:"+totalPedido)
+        pedido.total = totalPedido        
 
-                //Ahora tenemos que reducir las existencias y vuelve a suceder que no sabemos de antemano cuantas 
-                //consultas serán así que volvemos a recopilar una serie de promesas en un array
-                arrayDePromesas = []
-                for(let detalle of pedido.detalles){
-                    detalle.producto.existencias = detalle.producto.existencias-detalle.cantidad
-                    let promesa = detalle.producto.save()
-                    arrayDePromesas.push(promesa)
-                }
-                console.log("reduciendo las existencias")
-                return Promise.all(arrayDePromesas)
-            })
-            .then( x => {
-                console.log("Existencias actualizadas")
-                return negocioFacturas.crearFactura(pedido)
-            })
-            .then( facturaInsertada => {
-                console.log("Factura insertada")
-                pedido.factura = facturaInsertada._id
-                pedido.estado = "FACTURADO"
-                pedido.codigo = "PED-"+Math.round(Date.now()/100) //Por poner algo
-                let pedidoMG = new Pedido(pedido)
-                pedidoMG.usuario = pedido.usuario
-                return pedidoMG.save()
-            })
-            .then( resultado => {
-                console.log("Pedido insertado")
-                resolve()
-            })
-            .catch( err => {
-                console.log("AL MENOS UN PRODUCTO NO EXISTIA O HA PETADO LA BB.DD")
-                console.log(err)
-                reject({ codigo:500, mensaje:"Error en la bb.dd" })
-            })
-    })
+        //Vamos a modificar los productos en paralelo :)
+        let arrayDePromesas = []
+        for(let detalle of pedido.detalles){
+            detalle.producto.existencias = detalle.producto.existencias-detalle.cantidad
+            let promesa = detalle.producto.save()
+            arrayDePromesas.push(promesa)
+        }
+        await Promise.all(arrayDePromesas)
+
+        console.log("Existencias actualizadas")
+        let factura = await negocioFacturas.crearFactura(pedido)
+        console.log("Factura insertada")
+        pedido.factura = facturaInsertada._id //Aqui deberíamos guardar la factura entera como en Toronto
+        pedido.estado = "FACTURADO"
+        pedido.codigo = "PED-"+Math.round(Date.now()/100) //Por poner algo
+        
+        let pedidoMG = new Pedido(pedido)
+        pedidoMG.usuario = pedido.usuario
+        await pedidoMG.save()   
+        console.log("Pedido insertado")
+        //FIN
+        return
+    } catch (error) {
+        console.log("AL MENOS UN PRODUCTO NO EXISTIA O HA PETADO LA BB.DD")
+        console.log(error)
+        throw { codigo:500, mensaje:"Error en la bb.dd" }
+    }
 }
 
-exports.listarPedidosPorCliente = function(idCliente, autoridad){
-
-    return new Promise(function(resolve, reject){
-
-        if(idCliente!=autoridad._id){
-            reject({ codigo:403, mensaje:"Los clientes solo pueden ver sus pedidos"})
-            return
-        }
-
-        Pedido
-            .find({ "usuario._id" : new ObjectID(idCliente)})
-            .then( pedidos => {
-                resolve(pedidos)
-            })
-            .catch(err => {
-                console.log(err)
-                reject({ codigo:500, mensaje:'Error en la base de datos, JDT'})
-            })
-    })
+exports.listarPedidosPorCliente = async function(idCliente, autoridad){
+        
+    if(idCliente!=autoridad._id){
+        throw { codigo:403, mensaje:"Los clientes solo pueden ver sus pedidos"}
+    }
+    
+    try {
+        let pedidos = Pedido.find({ "usuario._id" : new ObjectID(idCliente)})
+        return pedidos
+    }
+    catch( error ){
+        throw { codigo:500, mensaje:'Error en la base de datos, JDT'}
+    }
 
 }
