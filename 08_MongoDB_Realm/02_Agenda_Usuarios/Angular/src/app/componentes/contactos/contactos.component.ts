@@ -27,8 +27,17 @@ export class ContactosComponent implements OnInit {
     this.listarContactos()
   }
   
-  private listarContactos():void{    
+  private async listarContactos():Promise<any>{   
+    try {
+      this.contactos = await this.contactosService.listar()
+    } catch (error) {
+      this.mensajeError = "Hubo un problema en el servidor"
+    }
+    /*
     this.contactosService.listar()
+      .then( contactos => this.contactos = contactos )
+      .catch( err => this.mensajeError = "Hubo un problema en el servidor")
+    */
   }
 
   ngOnInit(): void {
@@ -36,6 +45,14 @@ export class ContactosComponent implements OnInit {
 
   public insertar():void{
     console.log("Insertar contacto")
+
+    //Validaciones...    
+    this.formulario.markAllAsTouched()
+    if(this.formulario.invalid){
+      return
+    }
+    
+    
   }
   
   public modificar():void{

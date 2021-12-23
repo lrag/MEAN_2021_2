@@ -25,6 +25,11 @@
                 </div>
                 <div class="col-10 mt-1">
                     <input type="text" class="form-control" id="nombre" formControlName="nombre"/>
+                    <div *ngIf="(formulario.get('nombre')?.dirty || formulario.get('nombre')?.touched)">
+                        <small *ngIf="formulario.get('nombre')?.hasError('required')" class="text-danger">
+                            El nombre es obligatorio.
+                        </small>
+                    </div>                    
                 </div>
 
                 <div class="col-2 mt-1">
@@ -32,6 +37,11 @@
                 </div>
                 <div class="col-10 mt-1">
                     <input type="text" class="form-control" id="direccion" formControlName="direccion"/>
+                    <div *ngIf="(formulario.get('direccion')?.dirty || formulario.get('direccion')?.touched)">
+                        <small *ngIf="formulario.get('direccion')?.hasError('required')" class="text-danger">
+                            La dirección es obligatoria.
+                        </small>
+                    </div>                     
                 </div>
 
                 <div class="col-2 mt-1">
@@ -39,6 +49,11 @@
                 </div>
                 <div class="col-10 mt-1">
                     <input type="text" class="form-control" id="telefono" formControlName="telefono"/>
+                    <div *ngIf="(formulario.get('telefono')?.dirty || formulario.get('telefono')?.touched)">
+                        <small *ngIf="formulario.get('telefono')?.hasError('required')" class="text-danger">
+                            El teléfono es obligatorio.
+                        </small>
+                    </div>                     
                 </div>
             
                 <div class="col-2 mt-1">
@@ -46,6 +61,14 @@
                 </div>
                 <div class="col-10 mt-1">
                     <input type="text" class="form-control" id="correoE" formControlName="correoE"/>
+                    <div *ngIf="(formulario.get('correoE')?.dirty || formulario.get('correoE')?.touched)">
+                        <small *ngIf="formulario.get('correoE')?.hasError('required')" class="text-danger">
+                          El correoE es obligatorio.
+                        </small>
+                        <small *ngIf="formulario.get('correoE')?.hasError('email')" class="text-danger">
+                          Tiene que ser una dirección de correo E.
+                        </small>
+                      </div>                     
                 </div>                 
             </div>         
         </div>
@@ -65,6 +88,12 @@
                 </tr>
             </thead>
             <tbody id="tablaContactos">
+                <tr *ngFor="let c of contactos">
+                    <td>{{c.nombre}}</td>
+                    <td>{{c.direccion}}</td>
+                    <td>{{c.telefono}}</td>
+                    <td>{{c.correoE}}</td>
+                </tr>                
             </tbody>
         </table>
     </div>
