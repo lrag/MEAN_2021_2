@@ -1,11 +1,14 @@
 <div class="card mt-4">
 
     <div class="row">
-      <div class="col-3">
+      <div class="col-4">
+        <!--
         <img class="card-img-top" src="https://picsum.photos/300/330?random={{detalle?.producto?._id}}" alt="Card image">
+        -->
+        <img [src]="imagenProducto" alt="Atiende" width="250px">
       </div>
   
-      <div class="col-9"> 
+      <div class="col-8"> 
   
         <h4 class="card-title">{{detalle?.producto?.nombre}}</h4>
         <h6 class="card-title">{{detalle?.producto?.fabricante}}</h6>

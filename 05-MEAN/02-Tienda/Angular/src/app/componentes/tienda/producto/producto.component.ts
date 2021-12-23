@@ -25,7 +25,7 @@ export class ProductoComponent implements OnInit {
     .subscribe(
       data => this.createImageFromBlob(data),
       error => console.log(error)
-    );
+    )
 
   }
 

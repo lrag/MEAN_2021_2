@@ -3,6 +3,7 @@ import { DetallePedido } from 'src/app/entidades/detallePedido';
 import { Pedido } from 'src/app/entidades/pedido';
 import { Producto } from 'src/app/entidades/producto';
 import { CestaService } from 'src/app/servicios/cesta-service';
+import { ProductosService } from 'src/app/servicios/productos-service';
 
 //CICLO DE VIDA DE LOS COMPONENTES ANGULAR
 //angular descubre que debe mostrarse un componente
@@ -30,8 +31,9 @@ export class DetalleCestaComponent implements OnInit {
   public cesta:Pedido = new Pedido()
 
   private producto:any
+  public imagenProducto:any
 
-  constructor() { 
+  constructor(private productosService:ProductosService) { 
     //Aqui es demasiado pronto para extraer el producto del detalle que nos inyectarán con @Input
     //dirante la ejecución del constructor aún no hemos recibido esos valores
     //this.producto = this.detalle.producto
@@ -43,7 +45,25 @@ export class DetalleCestaComponent implements OnInit {
   //-generado el contenido de la plantilla
   ngOnInit(): void {
     this.producto = this.detalle.producto
+
+    this.productosService.getImage(this.producto.imagen)
+    .subscribe(
+      data => this.createImageFromBlob(data),
+      error => console.log(error)
+    )    
   }
+
+  //Esto deberia estar en un servicio
+  public createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+       this.imagenProducto = reader.result;
+    }, false);
+ 
+    if (image) {
+       reader.readAsDataURL(image);
+    }
+  }  
 
   public disminuirCantidad():void{
     this.cesta.quitarProducto(this.producto)
