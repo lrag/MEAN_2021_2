@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <!-- Esta librería nos permite enviar consultas directamente a la base de datos
+  desde el navegador, asi como invocar las funciones definidas en el servidor-->
+  <script src="https://unpkg.com/realm-web@1.2.1/dist/bundle.iife.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+  crossorigin="anonymous"></script>        
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>    
+  <link rel="stylesheet" 
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+      crossorigin="anonymous">
+</head>
+
+<script type="application/javascript">
+
+
+function confirmar(){
+
+    //Validar...
+    
+    app = new Realm.App({ id : "agendausuarios-cvemp" })
+
+    let email = $("#correoE").val()
+    let pw    = $("#password").val()
+
+    //Pasos:
+    //-registrar el usuario
+    //-añadir su información adicional a 'custom user data'
+    app.emailPasswordAuth.registerUser(email, pw)
+    .then( () => {
+        console.log("Usuario registrado")
+
+        //Para poder añadir el curstom data al usuario necesitamos el id del nuevo usuario
+        //asi que hacemos un login 
+        let credenciales = Realm.Credentials.emailPassword(email, pw)
+        return app.logIn(credenciales)
+    })
+    .then( usuario => {
+
+        let customData = {
+          nombre    : $("#nombre").val(),
+          direccion : $("#direccion").val(),
+          telefono  : $("#telefono").val(),
+          rol       : "CLIENTE",
+          idUsuario : usuario.id
+        }     
+
+        return usuario
+          .mongoClient("mongodb-atlas")
+          .db("bbdd_agenda_usuarios")
+          .collection("custom_user_data")
+          .insertOne(customData)
+    })
+    .then( documentoInsertado => {
+      console.log("Nuevo custom data:", documentoInsertado)
+      //Refrescamos el usuario porque lo que tenemos en el local storage no incluye
+      //el custom user data
+      return app.currentUser.refreshCustomData()
+    }).
+    then( () => {
+      //FIN
+      window.location = "agenda.html"
+    })
+    .catch( error => console.log(error))
+
+}
+
+function cancelar(){
+    window.location = "login.html"
+}
+
+$(inicializar)
+function inicializar(){
+    $("#btnConfirmar").click(confirmar)
+    $("#btnCancelar").click(cancelar)
+}
+
+</script>
+
+
+<body>
+  
+  <div class="jumbotron">
+    <h1>Agenda 3000 Realm Edition (Usuarios con Then)</h1>
+  </div>
+
+  <div class="text-center">
+      <h2>Alta de usuario</h2>
+  </div>
+
+  <div class="row">
+
+    <div class="col-6 offset-3">
+  
+      <div class="form-horizontal" id="formulario">
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="correoE">Correo E.</label>
+          <div class="col-xs-8">
+            <input type="text" 
+                  class="form-control"
+                  id="correoE"
+                  campo=""/>
+          </div>
+        </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="password" >Password</label>
+          <div class="col-xs-8">
+            <input type="text" 
+                  class="form-control"
+                  id="password"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="nombre">Nombre</label>
+          <div class="col-xs-8">
+            <input type="text" 
+                  class="form-control"
+                  required="required" 
+                  id="nombre"
+                  campo=""/>
+          </div> 
+        </div>    
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="direccion">Dirección</label>
+          <div class="col-xs-8">
+            <input type="text" 
+                  class="form-control"
+                  required="required" 
+                  id="direccion"
+                  campo=""/>
+          </div> 
+        </div>    
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="telefono">Teléfono</label>
+          <div class="col-xs-8">
+            <input type="text" 
+                  class="form-control"
+                  required="required" 
+                  id="telefono"
+                  campo=""/>
+          </div> 
+        </div>    
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <input type="button" 
+          value="Confirmar" 
+          class="btn mr-1 btn-primary" 
+          style="width:110px"
+          id="btnConfirmar"/>
+    <input type="button" 
+          value="Cancelar"  
+          class="btn mr-1 btn-warning" 
+          style="width:110px"
+          id="btnCancelar"/>
+  </div>
+
+
+
+</body>
+</html>

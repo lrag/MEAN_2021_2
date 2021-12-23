@@ -41,7 +41,8 @@ export class AutenticacionService {
         })
     }
     
-    public logout():void{
+    public logout():Promise<any>{
+        return this.realmService.getApp().currentUser.logOut() //Esto devuelve una promes
     }
     
     public altaUsuario(registro:any):Observable<any>{

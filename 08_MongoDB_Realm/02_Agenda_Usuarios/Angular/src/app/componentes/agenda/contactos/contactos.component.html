@@ -1,8 +1,7 @@
-
 <div class="text-center mt-2 mb-2">
-    <button class="btn btn-primary mr-1" id="btnInsertar" (click)="insertar()">Insertar</button>
-    <button class="btn btn-primary mr-1" id="btnModificar" (click)="modificar()">Modificar</button>
-    <button class="btn btn-danger  mr-1" id="btnBorrar" (click)="borrar()">Borrar</button>
+    <button class="btn btn-primary mr-1" id="btnInsertar" (click)="insertar()" [disabled]="!modoInsercion">Insertar</button>
+    <button class="btn btn-primary mr-1" id="btnModificar" (click)="modificar()" [disabled]="modoInsercion">Modificar</button>
+    <button class="btn btn-danger  mr-1" id="btnBorrar" (click)="borrar()" [disabled]="modoInsercion">Borrar</button>
     <button class="btn btn-warning mr-1" id="btnVaciar" (click)="vaciarFormulario()">Vaciar</button>
 </div>
 

@@ -9,10 +9,11 @@ import { ContactosService } from 'src/app/servicios/contactos-service';
 })
 export class ContactosComponent implements OnInit {
 
-  public mensaje      : string = ""
-  public mensajeError : string = ""
-  public formulario   : FormGroup
-  public contactos    : Contacto[] = []
+  public modoInsercion : boolean = true
+  public mensaje       : string = ""
+  public mensajeError  : string = ""
+  public formulario    : FormGroup
+  public contactos     : Contacto[] = []
 
   public constructor(formBuilder:FormBuilder,
                      private contactosService:ContactosService) { 
@@ -64,17 +65,45 @@ export class ContactosComponent implements OnInit {
     }
   }
   
-  public modificar():void{
+  public async modificar():Promise<any>{
     console.log("Modificar contacto")
+
+    //Validaciones...    
+    this.formulario.markAllAsTouched()
+    if(this.formulario.invalid){
+      return
+    }
+
+    try{
+      await this.contactosService.modificar(this.formulario.value)
+      this.listarContactos()  
+      this.mensaje = "El contacto se modificó correctamente"  
+      this.vaciarFormulario()
+    } catch (error) {
+      this.mensaje = ""
+      this.mensajeError = "Hubo un problema al modificar el contacto"
+    }    
   }
   
-  public borrar():void{
+  public async borrar():Promise<any>{
     console.log("Borrar contacto")
+    try{
+      await this.contactosService.borrar(this.formulario.value)
+      this.listarContactos()  
+      this.mensaje = "El contacto se eliminó correctamente"  
+      this.vaciarFormulario()
+    } catch (error) {
+      this.mensaje = ""
+      this.mensajeError = "Hubo un problema al borrar el contacto"
+    }
   }
   
   public vaciarFormulario():void{
     console.log("Vaciar formulario")
     this.formulario.setValue(new Contacto())
+    this.formulario.markAsUntouched()
+    this.formulario.markAsPristine();
+    this.modoInsercion = true
   }
 
   public async seleccionar(_id:string):Promise<any>{
@@ -84,12 +113,12 @@ export class ContactosComponent implements OnInit {
       let contacto:Contacto = await this.contactosService.buscarPorId(_id)
       console.log(contacto)
       this.formulario.setValue(contacto) //ZASCA
+      this.modoInsercion = false
     } catch (error:any) {
       console.log(error)
       this.mensaje = ""
       this.mensajeError = error.message
     }
-
   }  
 
 }

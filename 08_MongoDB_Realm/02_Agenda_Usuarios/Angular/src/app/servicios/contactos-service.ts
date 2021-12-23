@@ -29,6 +29,14 @@ export class ContactosService {
         return this.coleccionContactos.insertOne(contacto)
     }
 
+    public modificar(contacto:Contacto):Promise<any>{
+        return this.coleccionContactos.findOneAndUpdate({ _id : contacto._id },{ $set : contacto })
+    }
+
+    public borrar(contacto:Contacto):Promise<any>{
+        return this.coleccionContactos.deleteOne({ _id : contacto._id })
+    }
+
     public async buscarPorId(_id:string):Promise<any>{
 
         try {
@@ -37,7 +45,10 @@ export class ContactosService {
                 throw new Error("El contacto no existe")
             }
             return contactoEncontrado
-        } catch (error) {
+        } catch (error:any) {
+            if(error.message == "El contacto no existe"){
+                throw error
+            }
             throw new Error("Hubo un problema en el servidor")            
         }
 

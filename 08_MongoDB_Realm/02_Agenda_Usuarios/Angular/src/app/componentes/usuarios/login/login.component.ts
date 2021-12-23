@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         () => {
           console.log("OK")
-          this.router.navigateByUrl("/agenda/perfil")
+          this.router.navigateByUrl("/agenda/contactos")
         },
         error => {
           console.log("MAL",error)
