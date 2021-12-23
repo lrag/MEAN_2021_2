@@ -19,4 +19,8 @@ export class ProductosService{
         return this.httpClient.get(ConfiguracionUtil.urlServidor+"/productos")
     }
 
+    public getImage(imageUrl:string): Observable<Blob> {
+        return this.httpClient.get(ConfiguracionUtil.urlServidor+"/"+imageUrl, { responseType: 'blob' });
+    }
+
 }

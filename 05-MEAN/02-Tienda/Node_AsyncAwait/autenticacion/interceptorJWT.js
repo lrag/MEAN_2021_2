@@ -11,7 +11,7 @@ exports.interceptorJWT = function(request, response, next){
     // :(
     let urlSinParametros = request.url.split("?")[0]
     if((request.method.toUpperCase()=="POST" && urlSinParametros == "/login") || 
-        (request.method.toUpperCase()=="POST" && urlSinParametros == "/usuarios") ){
+        (request.method.toUpperCase()=="POST" && urlSinParametros == "/usuarios")){
         next()
         return //pa no seguir
     }  

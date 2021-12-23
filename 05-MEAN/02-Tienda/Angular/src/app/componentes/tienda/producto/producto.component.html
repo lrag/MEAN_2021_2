@@ -1,5 +1,12 @@
 <div class="card mt-4">
-    <img class="card-img-top" src="https://picsum.photos/300/200?random={{producto?._id}}" alt="Card image">
+    
+    
+    <!--
+    <img class="card-img-top" src="https://localhost:7000/{{producto?.imagen}}" alt="Card image">
+    -->
+
+    <img [src]="imagenProducto" alt="Atiende">
+    
     <div class="card-body">
         <h4 class="card-title">{{producto?.nombre}}</h4>
         <h6 class="card-title">{{producto?.fabricante}}</h6>
