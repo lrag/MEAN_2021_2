@@ -18,6 +18,7 @@ export class ContactosComponent implements OnInit {
                      private contactosService:ContactosService) { 
     this.formulario = formBuilder.group({
       _id       : formBuilder.control(''),
+      idUsuario : formBuilder.control(''),
       nombre    : formBuilder.control('', [ Validators.required ]),
       direccion : formBuilder.control('', [ Validators.required ]),
       telefono  : formBuilder.control('', [ Validators.required ]),
@@ -43,7 +44,7 @@ export class ContactosComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public insertar():void{
+  public async insertar():Promise<any>{
     console.log("Insertar contacto")
 
     //Validaciones...    
@@ -51,8 +52,16 @@ export class ContactosComponent implements OnInit {
     if(this.formulario.invalid){
       return
     }
-    
-    
+
+    try{
+      await this.contactosService.insertar(this.formulario.value)
+      this.listarContactos()  
+      this.mensaje = "El contacto se insertó correctamente"  
+      this.vaciarFormulario()
+    } catch (error) {
+      this.mensaje = ""
+      this.mensajeError = "Hubo un problema al insertar el contacto"
+    }
   }
   
   public modificar():void{
@@ -63,9 +72,24 @@ export class ContactosComponent implements OnInit {
     console.log("Borrar contacto")
   }
   
-  public vaciar():void{
+  public vaciarFormulario():void{
     console.log("Vaciar formulario")
     this.formulario.setValue(new Contacto())
   }
+
+  public async seleccionar(_id:string):Promise<any>{
+    console.log("Seleccionar:"+_id)   
+
+    try {
+      let contacto:Contacto = await this.contactosService.buscarPorId(_id)
+      console.log(contacto)
+      this.formulario.setValue(contacto) //ZASCA
+    } catch (error:any) {
+      console.log(error)
+      this.mensaje = ""
+      this.mensajeError = error.message
+    }
+
+  }  
 
 }

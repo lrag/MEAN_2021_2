@@ -3,11 +3,17 @@
     <button class="btn btn-primary mr-1" id="btnInsertar" (click)="insertar()">Insertar</button>
     <button class="btn btn-primary mr-1" id="btnModificar" (click)="modificar()">Modificar</button>
     <button class="btn btn-danger  mr-1" id="btnBorrar" (click)="borrar()">Borrar</button>
-    <button class="btn btn-warning mr-1" id="btnVaciar" (click)="vaciar()">Vaciar</button>
+    <button class="btn btn-warning mr-1" id="btnVaciar" (click)="vaciarFormulario()">Vaciar</button>
 </div>
 
-<div class="alert alert-danger alert-dismissible fade show" role="alert" id="alertError">
-    <strong>Error:</strong> <span id="mensajeError"></span>
+<div *ngIf="mensaje.length>0" class="alert alert-success alert-dismissible fade show" role="alert" id="alertExito">
+    <strong>Mensaje:</strong> <span id="alertExito"> {{mensaje}}</span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div *ngIf="mensajeError.length>0" class="alert alert-danger alert-dismissible fade show" role="alert" id="alertError">
+    <strong>Error:</strong> <span id="mensajeError"> {{mensajeError}}</span>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -88,7 +94,7 @@
                 </tr>
             </thead>
             <tbody id="tablaContactos">
-                <tr *ngFor="let c of contactos">
+                <tr *ngFor="let c of contactos" (click)="seleccionar(c._id)">
                     <td>{{c.nombre}}</td>
                     <td>{{c.direccion}}</td>
                     <td>{{c.telefono}}</td>
