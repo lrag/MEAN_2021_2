@@ -14,8 +14,8 @@ export class ContactosComponent implements OnInit {
   public formulario   : FormGroup
   public contactos    : Contacto[] = []
 
-  constructor(formBuilder:FormBuilder,
-              private contactosService:ContactosService) { 
+  public constructor(formBuilder:FormBuilder,
+                     private contactosService:ContactosService) { 
     this.formulario = formBuilder.group({
       _id       : formBuilder.control(''),
       nombre    : formBuilder.control('', [ Validators.required ]),

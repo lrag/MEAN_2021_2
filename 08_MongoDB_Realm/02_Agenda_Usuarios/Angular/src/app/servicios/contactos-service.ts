@@ -15,16 +15,10 @@ export class ContactosService {
 
     public async listar():Promise<any> {
 
-
         let usuario:Usuario = this.autenticacionService.getUsuario()
-
-        let contactos = await this.coleccionContactos.find(/*{ idUsuario : usuario._id }*/)
-
+        let contactos = await this.coleccionContactos.find({ idUsuario : usuario._id })
         console.log(contactos)
-
-
         return contactos
-
 
     }
 
